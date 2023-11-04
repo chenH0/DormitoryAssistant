@@ -8,12 +8,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="member" />
         <module name="commom" />
+        <module name="Gateway" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="DormitoryAssistant" options="" />
+      <module name="Gateway" options="-parameters" />
       <module name="commom" options="-parameters" />
       <module name="member" options="-parameters" />
     </option>
