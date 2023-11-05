@@ -18,15 +18,11 @@ public class MemberController {
     @GetMapping("/count")
     public CommonResp<Integer> hello(){
         int count = memberService.count();
-        CommonResp<Integer> commonResp = new CommonResp<>();
-        commonResp.setContent(count);
-        return commonResp;
+        return new CommonResp<>(count);
     }
     @PostMapping("/register")
     public CommonResp<Long> register(MemberRegisterReq req){
         Long register = memberService.register(req);
-        CommonResp<Long> commonResp = new CommonResp<>();
-        commonResp.setContent(register);
-        return commonResp;
+        return new CommonResp<>(register);
     }
 }
