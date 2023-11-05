@@ -3,6 +3,7 @@ package com.chen.assistant.member.service;
 import cn.hutool.core.collection.CollUtil;
 import com.chen.assistant.member.domain.Member;
 import com.chen.assistant.member.domain.MemberExample;
+import com.chen.assistant.member.domain.MemberRegisterReq;
 import com.chen.assistant.member.mapper.MemberMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -17,16 +18,17 @@ public class MemberService {
     public int count() {
         return (int) memberMapper.countByExample(null);
     }
-    public long register(String mobilePhone){
+    public long register(MemberRegisterReq req){
         MemberExample memberExample = new MemberExample();
-        memberExample.createCriteria().andMobileEqualTo(mobilePhone);
+        String mobile = req.getMobile();
+        memberExample.createCriteria().andMobileEqualTo(mobile);
         List<Member> list = memberMapper.selectByExample(memberExample);
         if(CollUtil.isNotEmpty(list)){
             throw new RuntimeException("手机号已注册");
         }
         Member member = new Member();
         member.setId(System.currentTimeMillis());
-        member.setMobile(mobilePhone);
+        member.setMobile(mobile);
         memberMapper.insert(member);
         return member.getId();
     }
