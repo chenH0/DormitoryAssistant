@@ -1,7 +1,8 @@
 package com.chen.assistant.member.controller;
 
 import com.chen.assistant.common.resp.CommonResp;
-import com.chen.assistant.member.domain.MemberRegisterReq;
+import com.chen.assistant.member.req.MemberRegisterReq;
+import com.chen.assistant.member.req.MemberSendCodeReq;
 import com.chen.assistant.member.service.MemberService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
@@ -25,5 +26,10 @@ public class MemberController {
     public CommonResp<Long> register(@Valid MemberRegisterReq req){
         Long register = memberService.register(req);
         return new CommonResp<>(register);
+    }
+    @PostMapping("/send-code")
+    public CommonResp<Long> sendCode(@Valid MemberSendCodeReq req){
+        memberService.sendCode(req);
+        return new CommonResp<>();
     }
 }
