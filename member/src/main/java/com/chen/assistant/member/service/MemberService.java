@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
+import cn.hutool.jwt.JWTUtil;
 import com.chen.assistant.common.exception.BusinessException;
 import com.chen.assistant.common.exception.BusinessExceptionEnum;
 import com.chen.assistant.common.util.SnowUtil;
@@ -20,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MemberService {
@@ -68,7 +70,12 @@ public class MemberService {
             throw new BusinessException(BusinessExceptionEnum.MEMBER_CODE_NOT_EXIST);
         }
         LOG.info("登录成功");
-        return BeanUtil.copyProperties(memberDB, MemberLoginResp.class);
+        MemberLoginResp memberLoginResp = BeanUtil.copyProperties(memberDB, MemberLoginResp.class);
+        Map<String, Object> map = BeanUtil.beanToMap(memberLoginResp);
+        String key = "chenh9420";
+        String token = JWTUtil.createToken(map, key.getBytes());
+        memberLoginResp.setToken(token);
+        return memberLoginResp;
     }
 
     private Member selectMembers(String mobile) {
