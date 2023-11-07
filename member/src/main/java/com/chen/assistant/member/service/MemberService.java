@@ -7,6 +7,7 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.jwt.JWTUtil;
 import com.chen.assistant.common.exception.BusinessException;
 import com.chen.assistant.common.exception.BusinessExceptionEnum;
+import com.chen.assistant.common.util.JwtUtil;
 import com.chen.assistant.common.util.SnowUtil;
 import com.chen.assistant.member.domain.Member;
 import com.chen.assistant.member.domain.MemberExample;
@@ -71,9 +72,7 @@ public class MemberService {
         }
         LOG.info("登录成功");
         MemberLoginResp memberLoginResp = BeanUtil.copyProperties(memberDB, MemberLoginResp.class);
-        Map<String, Object> map = BeanUtil.beanToMap(memberLoginResp);
-        String key = "chenh9420";
-        String token = JWTUtil.createToken(map, key.getBytes());
+        String token = JwtUtil.createToken(memberLoginResp.getId(), memberLoginResp.getMobile());
         memberLoginResp.setToken(token);
         return memberLoginResp;
     }
