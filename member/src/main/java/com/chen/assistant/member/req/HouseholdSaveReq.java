@@ -1,14 +1,21 @@
 package com.chen.assistant.member.req;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.Date;
 
 public class HouseholdSaveReq {
+    @NotNull(message = "id不能为空")
     private Long id;
 
+    @NotBlank(message = "memberId不能为空")
     private Long memberId;
 
+    @NotBlank(message = "name不能为空")
     private String name;
 
+    @NotBlank(message = "学号不能为空")
     private String idCard;
 
     private String type;
