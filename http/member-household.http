@@ -1,0 +1,16 @@
+POST http://localhost:8001/member/household/save
+Content-Type: application/json
+
+{
+  "memberId":"1",
+  "name": "test",
+  "idCard": "123",
+  "type": "1"
+}
+###
+
+POST http://localhost:8000/member/member/login
+Content-Type: application/json
+
+{"mobile":19940679593, "code":8888}
+###
