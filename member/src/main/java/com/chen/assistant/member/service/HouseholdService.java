@@ -2,6 +2,7 @@ package com.chen.assistant.member.service;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateTime;
+import com.chen.assistant.common.context.LoginMemberContext;
 import com.chen.assistant.common.util.SnowUtil;
 import com.chen.assistant.member.domain.Household;
 import com.chen.assistant.member.mapper.HouseholdMapper;
@@ -16,6 +17,7 @@ public class HouseholdService {
     public void save(HouseholdSaveReq req){
         DateTime now = DateTime.now();
         Household household = BeanUtil.copyProperties(req, Household.class);
+        household.setMemberId(LoginMemberContext.getId());
         household.setId(SnowUtil.getSnowflaskNextId());
         household.setCreateTime(now);
         household.setUpdateTime(now);
