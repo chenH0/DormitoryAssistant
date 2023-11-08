@@ -1,6 +1,7 @@
 package com.chen.assistant.member.config;
 
 
+import com.chen.assistant.common.inteceptor.LoginInterceptor;
 import com.chen.assistant.common.inteceptor.MemberInterceptor;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Configuration;
@@ -12,8 +13,12 @@ public class SpringMvcConfig implements WebMvcConfigurer {
    @Resource
    MemberInterceptor memberInterceptor;
 
+   @Resource
+    LoginInterceptor loginInterceptor;
+
    @Override
    public void addInterceptors(InterceptorRegistry registry) {
+       registry.addInterceptor(loginInterceptor);
        // 路径不要包含context-path
        registry.addInterceptor(memberInterceptor)
                .addPathPatterns("/**")
