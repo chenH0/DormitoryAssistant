@@ -2,6 +2,7 @@ package com.chen.assistant.member.controller;
 
 import com.chen.assistant.common.context.LoginMemberContext;
 import com.chen.assistant.common.resp.CommonResp;
+import com.chen.assistant.common.resp.PageResp;
 import com.chen.assistant.member.req.HouseholdQueryReq;
 import com.chen.assistant.member.req.HouseholdSaveReq;
 import com.chen.assistant.member.resp.HouseholdResp;
@@ -25,9 +26,9 @@ public class HouseHoldController {
     }
 
     @GetMapping("/query-list")
-    public CommonResp<List<HouseholdResp>> queryList(@Valid HouseholdQueryReq req){
+    public CommonResp<PageResp<HouseholdResp>> queryList(@Valid HouseholdQueryReq req){
         req.setMemberId(LoginMemberContext.getId());
-        List<HouseholdResp> householdResp = householdService.show(req);
+        PageResp<HouseholdResp> householdResp = householdService.show(req);
         return new CommonResp<>(householdResp);
     }
 }
