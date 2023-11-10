@@ -1,5 +1,6 @@
 package com.chen.assistant.member.resp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.Date;
@@ -7,23 +8,28 @@ import java.util.Date;
 public class HouseholdResp {
     private Long memberId;
 
-    @NotBlank(message = "name不能为空")
     private String name;
 
-    @NotBlank(message = "学号不能为空")
     private String idCard;
 
-    @NotBlank(message = "name不能为空")
     private String type;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
 
-    @NotBlank(message = "years不能为空")
     private String years;
 
-    @NotBlank(message = "school不能为空")
     private String school;
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
     public String getYears() {
         return years;
@@ -88,6 +94,7 @@ public class HouseholdResp {
         sb.append(", name='").append(name).append('\'');
         sb.append(", idCard='").append(idCard).append('\'');
         sb.append(", type='").append(type).append('\'');
+        sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", years='").append(years).append('\'');
         sb.append(", school='").append(school).append('\'');
