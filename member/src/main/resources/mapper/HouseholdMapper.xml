@@ -2,10 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chen.assistant.member.mapper.HouseholdMapper">
   <resultMap id="BaseResultMap" type="com.chen.assistant.member.domain.Household">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="member_id" jdbcType="BIGINT" property="memberId" />
+    <id column="member_id" jdbcType="BIGINT" property="memberId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="school" jdbcType="VARCHAR" property="school" />
+    <result column="room" jdbcType="VARCHAR" property="room" />
+    <result column="year" jdbcType="DATE" property="year" />
+    <result column="status" jdbcType="INTEGER" property="status" />
     <result column="type" jdbcType="CHAR" property="type" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -69,7 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, member_id, `name`, id_card, `type`, create_time, update_time
+    member_id, `name`, id_card, school, room, `year`, `status`, `type`, create_time, 
+    update_time
   </sql>
   <select id="selectByExample" parameterType="com.chen.assistant.member.domain.HouseholdExample" resultMap="BaseResultMap">
     select
@@ -89,11 +93,11 @@
     select 
     <include refid="Base_Column_List" />
     from household
-    where id = #{id,jdbcType=BIGINT}
+    where member_id = #{memberId,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from household
-    where id = #{id,jdbcType=BIGINT}
+    where member_id = #{memberId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.chen.assistant.member.domain.HouseholdExample">
     delete from household
@@ -102,19 +106,18 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.chen.assistant.member.domain.Household">
-    insert into household (id, member_id, `name`, 
-      id_card, `type`, create_time, 
-      update_time)
-    values (#{id,jdbcType=BIGINT}, #{memberId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
-      #{idCard,jdbcType=VARCHAR}, #{type,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+    insert into household (member_id, `name`, id_card, 
+      school, room, `year`, `status`, 
+      `type`, create_time, update_time
+      )
+    values (#{memberId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, 
+      #{school,jdbcType=VARCHAR}, #{room,jdbcType=VARCHAR}, #{year,jdbcType=DATE}, #{status,jdbcType=INTEGER}, 
+      #{type,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.chen.assistant.member.domain.Household">
     insert into household
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="memberId != null">
         member_id,
       </if>
@@ -123,6 +126,18 @@
       </if>
       <if test="idCard != null">
         id_card,
+      </if>
+      <if test="school != null">
+        school,
+      </if>
+      <if test="room != null">
+        room,
+      </if>
+      <if test="year != null">
+        `year`,
+      </if>
+      <if test="status != null">
+        `status`,
       </if>
       <if test="type != null">
         `type`,
@@ -135,9 +150,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="memberId != null">
         #{memberId,jdbcType=BIGINT},
       </if>
@@ -146,6 +158,18 @@
       </if>
       <if test="idCard != null">
         #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null">
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="room != null">
+        #{room,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=DATE},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="type != null">
         #{type,jdbcType=CHAR},
@@ -167,9 +191,6 @@
   <update id="updateByExampleSelective" parameterType="map">
     update household
     <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
-      </if>
       <if test="record.memberId != null">
         member_id = #{record.memberId,jdbcType=BIGINT},
       </if>
@@ -178,6 +199,18 @@
       </if>
       <if test="record.idCard != null">
         id_card = #{record.idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.school != null">
+        school = #{record.school,jdbcType=VARCHAR},
+      </if>
+      <if test="record.room != null">
+        room = #{record.room,jdbcType=VARCHAR},
+      </if>
+      <if test="record.year != null">
+        `year` = #{record.year,jdbcType=DATE},
+      </if>
+      <if test="record.status != null">
+        `status` = #{record.status,jdbcType=INTEGER},
       </if>
       <if test="record.type != null">
         `type` = #{record.type,jdbcType=CHAR},
@@ -195,10 +228,13 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update household
-    set id = #{record.id,jdbcType=BIGINT},
-      member_id = #{record.memberId,jdbcType=BIGINT},
+    set member_id = #{record.memberId,jdbcType=BIGINT},
       `name` = #{record.name,jdbcType=VARCHAR},
       id_card = #{record.idCard,jdbcType=VARCHAR},
+      school = #{record.school,jdbcType=VARCHAR},
+      room = #{record.room,jdbcType=VARCHAR},
+      `year` = #{record.year,jdbcType=DATE},
+      `status` = #{record.status,jdbcType=INTEGER},
       `type` = #{record.type,jdbcType=CHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
@@ -209,14 +245,23 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.chen.assistant.member.domain.Household">
     update household
     <set>
-      <if test="memberId != null">
-        member_id = #{memberId,jdbcType=BIGINT},
-      </if>
       <if test="name != null">
         `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="idCard != null">
         id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null">
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="room != null">
+        room = #{room,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        `year` = #{year,jdbcType=DATE},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
       </if>
       <if test="type != null">
         `type` = #{type,jdbcType=CHAR},
@@ -228,16 +273,19 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where member_id = #{memberId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.chen.assistant.member.domain.Household">
     update household
-    set member_id = #{memberId,jdbcType=BIGINT},
-      `name` = #{name,jdbcType=VARCHAR},
+    set `name` = #{name,jdbcType=VARCHAR},
       id_card = #{idCard,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      room = #{room,jdbcType=VARCHAR},
+      `year` = #{year,jdbcType=DATE},
+      `status` = #{status,jdbcType=INTEGER},
       `type` = #{type,jdbcType=CHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
+    where member_id = #{memberId,jdbcType=BIGINT}
   </update>
 </mapper>

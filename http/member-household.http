@@ -5,12 +5,15 @@ token: {{token}}
 {
   "name": "test",
   "idCard": "123",
-  "type": "1"
+  "type": "1",
+  "school": "人工智能学院",
+  "years": 2021,
+  "room": "未分配"
 }
 ###
 
-POST http://localhost:8000/member/member/login
-Content-Type: application/json
+GET http://localhost:8000/member/household/query-list
+Accept: application/json
+token: {{token}}
 
-{"mobile":19940679593, "code":8888}
 ###

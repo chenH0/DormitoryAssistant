@@ -1,24 +1,7 @@
-GET http://localhost:8000/member/member/count
-Accept: application/json
-token:123
-###
-
-POST http://localhost:8000/member/member/register
-Content-Type: application/x-www-form-urlencoded
-
-mobile=19940679593
-###
-
-POST http://localhost:8000/member/member/send-code
-Content-Type: application/json
-
-{"mobile":19940679593}
-###
-
 POST http://localhost:8000/member/member/login
 Content-Type: application/json
 
-{"mobile":19940679593, "code":8888}
+{"mobile":"chenhaol@stu.xidian.edu.cn", "code":8888}
 
 > {%
 client.log(JSON.stringify(response.body));

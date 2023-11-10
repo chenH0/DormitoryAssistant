@@ -8,14 +8,17 @@ create table `member` (
 
 drop table if exists `household`;
 create table `household` (
-  `id` bigint not null comment 'id',
   `member_id` bigint not null comment '会员id',
-  `name` varchar(20) not null comment '姓名',
-  `id_card` varchar(18) not null comment '学号',
-  `type` char(1) not null comment '旅客类型|枚举[PassengerTypeEnum]',
+  `name` varchar(20) comment '姓名',
+  `id_card` varchar(18) comment '学号',
+  `school` varchar(20) comment '学院',
+  `room` varchar(18) comment '宿舍',
+  `year` YEAR comment '入学年份',
+  `status` int comment '状态',
+  `type` char(1) comment '学生类型|枚举[PassengerTypeEnum]',
   `create_time` datetime(3) comment '新增时间',
   `update_time` datetime(3) comment '修改时间',
-  primary key (`id`),
+  primary key (`member_id`),
   index `member_id_index` (`member_id`)
 ) engine=innodb default charset=utf8mb4 comment='住户';
 

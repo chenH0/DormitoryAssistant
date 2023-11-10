@@ -3,27 +3,25 @@ package com.chen.assistant.member.domain;
 import java.util.Date;
 
 public class Household {
-    private Long id;
-
     private Long memberId;
 
     private String name;
 
     private String idCard;
 
+    private String school;
+
+    private String room;
+
+    private Date year;
+
+    private Integer status;
+
     private String type;
 
     private Date createTime;
 
     private Date updateTime;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getMemberId() {
         return memberId;
@@ -47,6 +45,38 @@ public class Household {
 
     public void setIdCard(String idCard) {
         this.idCard = idCard;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
+    }
+
+    public Date getYear() {
+        return year;
+    }
+
+    public void setYear(Date year) {
+        this.year = year;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getType() {
@@ -79,10 +109,13 @@ public class Household {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
         sb.append(", memberId=").append(memberId);
         sb.append(", name=").append(name);
         sb.append(", idCard=").append(idCard);
+        sb.append(", school=").append(school);
+        sb.append(", room=").append(room);
+        sb.append(", year=").append(year);
+        sb.append(", status=").append(status);
         sb.append(", type=").append(type);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);

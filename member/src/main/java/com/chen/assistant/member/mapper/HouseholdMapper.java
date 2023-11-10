@@ -10,7 +10,7 @@ public interface HouseholdMapper {
 
     int deleteByExample(HouseholdExample example);
 
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Long memberId);
 
     int insert(Household record);
 
@@ -18,7 +18,7 @@ public interface HouseholdMapper {
 
     List<Household> selectByExample(HouseholdExample example);
 
-    Household selectByPrimaryKey(Long id);
+    Household selectByPrimaryKey(Long memberId);
 
     int updateByExampleSelective(@Param("record") Household record, @Param("example") HouseholdExample example);
 

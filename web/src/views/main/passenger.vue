@@ -2,7 +2,7 @@
   <p>
     <a-space>
       <a-button type="primary" @click="handleQuery()">刷新</a-button>
-      <a-button type="primary" @click="onAdd">新增</a-button>
+      <a-button type="primary" @click="onAdd">编辑</a-button>
     </a-space>
   </p>
   <a-table :dataSource="passengers"
@@ -31,21 +31,30 @@
       </template>
     </template>
   </a-table>
-  <a-modal v-model:visible="visible" title="乘车人" @ok="handleOk"
+  <a-modal v-model:visible="visible" title="信息确认" @ok="handleOk"
            ok-text="确认" cancel-text="取消">
     <a-form :model="passenger" :label-col="{span: 4}" :wrapper-col="{ span: 20 }">
       <a-form-item label="姓名">
         <a-input v-model:value="passenger.name" />
       </a-form-item>
-      <a-form-item label="身份证">
+      <a-form-item label="学号">
         <a-input v-model:value="passenger.idCard" />
       </a-form-item>
-      <a-form-item label="旅客类型">
+      <a-form-item label="年级">
         <a-select v-model:value="passenger.type">
           <a-select-option v-for="item in PASSENGER_TYPE_ARRAY" :key="item.code" :value="item.code">
             {{item.desc}}
           </a-select-option>
         </a-select>
+      </a-form-item>
+      <a-form-item label="入学年份">
+        <a-input v-model:value="passenger.years" />
+      </a-form-item>
+      <a-form-item label="学院">
+        <a-input v-model:value="passenger.school" />
+      </a-form-item>
+      <a-form-item label="宿舍">
+        <a-input v-model:value="passenger.Room" />
       </a-form-item>
     </a-form>
   </a-modal>

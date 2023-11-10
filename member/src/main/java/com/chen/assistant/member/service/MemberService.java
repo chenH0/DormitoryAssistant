@@ -2,15 +2,17 @@ package com.chen.assistant.member.service;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
-import cn.hutool.jwt.JWTUtil;
 import com.chen.assistant.common.exception.BusinessException;
 import com.chen.assistant.common.exception.BusinessExceptionEnum;
 import com.chen.assistant.common.util.JwtUtil;
 import com.chen.assistant.common.util.SnowUtil;
+import com.chen.assistant.member.domain.Household;
 import com.chen.assistant.member.domain.Member;
 import com.chen.assistant.member.domain.MemberExample;
+import com.chen.assistant.member.mapper.HouseholdMapper;
 import com.chen.assistant.member.req.MemberLoginReq;
 import com.chen.assistant.member.req.MemberRegisterReq;
 import com.chen.assistant.member.mapper.MemberMapper;
@@ -22,7 +24,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class MemberService {
@@ -30,6 +31,10 @@ public class MemberService {
 
     @Resource
     private MemberMapper memberMapper;
+    
+    @Resource
+    private HouseholdMapper householdMapper;
+    
     public int count() {
         return (int) memberMapper.countByExample(null);
     }
@@ -54,6 +59,14 @@ public class MemberService {
             member.setId(SnowUtil.getSnowflaskNextId());
             member.setMobile(mobile);
             memberMapper.insert(member);
+            Household household = new Household();
+            DateTime now = DateTime.now();
+            household.setMemberId(member.getId());
+            household.setCreateTime(now);
+            household.setUpdateTime(now);
+            household.setStatus(0);
+            household.setRoom("未分配");
+            householdMapper.insert(household);
         }else {
             LOG.info("手机号存在");
         }

@@ -1,10 +1,10 @@
-package com.chen.assistant.member.req;
+package com.chen.assistant.member.resp;
 
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.Date;
 
-public class HouseholdSaveReq {
+public class HouseholdResp {
     private Long memberId;
 
     @NotBlank(message = "name不能为空")
@@ -83,7 +83,7 @@ public class HouseholdSaveReq {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("HouseholdSaveReq{");
+        final StringBuffer sb = new StringBuffer("HouseholdResp{");
         sb.append("memberId=").append(memberId);
         sb.append(", name='").append(name).append('\'');
         sb.append(", idCard='").append(idCard).append('\'');
