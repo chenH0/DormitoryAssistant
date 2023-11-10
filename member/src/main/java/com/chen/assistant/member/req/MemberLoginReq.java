@@ -4,8 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 public class MemberLoginReq {
-    @NotBlank(message = "手机号不能为空")
-    @Pattern(regexp = "^1\\d{10}$", message = "手机号格式错误")
+    @NotBlank(message = "邮箱不能为空")
+    //@Pattern(regexp = "^1\\d{10}$", message = "手机号格式错误")
+    @Pattern(regexp = ".+@stu\\.xidian\\.edu\\.cn$", message = "校园邮箱格式错误")
     private String mobile;
 
     @NotBlank(message = "验证码不能为空")

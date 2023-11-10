@@ -24,22 +24,32 @@
       </a-menu-item>
       <a-menu-item key="/passenger">
         <router-link to="/passenger">
-          <user-outlined /> &nbsp; 乘车人管理
+          <user-outlined /> &nbsp; 信息确认
         </router-link>
       </a-menu-item>
       <a-menu-item key="/ticket">
         <router-link to="/ticket">
-          <border-outer-outlined /> &nbsp; 余票查询
+          <border-outer-outlined /> &nbsp; 床位查询
         </router-link>
       </a-menu-item>
       <a-menu-item key="/my-ticket">
         <router-link to="/my-ticket">
-          <idcard-outlined /> &nbsp; 我的车票
+          <idcard-outlined /> &nbsp; 我的床铺
         </router-link>
       </a-menu-item>
       <a-menu-item key="/seat">
         <router-link to="/seat">
-          <usergroup-add-outlined /> &nbsp; 座位销售图
+          <usergroup-add-outlined /> &nbsp; 床位分布图
+        </router-link>
+      </a-menu-item>
+      <a-menu-item key="/repair">
+        <router-link to="/repair">
+          <AliwangwangOutlined /> &nbsp; 电器报修
+        </router-link>
+      </a-menu-item>
+      <a-menu-item key="/apply">
+        <router-link to="/apply">
+          <SolutionOutlined /> &nbsp; 假期留宿申请
         </router-link>
       </a-menu-item>
       <a-menu-item key="/admin">

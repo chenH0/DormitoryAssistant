@@ -1,7 +1,7 @@
 <template>
   <a-row class="login">
     <a-col :span="8" :offset="8" class="login-main">
-      <h1 style="text-align: center"><rocket-two-tone />&nbsp;宿管帮一站式服务大厅</h1>
+      <h1 style="text-align: center"><rocket-two-tone />&nbsp;宿管帮  宿舍一站式服务大厅</h1>
       <a-form
           :model="loginForm"
           name="basic"
@@ -10,9 +10,9 @@
         <a-form-item
             label=""
             name="mobile"
-            :rules="[{ required: true, message: '请输入手机号!' }]"
+            :rules="[{ required: true, message: '请输入校园邮箱!' }]"
         >
-          <a-input v-model:value="loginForm.mobile" placeholder="手机号"/>
+          <a-input v-model:value="loginForm.mobile" placeholder="邮箱"/>
         </a-form-item>
 
         <a-form-item
@@ -50,7 +50,7 @@ export default defineComponent({
     const router = useRouter();
 
     const loginForm = reactive({
-      mobile: '13000000000',
+      mobile: 'chenhaol@stu.xidian.edu.cn',
       code: '',
     });
 
