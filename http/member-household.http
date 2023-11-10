@@ -12,7 +12,7 @@ token: {{token}}
 }
 ###
 
-GET http://localhost:8000/member/household/query-list
+GET http://localhost:8000/member/household/query-list?page=1&size=20
 Accept: application/json
 token: {{token}}
 

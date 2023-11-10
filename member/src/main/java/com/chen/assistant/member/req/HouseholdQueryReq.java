@@ -1,6 +1,8 @@
 package com.chen.assistant.member.req;
 
-public class HouseholdQueryReq {
+import com.chen.assistant.common.req.PageReq;
+
+public class HouseholdQueryReq extends PageReq {
     private Long memberId;
 
     public Long getMemberId() {

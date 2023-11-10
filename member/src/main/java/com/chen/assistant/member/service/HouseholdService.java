@@ -11,6 +11,7 @@ import com.chen.assistant.member.mapper.HouseholdMapper;
 import com.chen.assistant.member.req.HouseholdQueryReq;
 import com.chen.assistant.member.req.HouseholdSaveReq;
 import com.chen.assistant.member.resp.HouseholdResp;
+import com.github.pagehelper.PageHelper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,7 @@ public class HouseholdService {
     public List<HouseholdResp> show(HouseholdQueryReq req) {
         HouseholdExample householdExample = new HouseholdExample();
         householdExample.createCriteria().andMemberIdEqualTo(req.getMemberId());
+        PageHelper.startPage(req.getPage(), req.getSize());
         List<Household> households = householdMapper.selectByExample(householdExample);
         return BeanUtil.copyToList(households, HouseholdResp.class);
     }
