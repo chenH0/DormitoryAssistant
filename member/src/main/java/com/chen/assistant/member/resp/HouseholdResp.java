@@ -19,6 +19,16 @@ public class HouseholdResp {
 
     private String room;
 
+    private int year;
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
     public String getRoom() {
         return room;
     }
@@ -118,6 +128,7 @@ public class HouseholdResp {
         sb.append(", idCard='").append(idCard).append('\'');
         sb.append(", type='").append(type).append('\'');
         sb.append(", room='").append(room).append('\'');
+        sb.append(", year=").append(year);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", years='").append(years).append('\'');

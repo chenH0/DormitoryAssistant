@@ -3,12 +3,11 @@ Content-Type: application/json
 token: {{token}}
 
 {
-  "name": "test",
-  "idCard": "123",
+  "name": "陈浩",
+  "idCard": "21171213830",
   "type": "1",
-  "school": "人工智能学院",
-  "years": 2021,
-  "room": "未分配"
+  "year": "2021",
+  "school": "人工智能学院"
 }
 ###
 

@@ -7,7 +7,7 @@
     <result column="id_card" jdbcType="VARCHAR" property="idCard" />
     <result column="school" jdbcType="VARCHAR" property="school" />
     <result column="room" jdbcType="VARCHAR" property="room" />
-    <result column="year" jdbcType="DATE" property="year" />
+    <result column="year" jdbcType="INTEGER" property="year" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="type" jdbcType="CHAR" property="type" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -107,13 +107,13 @@
   </delete>
   <insert id="insert" parameterType="com.chen.assistant.member.domain.Household">
     insert into household (member_id, `name`, id_card, 
-      school, room, `year`, `status`, 
-      `type`, create_time, update_time
-      )
+      school, room, `year`, 
+      `status`, `type`, create_time, 
+      update_time)
     values (#{memberId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, 
-      #{school,jdbcType=VARCHAR}, #{room,jdbcType=VARCHAR}, #{year,jdbcType=DATE}, #{status,jdbcType=INTEGER}, 
-      #{type,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+      #{school,jdbcType=VARCHAR}, #{room,jdbcType=VARCHAR}, #{year,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{type,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.chen.assistant.member.domain.Household">
     insert into household
@@ -166,7 +166,7 @@
         #{room,jdbcType=VARCHAR},
       </if>
       <if test="year != null">
-        #{year,jdbcType=DATE},
+        #{year,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -207,7 +207,7 @@
         room = #{record.room,jdbcType=VARCHAR},
       </if>
       <if test="record.year != null">
-        `year` = #{record.year,jdbcType=DATE},
+        `year` = #{record.year,jdbcType=INTEGER},
       </if>
       <if test="record.status != null">
         `status` = #{record.status,jdbcType=INTEGER},
@@ -233,7 +233,7 @@
       id_card = #{record.idCard,jdbcType=VARCHAR},
       school = #{record.school,jdbcType=VARCHAR},
       room = #{record.room,jdbcType=VARCHAR},
-      `year` = #{record.year,jdbcType=DATE},
+      `year` = #{record.year,jdbcType=INTEGER},
       `status` = #{record.status,jdbcType=INTEGER},
       `type` = #{record.type,jdbcType=CHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -258,7 +258,7 @@
         room = #{room,jdbcType=VARCHAR},
       </if>
       <if test="year != null">
-        `year` = #{year,jdbcType=DATE},
+        `year` = #{year,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         `status` = #{status,jdbcType=INTEGER},
@@ -281,7 +281,7 @@
       id_card = #{idCard,jdbcType=VARCHAR},
       school = #{school,jdbcType=VARCHAR},
       room = #{room,jdbcType=VARCHAR},
-      `year` = #{year,jdbcType=DATE},
+      `year` = #{year,jdbcType=INTEGER},
       `status` = #{status,jdbcType=INTEGER},
       `type` = #{type,jdbcType=CHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},

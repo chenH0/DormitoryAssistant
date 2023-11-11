@@ -107,8 +107,8 @@ export default defineComponent({
     },
       {
         title: '年级',
-        dataIndex: 'years',
-        key: 'years',
+        dataIndex: 'year',
+        key: 'year',
       },
       {
         title: '学院',

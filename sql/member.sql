@@ -13,7 +13,7 @@ create table `household` (
   `id_card` varchar(18) comment '学号',
   `school` varchar(20) comment '学院',
   `room` varchar(18) comment '宿舍',
-  `year` YEAR comment '入学年份',
+  `year` int comment '入学年份',
   `status` int comment '状态',
   `type` char(1) comment '学生类型|枚举[PassengerTypeEnum]',
   `create_time` datetime(3) comment '新增时间',

@@ -13,7 +13,7 @@ public class Household {
 
     private String room;
 
-    private Date year;
+    private Integer year;
 
     private Integer status;
 
@@ -63,11 +63,11 @@ public class Household {
         this.room = room;
     }
 
-    public Date getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(Date year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 

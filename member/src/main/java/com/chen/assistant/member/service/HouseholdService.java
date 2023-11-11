@@ -30,9 +30,8 @@ public class HouseholdService {
         DateTime now = DateTime.now();
         Household household = BeanUtil.copyProperties(req, Household.class);
         household.setMemberId(LoginMemberContext.getId());
-        household.setCreateTime(now);
         household.setUpdateTime(now);
-        householdMapper.insert(household);
+        householdMapper.updateByPrimaryKeySelective(household);
     }
 
     public PageResp<HouseholdResp> show(HouseholdQueryReq req) {

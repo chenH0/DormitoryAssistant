@@ -1,36 +1,36 @@
 package com.chen.assistant.member.req;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.Date;
 
 public class HouseholdSaveReq {
-    private Long memberId;
-
     @NotBlank(message = "name不能为空")
     private String name;
 
     @NotBlank(message = "学号不能为空")
     private String idCard;
 
-    @NotBlank(message = "name不能为空")
+    @NotBlank(message = "培养方式不能为空")
     private String type;
 
     private Date updateTime;
 
-    @NotBlank(message = "years不能为空")
-    private String years;
+    @Min(value = 2000, message = "year不能小于1999")
+    @Max(value = 2099, message = "year不能大于2100")
+    private int year;
 
     @NotBlank(message = "school不能为空")
     private String school;
 
-
-    public String getYears() {
-        return years;
+    public int getYear() {
+        return year;
     }
 
-    public void setYears(String years) {
-        this.years = years;
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public String getSchool() {
@@ -39,14 +39,6 @@ public class HouseholdSaveReq {
 
     public void setSchool(String school) {
         this.school = school;
-    }
-
-    public Long getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(Long memberId) {
-        this.memberId = memberId;
     }
 
     public String getName() {
@@ -84,12 +76,11 @@ public class HouseholdSaveReq {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("HouseholdSaveReq{");
-        sb.append("memberId=").append(memberId);
-        sb.append(", name='").append(name).append('\'');
+        sb.append("name='").append(name).append('\'');
         sb.append(", idCard='").append(idCard).append('\'');
         sb.append(", type='").append(type).append('\'');
         sb.append(", updateTime=").append(updateTime);
-        sb.append(", years='").append(years).append('\'');
+        sb.append(", year=").append(year);
         sb.append(", school='").append(school).append('\'');
         sb.append('}');
         return sb.toString();
