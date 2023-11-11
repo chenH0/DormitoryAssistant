@@ -85,6 +85,11 @@ export default defineComponent({
     });
     let loading = ref(false);
     const columns = [
+      {
+        title: 'ID',
+        dataIndex: 'memberId',
+        key: 'memberId',
+      },
     {
       title: '姓名',
       dataIndex: 'name',
@@ -119,7 +124,12 @@ export default defineComponent({
       title: '修改时间',
       dataIndex: 'updateTime',
       key: 'updateTime',
-    }
+    },
+      {
+        title: '状态',
+        dataIndex: 'status',
+        key: 'status',
+      }
     ];
 
     const onAdd = () => {

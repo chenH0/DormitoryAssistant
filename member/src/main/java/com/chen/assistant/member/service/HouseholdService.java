@@ -37,6 +37,7 @@ public class HouseholdService {
 
     public PageResp<HouseholdResp> show(HouseholdQueryReq req) {
         HouseholdExample householdExample = new HouseholdExample();
+        householdExample.setOrderByClause("member_id desc");
         householdExample.createCriteria().andMemberIdEqualTo(req.getMemberId());
         PageHelper.startPage(req.getPage(), req.getSize());
         List<Household> households = householdMapper.selectByExample(householdExample);

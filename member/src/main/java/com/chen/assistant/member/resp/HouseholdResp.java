@@ -1,11 +1,14 @@
 package com.chen.assistant.member.resp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.Date;
 
 public class HouseholdResp {
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long memberId;
 
     private String name;
@@ -32,6 +35,16 @@ public class HouseholdResp {
     private String years;
 
     private String school;
+
+    private Integer status;
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     public Date getCreateTime() {
         return createTime;
@@ -109,6 +122,7 @@ public class HouseholdResp {
         sb.append(", updateTime=").append(updateTime);
         sb.append(", years='").append(years).append('\'');
         sb.append(", school='").append(school).append('\'');
+        sb.append(", status=").append(status);
         sb.append('}');
         return sb.toString();
     }
