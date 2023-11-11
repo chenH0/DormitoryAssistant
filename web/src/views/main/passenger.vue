@@ -40,7 +40,7 @@
       <a-form-item label="学号">
         <a-input v-model:value="passenger.idCard" />
       </a-form-item>
-      <a-form-item label="年级">
+      <a-form-item label="培养类型">
         <a-select v-model:value="passenger.type">
           <a-select-option v-for="item in PASSENGER_TYPE_ARRAY" :key="item.code" :value="item.code">
             {{item.desc}}
@@ -52,9 +52,6 @@
       </a-form-item>
       <a-form-item label="学院">
         <a-input v-model:value="passenger.school" />
-      </a-form-item>
-      <a-form-item label="宿舍">
-        <a-input v-model:value="passenger.Room" />
       </a-form-item>
     </a-form>
   </a-modal>
@@ -94,18 +91,34 @@ export default defineComponent({
       key: 'name',
     },
     {
-      title: '身份证',
+      title: '学号',
       dataIndex: 'idCard',
       key: 'idCard',
     },
     {
-      title: '旅客类型',
+      title: '培养类型',
       dataIndex: 'type',
       key: 'type',
     },
+      {
+        title: '年级',
+        dataIndex: 'years',
+        key: 'years',
+      },
+      {
+        title: '学院',
+        dataIndex: 'school',
+        key: 'school',
+      },
+      {
+        title: '分配宿舍',
+        dataIndex: 'room',
+        key: 'room',
+      },
     {
-      title: '操作',
-      dataIndex: 'operation'
+      title: '修改时间',
+      dataIndex: 'updateTime',
+      key: 'updateTime',
     }
     ];
 
@@ -120,7 +133,7 @@ export default defineComponent({
     };
 
     const onDelete = (record) => {
-      axios.delete("/member/passenger/delete/" + record.id).then((response) => {
+      axios.delete("/member/household/delete/" + record.id).then((response) => {
         const data = response.data;
         if (data.success) {
           notification.success({description: "删除成功！"});
@@ -135,7 +148,7 @@ export default defineComponent({
     };
 
     const handleOk = () => {
-      axios.post("/member/passenger/save", passenger.value).then((response) => {
+      axios.post("/member/household/save", passenger.value).then((response) => {
         let data = response.data;
         if (data.success) {
           notification.success({description: "保存成功！"});
@@ -158,7 +171,7 @@ export default defineComponent({
         };
       }
       loading.value = true;
-      axios.get("/member/passenger/query-list", {
+      axios.get("/member/household/query-list", {
         params: {
           page: param.page,
           size: param.size

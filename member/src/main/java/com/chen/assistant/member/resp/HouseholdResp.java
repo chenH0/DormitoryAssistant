@@ -14,6 +14,16 @@ public class HouseholdResp {
 
     private String type;
 
+    private String room;
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
+    }
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -94,6 +104,7 @@ public class HouseholdResp {
         sb.append(", name='").append(name).append('\'');
         sb.append(", idCard='").append(idCard).append('\'');
         sb.append(", type='").append(type).append('\'');
+        sb.append(", room='").append(room).append('\'');
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", years='").append(years).append('\'');
