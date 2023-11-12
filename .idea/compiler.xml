@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="member" />
         <module name="generator" />
+        <module name="business" />
         <module name="commom" />
         <module name="Gateway" />
       </profile>
@@ -17,6 +18,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="DormitoryAssistant" options="" />
       <module name="Gateway" options="-parameters" />
+      <module name="business" options="-parameters" />
       <module name="commom" options="-parameters" />
       <module name="generator" options="-parameters" />
       <module name="member" options="-parameters" />
