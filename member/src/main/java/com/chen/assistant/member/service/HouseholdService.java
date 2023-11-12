@@ -8,6 +8,7 @@ import com.chen.assistant.common.resp.PageResp;
 import com.chen.assistant.common.util.SnowUtil;
 import com.chen.assistant.member.domain.Household;
 import com.chen.assistant.member.domain.HouseholdExample;
+import com.chen.assistant.member.enums.HouseholdStatusEnum;
 import com.chen.assistant.member.mapper.HouseholdMapper;
 import com.chen.assistant.member.req.HouseholdQueryReq;
 import com.chen.assistant.member.req.HouseholdSaveReq;
@@ -31,6 +32,9 @@ public class HouseholdService {
         Household household = BeanUtil.copyProperties(req, Household.class);
         household.setMemberId(LoginMemberContext.getId());
         household.setUpdateTime(now);
+        if(true){
+            household.setStatus(1); // 自动审核通过
+        }
         householdMapper.updateByPrimaryKeySelective(household);
     }
 

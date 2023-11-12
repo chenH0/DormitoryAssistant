@@ -80,7 +80,7 @@ public class HouseholdSaveReq {
         sb.append(", idCard='").append(idCard).append('\'');
         sb.append(", type='").append(type).append('\'');
         sb.append(", updateTime=").append(updateTime);
-        sb.append(", year=").append(year);
+        sb.append(", year='").append(year).append('\'');
         sb.append(", school='").append(school).append('\'');
         sb.append('}');
         return sb.toString();

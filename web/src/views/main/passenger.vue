@@ -2,7 +2,7 @@
   <p>
     <a-space>
       <a-button type="primary" @click="handleQuery()">刷新</a-button>
-      <a-button type="primary" @click="onAdd">编辑</a-button>
+      <a-button type="primary" @click="onAdd">修改</a-button>
     </a-space>
   </p>
   <a-table :dataSource="passengers"
@@ -29,9 +29,19 @@
           </span>
         </span>
       </template>
+      <template v-else-if="column.dataIndex === 'status'">
+        <span v-for="item in STATUS_TYPE_ARRAY" :key="item.code">
+          <span v-if="item.code === record.status && record.status===1" style="color: deepskyblue">
+            {{item.desc}}
+          </span>
+          <span v-else-if="item.code === record.status && record.status===0" style="color: red">
+            {{item.desc}}
+          </span>
+        </span>
+      </template>
     </template>
   </a-table>
-  <a-modal v-model:visible="visible" title="信息确认" @ok="handleOk"
+  <a-modal v-model:visible="visible" title="个人信息修改" @ok="handleOk"
            ok-text="确认" cancel-text="取消">
     <a-form :model="passenger" :label-col="{span: 4}" :wrapper-col="{ span: 20 }">
       <a-form-item label="姓名">
@@ -48,7 +58,7 @@
         </a-select>
       </a-form-item>
       <a-form-item label="入学年份">
-        <a-input v-model:value="passenger.years" />
+        <a-input v-model:value="passenger.year" />
       </a-form-item>
       <a-form-item label="学院">
         <a-input v-model:value="passenger.school" />
@@ -66,13 +76,16 @@ export default defineComponent({
   name: "passenger-view",
   setup() {
     const PASSENGER_TYPE_ARRAY = window.PASSENGER_TYPE_ARRAY;
+    const STATUS_TYPE_ARRAY = window.STATUS_TYPE_ARRAY;
     const visible = ref(false);
     let passenger = ref({
-      id: undefined,
       memberId: undefined,
       name: undefined,
       idCard: undefined,
       type: undefined,
+      year: undefined,
+      school: undefined,
+      room: undefined,
       createTime: undefined,
       updateTime: undefined,
     });
@@ -90,21 +103,21 @@ export default defineComponent({
         dataIndex: 'memberId',
         key: 'memberId',
       },
-    {
-      title: '姓名',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: '学号',
-      dataIndex: 'idCard',
-      key: 'idCard',
-    },
-    {
-      title: '培养类型',
-      dataIndex: 'type',
-      key: 'type',
-    },
+      {
+        title: '姓名',
+        dataIndex: 'name',
+        key: 'name',
+      },
+      {
+        title: '学号',
+        dataIndex: 'idCard',
+        key: 'idCard',
+      },
+      {
+        title: '培养类型',
+        dataIndex: 'type',
+        key: 'type',
+      },
       {
         title: '年级',
         dataIndex: 'year',
@@ -120,13 +133,13 @@ export default defineComponent({
         dataIndex: 'room',
         key: 'room',
       },
-    {
-      title: '修改时间',
-      dataIndex: 'updateTime',
-      key: 'updateTime',
-    },
       {
-        title: '状态',
+        title: '最后修改时间',
+        dataIndex: 'updateTime',
+        key: 'updateTime',
+      },
+      {
+        title: '审核状态',
         dataIndex: 'status',
         key: 'status',
       }
@@ -162,6 +175,7 @@ export default defineComponent({
         let data = response.data;
         if (data.success) {
           notification.success({description: "保存成功！"});
+          notification.success({description: "审核自动通过！"});
           visible.value = false;
           handleQuery({
             page: pagination.value.current,
@@ -217,6 +231,7 @@ export default defineComponent({
 
     return {
       PASSENGER_TYPE_ARRAY,
+      STATUS_TYPE_ARRAY,
       passenger,
       visible,
       passengers,
