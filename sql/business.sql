@@ -1,14 +1,14 @@
-drop table if exists `station`;
-create table `station` (
+drop table if exists `parti`;
+create table `parti` (
   `id` bigint not null comment 'id',
-  `name` varchar(20) not null comment '站名',
-  `name_pinyin` varchar(50) not null comment '站名拼音',
-  `name_py` varchar(50) not null comment '站名拼音首字母',
+  `name` varchar(20) not null comment '宿舍分区名',
+  `name_pinyin` varchar(50) not null comment '分区拼音',
+  `name_py` varchar(50) not null comment '分区拼音首字母',
   `create_time` datetime(3) comment '新增时间',
   `update_time` datetime(3) comment '修改时间',
   primary key (`id`),
   unique key `name_unique` (`name`)
-) engine=innodb default charset=utf8mb4 comment='车站';
+) engine=innodb default charset=utf8mb4 comment='宿舍';
 
 drop table if exists `train`;
 create table `train` (

@@ -20,7 +20,7 @@
         <template #title>
           <span>
             <UnorderedListOutlined />
-            会员管理
+            宿舍分区管理
           </span>
         </template>
         <a-menu-item key="/member/ticket">

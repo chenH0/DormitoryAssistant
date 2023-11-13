@@ -23,22 +23,22 @@
 
         <!-- 配置数据源，需要根据自己的项目修改 -->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://rm-bp17b22410ct7b7n8go.mysql.rds.aliyuncs.com/assistant_business?serverTimezone=Asia/Shanghai"
-                        userId="assistant_business"
+                        connectionURL="jdbc:mysql://rm-bp17b22410ct7b7n8go.mysql.rds.aliyuncs.com/assistant_member?serverTimezone=Asia/Shanghai"
+                        userId="assistant_member"
                         password="990873929Ch">
         </jdbcConnection>
 
         <!-- domain类的位置 targetProject是相对pom.xml的路径-->
-        <javaModelGenerator targetProject="../business/src/main/java"
-                            targetPackage="com.chen.assistant.business.domain"/>
+        <javaModelGenerator targetProject="../member/src/main/java"
+                            targetPackage="com.chen.assistant.member.domain"/>
 
         <!-- mapper xml的位置 targetProject是相对pom.xml的路径 -->
-        <sqlMapGenerator targetProject="../business/src/main/resources"
+        <sqlMapGenerator targetProject="../member/src/main/resources"
                          targetPackage="mapper"/>
 
         <!-- mapper类的位置 targetProject是相对pom.xml的路径 -->
-        <javaClientGenerator targetProject="../business/src/main/java"
-                             targetPackage="com.chen.assistant.business.mapper"
+        <javaClientGenerator targetProject="../member/src/main/java"
+                             targetPackage="com.chen.assistant.member.mapper"
                              type="XMLMAPPER"/>
 
         <!--<table tableName="station" domainObjectName="Station"/>-->
@@ -53,6 +53,6 @@
         <!--<table tableName="daily_train_ticket" domainObjectName="DailyTrainTicket"/>-->
         <!--<table tableName="confirm_order" domainObjectName="ConfirmOrder"/>-->
         <!--<table tableName="member" domainObjectName="Member"/>-->
-        <table tableName="parti" domainObjectName="Parti"/>
+        <table tableName="household" domainObjectName="Household"/>
     </context>
 </generatorConfiguration>

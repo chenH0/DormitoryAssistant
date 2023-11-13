@@ -5,7 +5,7 @@
       <a-button type="primary" @click="onAdd">新增</a-button>
     </a-space>
   </p>
-  <a-table :dataSource="stations"
+  <a-table :dataSource="partis"
            :columns="columns"
            :pagination="pagination"
            @change="handleTableChange"
@@ -24,33 +24,32 @@
       </template>
     </template>
   </a-table>
-  <a-modal v-model:visible="visible" title="宿舍楼" @ok="handleOk"
+  <a-modal v-model:visible="visible" title="宿舍" @ok="handleOk"
            ok-text="确认" cancel-text="取消">
-    <a-form :model="station" :label-col="{span: 4}" :wrapper-col="{ span: 20 }">
-      <a-form-item label="楼号">
-        <a-input v-model:value="station.name" />
+    <a-form :model="parti" :label-col="{span: 4}" :wrapper-col="{ span: 20 }">
+      <a-form-item label="宿舍分区名">
+        <a-input v-model:value="parti.name" />
       </a-form-item>
-      <a-form-item label="楼号拼音">
-        <a-input v-model:value="station.namePinyin" disabled/>
+      <a-form-item label="分区拼音">
+        <a-input v-model:value="parti.namePinyin" />
       </a-form-item>
-      <a-form-item label="拼音首字母">
-        <a-input v-model:value="station.namePy" disabled/>
+      <a-form-item label="分区拼音首字母">
+        <a-input v-model:value="parti.namePy" />
       </a-form-item>
     </a-form>
   </a-modal>
 </template>
 
 <script>
-import { defineComponent, ref, onMounted, watch } from 'vue';
+import { defineComponent, ref, onMounted } from 'vue';
 import {notification} from "ant-design-vue";
 import axios from "axios";
-import {pinyin} from "pinyin-pro";
 
 export default defineComponent({
-  name: "station-view",
+  name: "parti-view",
   setup() {
     const visible = ref(false);
-    let station = ref({
+    let parti = ref({
       id: undefined,
       name: undefined,
       namePinyin: undefined,
@@ -58,7 +57,7 @@ export default defineComponent({
       createTime: undefined,
       updateTime: undefined,
     });
-    const stations = ref([]);
+    const partis = ref([]);
     // 分页的三个属性名是固定的
     const pagination = ref({
       total: 0,
@@ -68,17 +67,17 @@ export default defineComponent({
     let loading = ref(false);
     const columns = [
     {
-      title: '楼号',
+      title: '宿舍分区名',
       dataIndex: 'name',
       key: 'name',
     },
     {
-      title: '楼号名拼音',
+      title: '分区拼音',
       dataIndex: 'namePinyin',
       key: 'namePinyin',
     },
     {
-      title: '楼号拼音首字母',
+      title: '分区拼音首字母',
       dataIndex: 'namePy',
       key: 'namePy',
     },
@@ -88,24 +87,13 @@ export default defineComponent({
     }
     ];
 
-    // http://pinyin-pro.cn/
-    watch(() => station.value.name, ()=>{
-      if (Tool.isNotEmpty(station.value.name)) {
-        station.value.namePinyin = pinyin(station.value.name, { toneType: 'none'}).replaceAll(" ", "");
-        station.value.namePy = pinyin(station.value.name, { pattern: 'first', toneType: 'none'}).replaceAll(" ", "");
-      } else {
-        station.value.namePinyin = "";
-        station.value.namePy = "";
-      }
-    }, {immediate: true});
-
     const onAdd = () => {
-      station.value = {};
+      parti.value = {};
       visible.value = true;
     };
 
     const onEdit = (record) => {
-      station.value = window.Tool.copy(record);
+      parti.value = window.Tool.copy(record);
       visible.value = true;
     };
 
@@ -125,7 +113,7 @@ export default defineComponent({
     };
 
     const handleOk = () => {
-      axios.post("/business/admin/parti/save", station.value).then((response) => {
+      axios.post("/business/admin/parti/save", parti.value).then((response) => {
         let data = response.data;
         if (data.success) {
           notification.success({description: "保存成功！"});
@@ -157,7 +145,7 @@ export default defineComponent({
         loading.value = false;
         let data = response.data;
         if (data.success) {
-          stations.value = data.content.list;
+          partis.value = data.content.list;
           // 设置分页控件的值
           pagination.value.current = param.page;
           pagination.value.total = data.content.total;
@@ -167,11 +155,12 @@ export default defineComponent({
       });
     };
 
-    const handleTableChange = (pagination) => {
-      // console.log("看看自带的分页参数都有啥：" + pagination);
+    const handleTableChange = (page) => {
+      // console.log("看看自带的分页参数都有啥：" + JSON.stringify(page));
+      pagination.value.pageSize = page.pageSize;
       handleQuery({
-        page: pagination.current,
-        size: pagination.pageSize
+        page: page.current,
+        size: page.pageSize
       });
     };
 
@@ -183,9 +172,9 @@ export default defineComponent({
     });
 
     return {
-      station,
+      parti,
       visible,
-      stations,
+      partis,
       pagination,
       columns,
       handleTableChange,
