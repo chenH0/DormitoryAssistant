@@ -1,7 +1,7 @@
 drop table if exists `parti`;
 create table `parti` (
   `id` bigint not null comment 'id',
-  `name` varchar(20) not null comment '宿舍分区名',
+  `name` varchar(20) not null comment '宿舍楼名',
   `name_pinyin` varchar(50) not null comment '分区拼音',
   `name_py` varchar(50) not null comment '分区拼音首字母',
   `create_time` datetime(3) comment '新增时间',
@@ -10,22 +10,18 @@ create table `parti` (
   unique key `name_unique` (`name`)
 ) engine=innodb default charset=utf8mb4 comment='宿舍';
 
-drop table if exists `train`;
-create table `train` (
+drop table if exists `storys`;
+create table `storys` (
   `id` bigint not null comment 'id',
-  `code` varchar(20) not null comment '车次编号',
-  `type` char(1) not null comment '车次类型|枚举[TrainTypeEnum]',
-  `start` varchar(20) not null comment '始发站',
-  `start_pinyin` varchar(50) not null comment '始发站拼音',
-  `start_time` time not null comment '出发时间',
-  `end` varchar(20) not null comment '终点站',
-  `end_pinyin` varchar(50) not null comment '终点站拼音',
-  `end_time` time not null comment '到站时间',
+  `code` varchar(20) not null comment '宿舍楼层编号',
+  `type` char(1) not null comment '性别|枚举[TrainTypeEnum]',
+  `start` varchar(20) not null comment '宿舍楼名',
+  `start_pinyin` varchar(20) not null comment '宿舍楼名拼音',
   `create_time` datetime(3) comment '新增时间',
   `update_time` datetime(3) comment '修改时间',
   primary key (`id`),
   unique key `code_unique` (`code`)
-) engine=innodb default charset=utf8mb4 comment='车次';
+) engine=innodb default charset=utf8mb4 comment='楼层';
 
 drop table if exists `train_station`;
 create table `train_station` (
