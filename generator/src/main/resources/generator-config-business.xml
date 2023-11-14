@@ -53,6 +53,6 @@
         <!--<table tableName="daily_train_ticket" domainObjectName="DailyTrainTicket"/>-->
         <!--<table tableName="confirm_order" domainObjectName="ConfirmOrder"/>-->
         <!--<table tableName="member" domainObjectName="Member"/>-->
-        <table tableName="storys" domainObjectName="Storys"/>
+        <table tableName="room_carriage" domainObjectName="RoomCarriage"/>
     </context>
 </generatorConfiguration>

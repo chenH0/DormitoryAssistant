@@ -11,7 +11,7 @@ public class PartiQueryResp {
      * id
      */
     @JsonSerialize(using= ToStringSerializer.class)
-    private Long id;
+    private String id;
 
     /**
      * 宿舍分区名
@@ -40,11 +40,11 @@ public class PartiQueryResp {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -90,17 +90,14 @@ public class PartiQueryResp {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", name=").append(name);
-        sb.append(", namePinyin=").append(namePinyin);
-        sb.append(", namePy=").append(namePy);
+        final StringBuffer sb = new StringBuffer("PartiQueryResp{");
+        sb.append("id='").append(id).append('\'');
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", namePinyin='").append(namePinyin).append('\'');
+        sb.append(", namePy='").append(namePy).append('\'');
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
-        sb.append("]");
+        sb.append('}');
         return sb.toString();
     }
 }

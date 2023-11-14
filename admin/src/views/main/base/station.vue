@@ -67,6 +67,11 @@ export default defineComponent({
     });
     let loading = ref(false);
     const columns = [
+      {
+        title: 'ID',
+        dataIndex: 'id',
+        key: 'id',
+      },
     {
       title: '楼号',
       dataIndex: 'name',

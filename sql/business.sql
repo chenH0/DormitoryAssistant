@@ -12,49 +12,31 @@ create table `parti` (
 
 drop table if exists `storys`;
 create table `storys` (
-  `id` bigint not null comment 'id',
+  `id` varchar(20) not null comment 'id',
   `code` varchar(20) not null comment '宿舍楼层编号',
   `type` char(1) not null comment '性别|枚举[TrainTypeEnum]',
-  `start` varchar(20) not null comment '宿舍楼名',
-  `start_pinyin` varchar(20) not null comment '宿舍楼名拼音',
-  `create_time` datetime(3) comment '新增时间',
+  `name` varchar(20) not null comment '宿舍楼名',
+  `floors` char(4) not null comment '宿舍楼层',
+  `name_pinyin` varchar(20) not null comment '宿舍楼名拼音',
   `update_time` datetime(3) comment '修改时间',
+  `status` int comment '状态',
   primary key (`id`),
   unique key `code_unique` (`code`)
 ) engine=innodb default charset=utf8mb4 comment='楼层';
 
-drop table if exists `train_station`;
-create table `train_station` (
+drop table if exists `room_carriage`;
+create table `room_carriage` (
   `id` bigint not null comment 'id',
-  `train_code` varchar(20) not null comment '车次编号',
-  `index` int not null comment '站序',
-  `name` varchar(20) not null comment '站名',
-  `name_pinyin` varchar(50) not null comment '站名拼音',
-  `in_time` time comment '进站时间',
-  `out_time` time comment '出站时间',
-  `stop_time` time comment '停站时长',
-  `km` decimal(8, 2) not null comment '里程（公里）|从上一站到本站的距离',
+  `name` varchar(30) not null comment 'name',
+  `floors_code` varchar(20) not null comment '宿舍楼层编号',
+  `index` int not null comment '宿舍编号',
+  `bed_type` char(3) not null comment '房间类型|枚举[SeatTypeEnum]',
+  `bed_count` int not null comment '床位数',
   `create_time` datetime(3) comment '新增时间',
   `update_time` datetime(3) comment '修改时间',
-  primary key (`id`),
-  unique key `train_code_index_unique` (`train_code`, `index`),
-  unique key `train_code_name_unique` (`train_code`, `name`)
-) engine=innodb default charset=utf8mb4 comment='火车车站';
-
-drop table if exists `train_carriage`;
-create table `train_carriage` (
-  `id` bigint not null comment 'id',
-  `train_code` varchar(20) not null comment '车次编号',
-  `index` int not null comment '厢号',
-  `seat_type` char(1) not null comment '座位类型|枚举[SeatTypeEnum]',
-  `seat_count` int not null comment '座位数',
-  `row_count` int not null comment '排数',
-  `col_count` int not null comment '列数',
-  `create_time` datetime(3) comment '新增时间',
-  `update_time` datetime(3) comment '修改时间',
-  unique key `train_code_index_unique` (`train_code`, `index`),
+  unique key `train_code_index_unique` (`name`),
   primary key (`id`)
-) engine=innodb default charset=utf8mb4 comment='火车车厢';
+) engine=innodb default charset=utf8mb4 comment='楼层宿舍';
 
 drop table if exists `train_seat`;
 create table `train_seat` (
@@ -69,6 +51,24 @@ create table `train_seat` (
   `update_time` datetime(3) comment '修改时间',
   primary key (`id`)
 ) engine=innodb default charset=utf8mb4 comment='座位';
+
+drop table if exists `train_station`;
+create table `train_station` (
+`id` bigint not null comment 'id',
+`train_code` varchar(20) not null comment '车次编号',
+`index` int not null comment '站序',
+`name` varchar(20) not null comment '站名',
+`name_pinyin` varchar(50) not null comment '站名拼音',
+`in_time` time comment '进站时间',
+`out_time` time comment '出站时间',
+`stop_time` time comment '停站时长',
+`km` decimal(8, 2) not null comment '里程（公里）|从上一站到本站的距离',
+`create_time` datetime(3) comment '新增时间',
+`update_time` datetime(3) comment '修改时间',
+primary key (`id`),
+unique key `train_code_index_unique` (`train_code`, `index`),
+unique key `train_code_name_unique` (`train_code`, `name`)
+) engine=innodb default charset=utf8mb4 comment='火车车站';
 
 drop table if exists `daily_train`;
 create table `daily_train` (

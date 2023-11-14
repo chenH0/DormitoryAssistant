@@ -67,4 +67,11 @@ public class PartiService {
     public void delete(Long id) {
         partiMapper.deleteByPrimaryKey(id);
     }
+
+    public List<PartiQueryResp> queryAll() {
+        PartiExample partiExample = new PartiExample();
+        partiExample.setOrderByClause("name asc");
+        List<Parti> partis = partiMapper.selectByExample(partiExample);
+        return BeanUtil.copyToList(partis, PartiQueryResp.class);
+    }
 }

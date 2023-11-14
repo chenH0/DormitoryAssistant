@@ -1,7 +1,7 @@
 <template>
   <a-select v-model:value="name" show-search allowClear
             :filterOption="filterNameOption"
-            @change="onChange" placeholder="请选择车站"
+            @change="onChange" placeholder="请选择宿舍楼"
             :style="'width: ' + localWidth">
     <a-select-option v-for="item in stations" :key="item.name" :value="item.name" :label="item.name + item.namePinyin + item.namePy">
       {{item.name}} {{item.namePinyin}} ~ {{item.namePy}}
@@ -37,7 +37,7 @@ export default defineComponent({
      * 查询所有的车站，用于车站下拉框
      */
     const queryAllStation = () => {
-      axios.get("/business/admin/station/query-all").then((response) => {
+      axios.get("/business/admin/parti/query-all").then((response) => {
         let data = response.data;
         if (data.success) {
           stations.value = data.content;

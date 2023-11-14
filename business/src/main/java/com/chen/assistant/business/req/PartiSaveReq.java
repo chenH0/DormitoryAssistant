@@ -93,17 +93,14 @@ public class PartiSaveReq {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", name=").append(name);
-        sb.append(", namePinyin=").append(namePinyin);
-        sb.append(", namePy=").append(namePy);
+        final StringBuffer sb = new StringBuffer("PartiSaveReq{");
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", namePinyin='").append(namePinyin).append('\'');
+        sb.append(", namePy='").append(namePy).append('\'');
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
-        sb.append("]");
+        sb.append('}');
         return sb.toString();
     }
 }

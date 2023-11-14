@@ -81,22 +81,22 @@
         </template>
         <a-menu-item key="/base/station">
           <router-link to="/base/station">
-            <MenuUnfoldOutlined /> &nbsp; 车站管理
+            <MenuUnfoldOutlined /> &nbsp; 楼号管理
           </router-link>
         </a-menu-item>
         <a-menu-item key="/base/train">
           <router-link to="/base/train">
-            <MenuUnfoldOutlined /> &nbsp; 火车管理
+            <MenuUnfoldOutlined /> &nbsp; 楼层管理
           </router-link>
         </a-menu-item>
-        <a-menu-item key="/base/train-station">
+<!--        <a-menu-item key="/base/train-station">
           <router-link to="/base/train-station">
             <MenuUnfoldOutlined /> &nbsp; 火车车站
           </router-link>
-        </a-menu-item>
+        </a-menu-item>-->
         <a-menu-item key="/base/train-carriage">
           <router-link to="/base/train-carriage">
-            <MenuUnfoldOutlined /> &nbsp; 火车车厢
+            <MenuUnfoldOutlined /> &nbsp; 房间管理
           </router-link>
         </a-menu-item>
         <a-menu-item key="/base/train-seat">

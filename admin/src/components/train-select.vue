@@ -42,7 +42,7 @@ export default defineComponent({
         console.log("queryAllTrain 读取缓存");
         trains.value = list;
       } else {
-        axios.get("/business/admin/train/query-all").then((response) => {
+        axios.get("/business/admin/storys/query-all").then((response) => {
           let data = response.data;
           if (data.success) {
             trains.value = data.content;

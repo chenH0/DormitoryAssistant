@@ -3,6 +3,9 @@ package com.chen.assistant.business.service;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
+import com.chen.assistant.business.domain.Parti;
+import com.chen.assistant.business.domain.PartiExample;
+import com.chen.assistant.business.resp.PartiQueryResp;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.chen.assistant.common.resp.PageResp;
@@ -33,8 +36,9 @@ public class StorysService {
         Storys storys = BeanUtil.copyProperties(req, Storys.class);
         if (ObjectUtil.isNull(storys.getId())) {
             storys.setId(SnowUtil.getSnowflaskNextId());
-            storys.setCreateTime(now);
             storys.setUpdateTime(now);
+            storys.setCode(storys.getName()+"楼-"+storys.getFloors());
+            storys.setStatus(1);
             storysMapper.insert(storys);
         } else {
             storys.setUpdateTime(now);
@@ -66,5 +70,12 @@ public class StorysService {
 
     public void delete(Long id) {
         storysMapper.deleteByPrimaryKey(id);
+    }
+
+    public List<StorysQueryResp> queryAll() {
+        StorysExample storysExample = new StorysExample();
+        storysExample.setOrderByClause("code asc");
+        List<Storys> partis = storysMapper.selectByExample(storysExample);
+        return BeanUtil.copyToList(partis, StorysQueryResp.class);
     }
 }

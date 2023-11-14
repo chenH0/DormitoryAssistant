@@ -9,13 +9,15 @@ public class Storys {
 
     private String type;
 
-    private String start;
+    private String name;
 
-    private String startPinyin;
+    private String floors;
 
-    private Date createTime;
+    private String namePinyin;
 
     private Date updateTime;
+
+    private Integer status;
 
     public Long getId() {
         return id;
@@ -41,28 +43,28 @@ public class Storys {
         this.type = type;
     }
 
-    public String getStart() {
-        return start;
+    public String getName() {
+        return name;
     }
 
-    public void setStart(String start) {
-        this.start = start;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getStartPinyin() {
-        return startPinyin;
+    public String getFloors() {
+        return floors;
     }
 
-    public void setStartPinyin(String startPinyin) {
-        this.startPinyin = startPinyin;
+    public void setFloors(String floors) {
+        this.floors = floors;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public String getNamePinyin() {
+        return namePinyin;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setNamePinyin(String namePinyin) {
+        this.namePinyin = namePinyin;
     }
 
     public Date getUpdateTime() {
@@ -73,20 +75,26 @@ public class Storys {
         this.updateTime = updateTime;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", code=").append(code);
-        sb.append(", type=").append(type);
-        sb.append(", start=").append(start);
-        sb.append(", startPinyin=").append(startPinyin);
-        sb.append(", createTime=").append(createTime);
+        final StringBuffer sb = new StringBuffer("Storys{");
+        sb.append("id=").append(id);
+        sb.append(", code='").append(code).append('\'');
+        sb.append(", type='").append(type).append('\'');
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", floors='").append(floors).append('\'');
+        sb.append(", namePinyin='").append(namePinyin).append('\'');
         sb.append(", updateTime=").append(updateTime);
-        sb.append("]");
+        sb.append(", status=").append(status);
+        sb.append('}');
         return sb.toString();
     }
 }

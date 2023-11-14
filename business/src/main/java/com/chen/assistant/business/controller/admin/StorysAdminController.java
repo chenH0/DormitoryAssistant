@@ -1,5 +1,6 @@
 package com.chen.assistant.business.controller.admin;
 
+import com.chen.assistant.business.resp.PartiQueryResp;
 import com.chen.assistant.common.resp.CommonResp;
 import com.chen.assistant.common.resp.PageResp;
 import com.chen.assistant.business.req.StorysQueryReq;
@@ -9,6 +10,8 @@ import com.chen.assistant.business.service.StorysService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin/storys")
@@ -35,4 +38,9 @@ public class StorysAdminController {
         return new CommonResp<>();
     }
 
+    @GetMapping("/query-all")
+    public CommonResp<List<StorysQueryResp>> queryList() {
+        List<StorysQueryResp> list = storysService.queryAll();
+        return new CommonResp<>(list);
+    }
 }
