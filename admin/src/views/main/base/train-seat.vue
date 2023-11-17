@@ -46,12 +46,10 @@ export default defineComponent({
     const visible = ref(false);
     let trainSeat = ref({
       id: undefined,
-      trainCode: undefined,
-      carriageIndex: undefined,
-      row: undefined,
-      col: undefined,
-      seatType: undefined,
-      carriageSeatIndex: undefined,
+      roomCode: undefined,
+      roomName: undefined,
+      index: undefined,
+      status: undefined,
       createTime: undefined,
       updateTime: undefined,
     });
@@ -68,35 +66,25 @@ export default defineComponent({
     });
     const columns = [
     {
-      title: '车次编号',
+      title: '宿舍编号',
       dataIndex: 'trainCode',
       key: 'trainCode',
     },
     {
-      title: '厢序',
-      dataIndex: 'carriageIndex',
-      key: 'carriageIndex',
+      title: '宿舍名',
+      dataIndex: 'roomName',
+      key: 'roomName',
     },
     {
-      title: '排号',
-      dataIndex: 'row',
-      key: 'row',
+      title: '座位号',
+      dataIndex: 'index',
+      key: 'index',
     },
     {
-      title: '列号',
-      dataIndex: 'col',
-      key: 'col',
-    },
-    {
-      title: '座位类型',
-      dataIndex: 'seatType',
-      key: 'seatType',
-    },
-    {
-      title: '同车厢座序',
-      dataIndex: 'carriageSeatIndex',
-      key: 'carriageSeatIndex',
-    },
+      title: '状态',
+      dataIndex: 'status',
+      key: 'status',
+    }
     ];
 
 
@@ -108,7 +96,7 @@ export default defineComponent({
         };
       }
       loading.value = true;
-      axios.get("/business/admin/train-seat/query-list", {
+      axios.get("/business/admin/bed-seat/query-list", {
         params: {
           page: param.page,
           size: param.size,

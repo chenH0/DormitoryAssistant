@@ -16,7 +16,7 @@
           <user-outlined /> &nbsp; 关于
         </router-link>
       </a-menu-item>
-      <a-sub-menu key="member">
+<!--      <a-sub-menu key="member">
         <template #title>
           <span>
             <UnorderedListOutlined />
@@ -28,7 +28,7 @@
             <MenuUnfoldOutlined /> 会员车票
           </router-link>
         </a-menu-item>
-      </a-sub-menu>
+      </a-sub-menu>-->
       <a-sub-menu key="business">
         <template #title>
           <span>
@@ -48,27 +48,27 @@
         </a-menu-item>
         <a-menu-item key="/business/daily-train-ticket">
           <router-link to="/business/daily-train-ticket">
-            <MenuUnfoldOutlined /> &nbsp; 余票信息
+            <MenuUnfoldOutlined /> &nbsp; 剩余床位
           </router-link>
         </a-menu-item>
         <a-menu-item key="/business/daily-train">
           <router-link to="/business/daily-train">
-            <MenuUnfoldOutlined /> &nbsp; 每日车次
+            <MenuUnfoldOutlined /> &nbsp; 每日楼栋
           </router-link>
         </a-menu-item>
         <a-menu-item key="/business/daily-train-station">
           <router-link to="/business/daily-train-station">
-            <MenuUnfoldOutlined /> &nbsp; 每日车站
+            <MenuUnfoldOutlined /> &nbsp; 每日楼层
           </router-link>
         </a-menu-item>
         <a-menu-item key="/business/daily-train-carriage">
           <router-link to="/business/daily-train-carriage">
-            <MenuUnfoldOutlined /> &nbsp; 每日车厢
+            <MenuUnfoldOutlined /> &nbsp; 每日宿舍
           </router-link>
         </a-menu-item>
         <a-menu-item key="/business/daily-train-seat">
           <router-link to="/business/daily-train-seat">
-            <MenuUnfoldOutlined /> &nbsp; 每日座位
+            <MenuUnfoldOutlined /> &nbsp; 每日床位
           </router-link>
         </a-menu-item>
       </a-sub-menu>
@@ -101,7 +101,7 @@
         </a-menu-item>
         <a-menu-item key="/base/train-seat">
           <router-link to="/base/train-seat">
-            <MenuUnfoldOutlined /> &nbsp; 火车座位
+            <MenuUnfoldOutlined /> &nbsp; 房间床位
           </router-link>
         </a-menu-item>
       </a-sub-menu>

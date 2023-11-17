@@ -38,15 +38,13 @@ create table `room_carriage` (
   primary key (`id`)
 ) engine=innodb default charset=utf8mb4 comment='楼层宿舍';
 
-drop table if exists `train_seat`;
-create table `train_seat` (
+drop table if exists `bed_seat`;
+create table `bed_seat` (
   `id` bigint not null comment 'id',
-  `train_code` varchar(20) not null comment '车次编号',
-  `carriage_index` int not null comment '厢序',
-  `row` char(2) not null comment '排号|01, 02',
-  `col` char(1) not null comment '列号|枚举[SeatColEnum]',
-  `seat_type` char(1) not null comment '座位类型|枚举[SeatTypeEnum]',
-  `carriage_seat_index` int not null comment '同车厢座序',
+  `room_code` bigint not null comment '宿舍编号',
+  `room_name` varchar(20) not null comment '宿舍名',
+  `index` char(2) not null comment '座位号|01, 02|03|04',
+  `status` int not null comment '状态|枚举[0未占用，1已占用]',
   `create_time` datetime(3) comment '新增时间',
   `update_time` datetime(3) comment '修改时间',
   primary key (`id`)
@@ -55,6 +53,7 @@ create table `train_seat` (
 drop table if exists `train_station`;
 create table `train_station` (
 `id` bigint not null comment 'id',
+`train_id` varchar(20) not null comment '车次编号',
 `train_code` varchar(20) not null comment '车次编号',
 `index` int not null comment '站序',
 `name` varchar(20) not null comment '站名',

@@ -1,12 +1,11 @@
 <template>
   <p>
     <a-space>
-      <train-select-view v-model="params.trainCode" width="200px"></train-select-view>
-      <a-button type="primary" @click="handleQuery()">查找</a-button>
+      <a-button type="primary" @click="handleQuery()">刷新</a-button>
       <a-button type="primary" @click="onAdd">新增</a-button>
     </a-space>
   </p>
-  <a-table :dataSource="trainCarriages"
+  <a-table :dataSource="bedSeats"
            :columns="columns"
            :pagination="pagination"
            @change="handleTableChange"
@@ -23,33 +22,33 @@
           <a @click="onEdit(record)">编辑</a>
         </a-space>
       </template>
-      <template v-else-if="column.dataIndex === 'bedType'">
-        <span v-for="item in SEAT_TYPE_ARRAY" :key="item.code">
-          <span v-if="item.code === record.bedType">
+      <template v-else-if="column.dataIndex === 'status'">
+        <span v-for="item in 0未占用，1已占用_ARRAY" :key="item.code">
+          <span v-if="item.code === record.status">
             {{item.desc}}
           </span>
         </span>
       </template>
     </template>
   </a-table>
-  <a-modal v-model:visible="visible" title="房间设置" @ok="handleOk"
+  <a-modal v-model:visible="visible" title="座位" @ok="handleOk"
            ok-text="确认" cancel-text="取消">
-    <a-form :model="trainCarriage" :label-col="{span: 4}" :wrapper-col="{ span: 20 }">
-      <a-form-item label="楼层编号">
-        <train-select-view v-model="trainCarriage.floorsCode"></train-select-view>
+    <a-form :model="bedSeat" :label-col="{span: 4}" :wrapper-col="{ span: 20 }">
+      <a-form-item label="宿舍编号">
+        <a-input v-model:value="bedSeat.roomCode" />
       </a-form-item>
-      <a-form-item label="房间序号">
-        <a-input v-model:value="trainCarriage.index" placeholder="请输入三位数门牌号"/>
+      <a-form-item label="宿舍名">
+        <a-input v-model:value="bedSeat.roomName" />
       </a-form-item>
-      <a-form-item label="房间类型">
-        <a-select v-model:value="trainCarriage.bedType">
-          <a-select-option v-for="item in SEAT_TYPE_ARRAY" :key="item.code" :value="item.code">
+      <a-form-item label="排号">
+        <a-input v-model:value="bedSeat.index" />
+      </a-form-item>
+      <a-form-item label="状态">
+        <a-select v-model:value="bedSeat.status">
+          <a-select-option v-for="item in 0未占用，1已占用_ARRAY" :key="item.code" :value="item.code">
             {{item.desc}}
           </a-select-option>
         </a-select>
-      </a-form-item>
-      <a-form-item label="床位数">
-        <a-input v-model:value="trainCarriage.bedCount"/>
       </a-form-item>
     </a-form>
   </a-modal>
@@ -59,25 +58,22 @@
 import { defineComponent, ref, onMounted } from 'vue';
 import {notification} from "ant-design-vue";
 import axios from "axios";
-import TrainSelectView from "@/components/train-select";
 
 export default defineComponent({
-  name: "train-carriage-view",
-  components: {TrainSelectView},
+  name: "bed-seat-view",
   setup() {
-    const SEAT_TYPE_ARRAY = window.SEAT_TYPE_ARRAY;
+    const 0未占用，1已占用_ARRAY = window.0未占用，1已占用_ARRAY;
     const visible = ref(false);
-    let trainCarriage = ref({
+    let bedSeat = ref({
       id: undefined,
-      name: undefined,
-      floorsCode: undefined,
+      roomCode: undefined,
+      roomName: undefined,
       index: undefined,
-      bedType: undefined,
-      bedCount: undefined,
+      status: undefined,
       createTime: undefined,
       updateTime: undefined,
     });
-    const trainCarriages = ref([]);
+    const bedSeats = ref([]);
     // 分页的三个属性名是固定的
     const pagination = ref({
       total: 0,
@@ -85,35 +81,27 @@ export default defineComponent({
       pageSize: 10,
     });
     let loading = ref(false);
-    let params = ref({
-      trainCode: null
-    });
     const columns = [
     {
-      title: '房间名',
-      dataIndex: 'name',
-      key: 'name',
+      title: '宿舍编号',
+      dataIndex: 'roomCode',
+      key: 'roomCode',
     },
     {
-      title: '房间类型',
-      dataIndex: 'bedType',
-      key: 'bedType',
+      title: '宿舍名',
+      dataIndex: 'roomName',
+      key: 'roomName',
     },
     {
-      title: '床位数',
-      dataIndex: 'bedCount',
-      key: 'bedCount',
+      title: '排号',
+      dataIndex: 'index',
+      key: 'index',
     },
-      {
-        title: '宿舍楼层编号',
-        dataIndex: 'floorsCode',
-        key: 'floorsCode',
-      },
-      {
-        title: '宿舍编号',
-        dataIndex: 'index',
-        key: 'index',
-      },
+    {
+      title: '状态',
+      dataIndex: 'status',
+      key: 'status',
+    },
     {
       title: '操作',
       dataIndex: 'operation'
@@ -121,17 +109,17 @@ export default defineComponent({
     ];
 
     const onAdd = () => {
-      trainCarriage.value = {};
+      bedSeat.value = {};
       visible.value = true;
     };
 
     const onEdit = (record) => {
-      trainCarriage.value = window.Tool.copy(record);
+      bedSeat.value = window.Tool.copy(record);
       visible.value = true;
     };
 
     const onDelete = (record) => {
-      axios.delete("/business/admin/room-carriage/delete/" + record.id).then((response) => {
+      axios.delete("/business/admin/bed-seat/delete/" + record.id).then((response) => {
         const data = response.data;
         if (data.success) {
           notification.success({description: "删除成功！"});
@@ -146,7 +134,7 @@ export default defineComponent({
     };
 
     const handleOk = () => {
-      axios.post("/business/admin/room-carriage/save", trainCarriage.value).then((response) => {
+      axios.post("/business/admin/bed-seat/save", bedSeat.value).then((response) => {
         let data = response.data;
         if (data.success) {
           notification.success({description: "保存成功！"});
@@ -169,17 +157,16 @@ export default defineComponent({
         };
       }
       loading.value = true;
-      axios.get("/business/admin/room-carriage/query-list", {
+      axios.get("/business/admin/bed-seat/query-list", {
         params: {
           page: param.page,
-          size: param.size,
-          trainCode: params.value.floorsCode
+          size: param.size
         }
       }).then((response) => {
         loading.value = false;
         let data = response.data;
         if (data.success) {
-          trainCarriages.value = data.content.list;
+          bedSeats.value = data.content.list;
           // 设置分页控件的值
           pagination.value.current = param.page;
           pagination.value.total = data.content.total;
@@ -189,11 +176,12 @@ export default defineComponent({
       });
     };
 
-    const handleTableChange = (pagination) => {
-      // console.log("看看自带的分页参数都有啥：" + pagination);
+    const handleTableChange = (page) => {
+      // console.log("看看自带的分页参数都有啥：" + JSON.stringify(page));
+      pagination.value.pageSize = page.pageSize;
       handleQuery({
-        page: pagination.current,
-        size: pagination.pageSize
+        page: page.current,
+        size: page.pageSize
       });
     };
 
@@ -205,10 +193,10 @@ export default defineComponent({
     });
 
     return {
-      SEAT_TYPE_ARRAY,
-      trainCarriage,
+      0未占用，1已占用_ARRAY,
+      bedSeat,
       visible,
-      trainCarriages,
+      bedSeats,
       pagination,
       columns,
       handleTableChange,
@@ -217,8 +205,7 @@ export default defineComponent({
       onAdd,
       handleOk,
       onEdit,
-      onDelete,
-      params
+      onDelete
     };
   },
 });

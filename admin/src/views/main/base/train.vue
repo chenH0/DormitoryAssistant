@@ -54,7 +54,7 @@
         </a-select>
       </a-form-item>
       <a-form-item label="宿舍楼层">
-        <a-input v-model:value="train.floors"/>
+        <a-input v-model:value="train.floors" placeholder="请输入楼层数字"/>
       </a-form-item>
     </a-form>
   </a-modal>

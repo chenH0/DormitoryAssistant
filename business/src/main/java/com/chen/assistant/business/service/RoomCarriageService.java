@@ -36,7 +36,7 @@ public class RoomCarriageService {
             roomCarriage.setId(SnowUtil.getSnowflaskNextId());
             roomCarriage.setCreateTime(now);
             roomCarriage.setUpdateTime(now);
-            roomCarriage.setName(roomCarriage.getFloorsCode()+"楼"+roomCarriage.getIndex()+ RoomTypeEnum.findEnumByCode(roomCarriage.getBedType()));
+            roomCarriage.setName(roomCarriage.getFloorsCode()+"层"+"-"+roomCarriage.getIndex()+"房"+"-"+RoomTypeEnum.findEnumByCode(roomCarriage.getBedType()));
             roomCarriageMapper.insert(roomCarriage);
         } else {
             roomCarriage.setUpdateTime(now);

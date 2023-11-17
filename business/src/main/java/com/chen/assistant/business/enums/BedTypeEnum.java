@@ -1,22 +1,21 @@
 package com.chen.assistant.business.enums;
 
-public enum RoomTypeEnum {
-    LEFT("0", "左室"),
-    MEDI("1", "中室"),
-    RIGHT("2", "右室");
-    private String code;
+public enum BedTypeEnum {
+    AVAI(1, "未占用"),
+    UNAVAI(1, "已占用");
+    private int code;
     private String desc;
 
-    RoomTypeEnum(String code, String desc) {
+    BedTypeEnum(int code, String desc) {
         this.code = code;
         this.desc = desc;
     }
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 
@@ -28,9 +27,9 @@ public enum RoomTypeEnum {
         this.desc = desc;
     }
 
-    public static String findEnumByCode(String code) {
-        for (RoomTypeEnum statusEnum : RoomTypeEnum.values()) {
-            if (statusEnum.getCode().equals(code)) {
+    public static String findEnumByCode(int code) {
+        for (BedTypeEnum statusEnum : BedTypeEnum.values()) {
+            if (statusEnum.getCode()==code) {
                 //如果需要直接返回name则更改返回类型为String,return statusEnum.name;
                 return statusEnum.desc;
             }
