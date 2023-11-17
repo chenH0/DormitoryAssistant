@@ -44,7 +44,7 @@ public class PartiService {
 
     public PageResp<PartiQueryResp> queryList(PartiQueryReq req) {
         PartiExample partiExample = new PartiExample();
-        partiExample.setOrderByClause("id desc");
+        partiExample.setOrderByClause("name asc");
         PartiExample.Criteria criteria = partiExample.createCriteria();
 
         LOG.info("查询页码：{}", req.getPage());

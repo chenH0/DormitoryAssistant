@@ -46,8 +46,11 @@ public class RoomCarriageService {
 
     public PageResp<RoomCarriageQueryResp> queryList(RoomCarriageQueryReq req) {
         RoomCarriageExample roomCarriageExample = new RoomCarriageExample();
-        roomCarriageExample.setOrderByClause("id desc");
+        roomCarriageExample.setOrderByClause("floors_code asc, 'index' asc, bed_type asc");
         RoomCarriageExample.Criteria criteria = roomCarriageExample.createCriteria();
+        if(ObjectUtil.isNotNull(req.getFloorCode())){
+            criteria.andFloorsCodeEqualTo(req.getFloorCode());
+        }
 
         LOG.info("查询页码：{}", req.getPage());
         LOG.info("每页条数：{}", req.getSize());
