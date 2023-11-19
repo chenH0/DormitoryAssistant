@@ -1,5 +1,6 @@
 package com.chen.assistant.business.controller.admin;
 
+import com.chen.assistant.business.domain.Storys;
 import com.chen.assistant.business.resp.PartiQueryResp;
 import com.chen.assistant.common.resp.CommonResp;
 import com.chen.assistant.common.resp.PageResp;
@@ -42,5 +43,10 @@ public class StorysAdminController {
     public CommonResp<List<StorysQueryResp>> queryList() {
         List<StorysQueryResp> list = storysService.queryAll();
         return new CommonResp<>(list);
+    }
+
+    @GetMapping("/selectBy-floorCode")
+    public Storys selectByFloorCode(String floorCode){
+        return storysService.selectByFloorCode(floorCode);
     }
 }

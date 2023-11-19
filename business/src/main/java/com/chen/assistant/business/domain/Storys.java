@@ -9,6 +9,8 @@ public class Storys {
 
     private String type;
 
+    private Integer total;
+
     private String name;
 
     private String floors;
@@ -41,6 +43,14 @@ public class Storys {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
     }
 
     public String getName() {
@@ -85,16 +95,20 @@ public class Storys {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("Storys{");
-        sb.append("id=").append(id);
-        sb.append(", code='").append(code).append('\'');
-        sb.append(", type='").append(type).append('\'');
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", floors='").append(floors).append('\'');
-        sb.append(", namePinyin='").append(namePinyin).append('\'');
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", code=").append(code);
+        sb.append(", type=").append(type);
+        sb.append(", total=").append(total);
+        sb.append(", name=").append(name);
+        sb.append(", floors=").append(floors);
+        sb.append(", namePinyin=").append(namePinyin);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", status=").append(status);
-        sb.append('}');
+        sb.append("]");
         return sb.toString();
     }
 }

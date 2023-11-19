@@ -5,6 +5,8 @@ import java.util.Date;
 public class BedSeat {
     private Long id;
 
+    private String floorsCode;
+
     private Long roomCode;
 
     private String roomName;
@@ -23,6 +25,14 @@ public class BedSeat {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getFloorsCode() {
+        return floorsCode;
+    }
+
+    public void setFloorsCode(String floorsCode) {
+        this.floorsCode = floorsCode;
     }
 
     public Long getRoomCode() {
@@ -80,6 +90,7 @@ public class BedSeat {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
+        sb.append(", floorsCode=").append(floorsCode);
         sb.append(", roomCode=").append(roomCode);
         sb.append(", roomName=").append(roomName);
         sb.append(", index=").append(index);

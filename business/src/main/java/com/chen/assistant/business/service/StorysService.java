@@ -78,4 +78,11 @@ public class StorysService {
         List<Storys> partis = storysMapper.selectByExample(storysExample);
         return BeanUtil.copyToList(partis, StorysQueryResp.class);
     }
+
+    public Storys selectByFloorCode(String floorCode){
+        StorysExample storysExample = new StorysExample();
+        StorysExample.Criteria criteria = storysExample.createCriteria();
+        criteria.andCodeEqualTo(floorCode);
+        return storysMapper.selectByExample(storysExample).get(0);
+    }
 }

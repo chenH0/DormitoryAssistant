@@ -1,7 +1,7 @@
 <template>
   <p>
     <a-space>
-      <train-select-view v-model="params.trainCode" width="200px"></train-select-view>
+      <train-select-view v-model="params.roomName" width="200px"></train-select-view>
       <a-button type="primary" @click="handleQuery()">查找</a-button>
     </a-space>
   </p>
@@ -62,13 +62,13 @@ export default defineComponent({
     });
     let loading = ref(false);
     let params = ref({
-      trainCode: null
+      roomName: null
     });
     const columns = [
     {
       title: '宿舍编号',
-      dataIndex: 'trainCode',
-      key: 'trainCode',
+      dataIndex: 'roomName',
+      key: 'roomName',
     },
     {
       title: '宿舍名',
@@ -100,7 +100,7 @@ export default defineComponent({
         params: {
           page: param.page,
           size: param.size,
-          trainCode: params.value.trainCode
+          roomName: params.value.roomName
         }
       }).then((response) => {
         loading.value = false;

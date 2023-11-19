@@ -5,6 +5,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="type" jdbcType="CHAR" property="type" />
+    <result column="total" jdbcType="INTEGER" property="total" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="floors" jdbcType="CHAR" property="floors" />
     <result column="name_pinyin" jdbcType="VARCHAR" property="namePinyin" />
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, code, `type`, `name`, floors, name_pinyin, update_time, `status`
+    id, code, `type`, total, `name`, floors, name_pinyin, update_time, `status`
   </sql>
   <select id="selectByExample" parameterType="com.chen.assistant.business.domain.StorysExample" resultMap="BaseResultMap">
     select
@@ -103,12 +104,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.chen.assistant.business.domain.Storys">
-    insert into storys (id, code, `type`, `name`, 
-      floors, name_pinyin, update_time, 
-      `status`)
-    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{type,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, 
-      #{floors,jdbcType=CHAR}, #{namePinyin,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{status,jdbcType=INTEGER})
+    insert into storys (id, code, `type`, total, 
+      `name`, floors, name_pinyin, 
+      update_time, `status`)
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{type,jdbcType=CHAR}, #{total,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{floors,jdbcType=CHAR}, #{namePinyin,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.chen.assistant.business.domain.Storys">
     insert into storys
@@ -121,6 +122,9 @@
       </if>
       <if test="type != null">
         `type`,
+      </if>
+      <if test="total != null">
+        total,
       </if>
       <if test="name != null">
         `name`,
@@ -147,6 +151,9 @@
       </if>
       <if test="type != null">
         #{type,jdbcType=CHAR},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=INTEGER},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -183,6 +190,9 @@
       <if test="record.type != null">
         `type` = #{record.type,jdbcType=CHAR},
       </if>
+      <if test="record.total != null">
+        total = #{record.total,jdbcType=INTEGER},
+      </if>
       <if test="record.name != null">
         `name` = #{record.name,jdbcType=VARCHAR},
       </if>
@@ -208,6 +218,7 @@
     set id = #{record.id,jdbcType=BIGINT},
       code = #{record.code,jdbcType=VARCHAR},
       `type` = #{record.type,jdbcType=CHAR},
+      total = #{record.total,jdbcType=INTEGER},
       `name` = #{record.name,jdbcType=VARCHAR},
       floors = #{record.floors,jdbcType=CHAR},
       name_pinyin = #{record.namePinyin,jdbcType=VARCHAR},
@@ -225,6 +236,9 @@
       </if>
       <if test="type != null">
         `type` = #{type,jdbcType=CHAR},
+      </if>
+      <if test="total != null">
+        total = #{total,jdbcType=INTEGER},
       </if>
       <if test="name != null">
         `name` = #{name,jdbcType=VARCHAR},
@@ -248,6 +262,7 @@
     update storys
     set code = #{code,jdbcType=VARCHAR},
       `type` = #{type,jdbcType=CHAR},
+      total = #{total,jdbcType=INTEGER},
       `name` = #{name,jdbcType=VARCHAR},
       floors = #{floors,jdbcType=CHAR},
       name_pinyin = #{namePinyin,jdbcType=VARCHAR},

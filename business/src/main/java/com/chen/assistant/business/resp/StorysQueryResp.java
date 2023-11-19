@@ -35,7 +35,17 @@ public class StorysQueryResp {
     @NotBlank(message = "【宿舍楼名拼音】不能为空")
     private String floors;
 
+    private Integer total;
+
     private int status;
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
 
     public Long getId() {
         return id;
@@ -111,6 +121,7 @@ public class StorysQueryResp {
         sb.append(", namePinyin='").append(namePinyin).append('\'');
         sb.append(", updateTime=").append(updateTime);
         sb.append(", floors='").append(floors).append('\'');
+        sb.append(", total=").append(total);
         sb.append(", status=").append(status);
         sb.append('}');
         return sb.toString();

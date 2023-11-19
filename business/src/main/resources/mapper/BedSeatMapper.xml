@@ -3,6 +3,7 @@
 <mapper namespace="com.chen.assistant.business.mapper.BedSeatMapper">
   <resultMap id="BaseResultMap" type="com.chen.assistant.business.domain.BedSeat">
     <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="floors_code" jdbcType="VARCHAR" property="floorsCode" />
     <result column="room_code" jdbcType="BIGINT" property="roomCode" />
     <result column="room_name" jdbcType="VARCHAR" property="roomName" />
     <result column="index" jdbcType="CHAR" property="index" />
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, room_code, room_name, `index`, `status`, create_time, update_time
+    id, floors_code, room_code, room_name, `index`, `status`, create_time, update_time
   </sql>
   <select id="selectByExample" parameterType="com.chen.assistant.business.domain.BedSeatExample" resultMap="BaseResultMap">
     select
@@ -102,18 +103,21 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.chen.assistant.business.domain.BedSeat">
-    insert into bed_seat (id, room_code, room_name, 
-      `index`, `status`, create_time, 
-      update_time)
-    values (#{id,jdbcType=BIGINT}, #{roomCode,jdbcType=BIGINT}, #{roomName,jdbcType=VARCHAR}, 
-      #{index,jdbcType=CHAR}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+    insert into bed_seat (id, floors_code, room_code, 
+      room_name, `index`, `status`, 
+      create_time, update_time)
+    values (#{id,jdbcType=BIGINT}, #{floorsCode,jdbcType=VARCHAR}, #{roomCode,jdbcType=BIGINT}, 
+      #{roomName,jdbcType=VARCHAR}, #{index,jdbcType=CHAR}, #{status,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.chen.assistant.business.domain.BedSeat">
     insert into bed_seat
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="floorsCode != null">
+        floors_code,
       </if>
       <if test="roomCode != null">
         room_code,
@@ -137,6 +141,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=BIGINT},
+      </if>
+      <if test="floorsCode != null">
+        #{floorsCode,jdbcType=VARCHAR},
       </if>
       <if test="roomCode != null">
         #{roomCode,jdbcType=BIGINT},
@@ -170,6 +177,9 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
+      <if test="record.floorsCode != null">
+        floors_code = #{record.floorsCode,jdbcType=VARCHAR},
+      </if>
       <if test="record.roomCode != null">
         room_code = #{record.roomCode,jdbcType=BIGINT},
       </if>
@@ -196,6 +206,7 @@
   <update id="updateByExample" parameterType="map">
     update bed_seat
     set id = #{record.id,jdbcType=BIGINT},
+      floors_code = #{record.floorsCode,jdbcType=VARCHAR},
       room_code = #{record.roomCode,jdbcType=BIGINT},
       room_name = #{record.roomName,jdbcType=VARCHAR},
       `index` = #{record.index,jdbcType=CHAR},
@@ -209,6 +220,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.chen.assistant.business.domain.BedSeat">
     update bed_seat
     <set>
+      <if test="floorsCode != null">
+        floors_code = #{floorsCode,jdbcType=VARCHAR},
+      </if>
       <if test="roomCode != null">
         room_code = #{roomCode,jdbcType=BIGINT},
       </if>
@@ -232,7 +246,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.chen.assistant.business.domain.BedSeat">
     update bed_seat
-    set room_code = #{roomCode,jdbcType=BIGINT},
+    set floors_code = #{floorsCode,jdbcType=VARCHAR},
+      room_code = #{roomCode,jdbcType=BIGINT},
       room_name = #{roomName,jdbcType=VARCHAR},
       `index` = #{index,jdbcType=CHAR},
       `status` = #{status,jdbcType=INTEGER},

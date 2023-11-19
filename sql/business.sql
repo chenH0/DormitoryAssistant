@@ -12,9 +12,10 @@ create table `parti` (
 
 drop table if exists `storys`;
 create table `storys` (
-  `id` varchar(20) not null comment 'id',
+  `id` bigint not null comment 'id',
   `code` varchar(20) not null comment '宿舍楼层编号',
   `type` char(1) not null comment '性别|枚举[TrainTypeEnum]',
+  `total` int not null comment '房间数',
   `name` varchar(20) not null comment '宿舍楼名',
   `floors` char(4) not null comment '宿舍楼层',
   `name_pinyin` varchar(20) not null comment '宿舍楼名拼音',
@@ -41,6 +42,7 @@ create table `room_carriage` (
 drop table if exists `bed_seat`;
 create table `bed_seat` (
   `id` bigint not null comment 'id',
+  `floors_code` varchar(20) not null comment '宿舍楼层编号',
   `room_code` bigint not null comment '宿舍编号',
   `room_name` varchar(20) not null comment '宿舍名',
   `index` char(2) not null comment '座位号|01, 02|03|04',

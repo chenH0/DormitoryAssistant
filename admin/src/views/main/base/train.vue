@@ -21,10 +21,10 @@
           </a-popconfirm>
           <a @click="onEdit(record)">编辑</a>
           <a-popconfirm
-              title="生成座位将删除已有记录，确认生成座位?"
+              title="生成床位将删除已有记录，确认生成床位?"
               @confirm="genSeat(record)"
               ok-text="确认" cancel-text="取消">
-            <a>生成座位</a>
+            <a>生成床位</a>
           </a-popconfirm>
         </a-space>
       </template>
@@ -53,8 +53,11 @@
           </a-select-option>
         </a-select>
       </a-form-item>
+      <a-form-item label="楼层房间数">
+        <a-input v-model:value="train.total" placeholder="请输入楼层房间数"/>
+      </a-form-item>
       <a-form-item label="宿舍楼层">
-        <a-input v-model:value="train.floors" placeholder="请输入楼层数字"/>
+        <a-input v-model:value="train.floors" placeholder="请输入楼层数"/>
       </a-form-item>
     </a-form>
   </a-modal>
@@ -77,6 +80,7 @@ export default defineComponent({
       id: undefined,
       code: undefined,
       type: undefined,
+      total: undefined,
       name: undefined,
       namePinyin: undefined,
       floors: undefined,
@@ -100,16 +104,21 @@ export default defineComponent({
       dataIndex: 'type',
       key: 'type',
     },
-    {
-      title: '所属宿舍楼',
-      dataIndex: 'name',
-      key: 'name',
-    },
+      {
+        title: '楼层房间数量',
+        dataIndex: 'total',
+        key: 'total',
+      },
       {
         title: '宿舍楼层',
         dataIndex: 'floors',
         key: 'floors',
       },
+    {
+      title: '所属宿舍楼',
+      dataIndex: 'name',
+      key: 'name',
+    },
     {
       title: '宿舍楼拼音',
       dataIndex: 'namePinyin',
@@ -224,7 +233,7 @@ export default defineComponent({
 
     const genSeat = (record) => {
       loading.value = true;
-      axios.get("/business/admin/storys/gen-seat/" + record.code).then((response) => {
+      axios.get("/business/admin/bed-seat/gen-seat/" + record.code).then((response) => {
         loading.value = false;
         const data = response.data;
         if (data.success) {

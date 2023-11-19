@@ -36,4 +36,9 @@ public class BedSeatAdminController {
         return new CommonResp<>();
     }
 
+    @GetMapping("/gen-seat/{floorCode}")
+    public CommonResp<Object> genRoomSeat(@PathVariable String floorCode){
+        bedSeatService.genRoomSeat(floorCode);
+        return new CommonResp<>();
+    }
 }

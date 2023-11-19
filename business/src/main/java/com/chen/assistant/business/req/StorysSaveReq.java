@@ -4,6 +4,7 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class StorysSaveReq {
 
@@ -36,6 +37,9 @@ public class StorysSaveReq {
     @NotBlank(message = "【宿舍楼名拼音】不能为空")
     private String namePinyin;
 
+    @NotNull(message = "【楼层房间数量】不能为空")
+    private Integer total;
+
     /**
      * 修改时间
      */
@@ -46,6 +50,14 @@ public class StorysSaveReq {
     private String floors;
 
     private int status;
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
 
     public int getStatus() {
         return status;
@@ -119,6 +131,7 @@ public class StorysSaveReq {
         sb.append(", type='").append(type).append('\'');
         sb.append(", name='").append(name).append('\'');
         sb.append(", namePinyin='").append(namePinyin).append('\'');
+        sb.append(", total=").append(total);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", floors='").append(floors).append('\'');
         sb.append(", status=").append(status);
