@@ -3,6 +3,8 @@ package com.chen.assistant.business.service;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
+import com.chen.assistant.business.domain.Storys;
+import com.chen.assistant.business.domain.StorysExample;
 import com.chen.assistant.business.enums.RoomTypeEnum;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -18,6 +20,7 @@ import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,8 +35,10 @@ public class RoomCarriageService {
     public void save(RoomCarriageSaveReq req) {
         DateTime now = DateTime.now();
         RoomCarriage roomCarriage = BeanUtil.copyProperties(req, RoomCarriage.class);
-        if (ObjectUtil.isNull(roomCarriage.getId())) {
-            roomCarriage.setId(SnowUtil.getSnowflaskNextId());
+        if (ObjectUtil.isNull(roomCarriage.getCreateTime())) {
+            if(ObjectUtil.isNull(roomCarriage.getId())){
+                roomCarriage.setId(SnowUtil.getSnowflaskNextId());
+            }
             roomCarriage.setCreateTime(now);
             roomCarriage.setUpdateTime(now);
             roomCarriage.setName(roomCarriage.getFloorsCode()+"层"+"-"+roomCarriage.getIndex()+"房"+"-"+RoomTypeEnum.findEnumByCode(roomCarriage.getBedType()));
@@ -71,5 +76,12 @@ public class RoomCarriageService {
 
     public void delete(Long id) {
         roomCarriageMapper.deleteByPrimaryKey(id);
+    }
+
+    public RoomCarriage selectByRoomCode(Long id){
+        RoomCarriageExample roomCarriageExample = new RoomCarriageExample();
+        RoomCarriageExample.Criteria criteria = roomCarriageExample.createCriteria();
+        criteria.andIdEqualTo(id);
+        return roomCarriageMapper.selectByExample(roomCarriageExample).get(0);
     }
 }
