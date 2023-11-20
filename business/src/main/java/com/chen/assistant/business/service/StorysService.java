@@ -74,7 +74,7 @@ public class StorysService {
 
     public List<StorysQueryResp> queryAll() {
         StorysExample storysExample = new StorysExample();
-        storysExample.setOrderByClause("code asc");
+        storysExample.setOrderByClause("name asc, floors asc");
         List<Storys> partis = storysMapper.selectByExample(storysExample);
         return BeanUtil.copyToList(partis, StorysQueryResp.class);
     }

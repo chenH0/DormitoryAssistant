@@ -1,7 +1,7 @@
 <template>
   <p>
     <a-space>
-      <train-select-view v-model="params.roomName" width="200px"></train-select-view>
+      <train-select-view v-model="params.floorsCode" width="200px"></train-select-view>
       <a-button type="primary" @click="handleQuery()">查找</a-button>
     </a-space>
   </p>
@@ -47,6 +47,7 @@ export default defineComponent({
     let trainSeat = ref({
       id: undefined,
       roomCode: undefined,
+      floorsCode: undefined,
       roomName: undefined,
       index: undefined,
       status: undefined,
@@ -62,7 +63,7 @@ export default defineComponent({
     });
     let loading = ref(false);
     let params = ref({
-      roomName: null
+      floorsCode: null
     });
     const columns = [
     {
@@ -71,9 +72,9 @@ export default defineComponent({
       key: 'roomName',
     },
     {
-      title: '宿舍名',
-      dataIndex: 'roomName',
-      key: 'roomName',
+      title: '楼层名',
+      dataIndex: 'floorsCode',
+      key: 'floorsCode',
     },
     {
       title: '座位号',
@@ -100,7 +101,7 @@ export default defineComponent({
         params: {
           page: param.page,
           size: param.size,
-          roomName: params.value.roomName
+          floorsCode: params.value.floorsCode
         }
       }).then((response) => {
         loading.value = false;

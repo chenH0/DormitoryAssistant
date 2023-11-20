@@ -33,6 +33,8 @@ public class BedSeatQueryResp {
      */
     private Integer status;
 
+    private String floorsCode;
+
     /**
      * 新增时间
      */
@@ -44,6 +46,14 @@ public class BedSeatQueryResp {
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
+
+    public String getFloorsCode() {
+        return floorsCode;
+    }
+
+    public void setFloorsCode(String floorsCode) {
+        this.floorsCode = floorsCode;
+    }
 
     public Long getId() {
         return id;
@@ -103,18 +113,16 @@ public class BedSeatQueryResp {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
+        final StringBuffer sb = new StringBuffer("BedSeatQueryResp{");
+        sb.append("id=").append(id);
         sb.append(", roomCode=").append(roomCode);
-        sb.append(", roomName=").append(roomName);
-        sb.append(", index=").append(index);
+        sb.append(", roomName='").append(roomName).append('\'');
+        sb.append(", index='").append(index).append('\'');
         sb.append(", status=").append(status);
+        sb.append(", floorsCode='").append(floorsCode).append('\'');
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
-        sb.append("]");
+        sb.append('}');
         return sb.toString();
     }
 }

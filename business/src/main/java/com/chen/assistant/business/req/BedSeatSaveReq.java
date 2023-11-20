@@ -25,6 +25,8 @@ public class BedSeatSaveReq {
     @NotBlank(message = "【宿舍名】不能为空")
     private String roomName;
 
+    private String floorsCode;
+
     /**
      * 排号|01, 02|03|04
      */
@@ -48,6 +50,14 @@ public class BedSeatSaveReq {
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
+
+    public String getFloorsCode() {
+        return floorsCode;
+    }
+
+    public void setFloorsCode(String floorsCode) {
+        this.floorsCode = floorsCode;
+    }
 
     public Long getId() {
         return id;
@@ -107,18 +117,16 @@ public class BedSeatSaveReq {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
+        final StringBuffer sb = new StringBuffer("BedSeatSaveReq{");
+        sb.append("id=").append(id);
         sb.append(", roomCode=").append(roomCode);
-        sb.append(", roomName=").append(roomName);
-        sb.append(", index=").append(index);
+        sb.append(", roomName='").append(roomName).append('\'');
+        sb.append(", floorsCode='").append(floorsCode).append('\'');
+        sb.append(", index='").append(index).append('\'');
         sb.append(", status=").append(status);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
-        sb.append("]");
+        sb.append('}');
         return sb.toString();
     }
 }

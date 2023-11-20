@@ -3,20 +3,20 @@ package com.chen.assistant.business.req;
 import com.chen.assistant.common.req.PageReq;
 
 public class BedSeatQueryReq extends PageReq {
-    private String roomName;
+    private String floorsCode;
 
-    public String getRoomName() {
-        return roomName;
+    public String getFloorsCode() {
+        return floorsCode;
     }
 
-    public void setRoomName(String roomName) {
-        this.roomName = roomName;
+    public void setFloorsCode(String floorsCode) {
+        this.floorsCode = floorsCode;
     }
 
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("BedSeatQueryReq{");
-        sb.append("roomName='").append(roomName).append('\'');
+        sb.append("floorsCode='").append(floorsCode).append('\'');
         sb.append('}');
         return sb.toString();
     }

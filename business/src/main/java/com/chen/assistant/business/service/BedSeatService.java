@@ -51,10 +51,10 @@ public class BedSeatService {
 
     public PageResp<BedSeatQueryResp> queryList(BedSeatQueryReq req) {
         BedSeatExample bedSeatExample = new BedSeatExample();
-        bedSeatExample.setOrderByClause("room_code asc, 'index' asc");
+        bedSeatExample.setOrderByClause("floors_code asc, room_name asc, 'index' asc");
         BedSeatExample.Criteria criteria = bedSeatExample.createCriteria();
-        if(ObjectUtil.isNotNull(req.getRoomName())){
-            criteria.andRoomNameEqualTo(req.getRoomName());
+        if(StrUtil.isNotBlank(req.getFloorsCode())){
+            criteria.andFloorsCodeEqualTo(req.getFloorsCode());
         }
 
         LOG.info("查询页码：{}", req.getPage());
@@ -88,6 +88,7 @@ public class BedSeatService {
         RoomCarriageExample roomCarriageExample = new RoomCarriageExample();
         RoomCarriageExample.Criteria roomCriteria = roomCarriageExample.createCriteria();
         roomCriteria.andFloorsCodeEqualTo(floorCode);
+
 
         Storys storys = storysService.selectByFloorCode(floorCode);
         LOG.info("{}层床位正在生成", storys.getFloors());
