@@ -8,6 +8,7 @@
     <result column="index" jdbcType="INTEGER" property="index" />
     <result column="bed_type" jdbcType="CHAR" property="bedType" />
     <result column="bed_count" jdbcType="INTEGER" property="bedCount" />
+    <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, `name`, floors_code, `index`, bed_type, bed_count, create_time, update_time
+    id, `name`, floors_code, `index`, bed_type, bed_count, `status`, create_time, update_time
   </sql>
   <select id="selectByExample" parameterType="com.chen.assistant.business.domain.RoomCarriageExample" resultMap="BaseResultMap">
     select
@@ -105,10 +106,12 @@
   <insert id="insert" parameterType="com.chen.assistant.business.domain.RoomCarriage">
     insert into room_carriage (id, `name`, floors_code, 
       `index`, bed_type, bed_count, 
-      create_time, update_time)
+      `status`, create_time, update_time
+      )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{floorsCode,jdbcType=VARCHAR}, 
       #{index,jdbcType=INTEGER}, #{bedType,jdbcType=CHAR}, #{bedCount,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.chen.assistant.business.domain.RoomCarriage">
     insert into room_carriage
@@ -130,6 +133,9 @@
       </if>
       <if test="bedCount != null">
         bed_count,
+      </if>
+      <if test="status != null">
+        `status`,
       </if>
       <if test="createTime != null">
         create_time,
@@ -156,6 +162,9 @@
       </if>
       <if test="bedCount != null">
         #{bedCount,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -192,6 +201,9 @@
       <if test="record.bedCount != null">
         bed_count = #{record.bedCount,jdbcType=INTEGER},
       </if>
+      <if test="record.status != null">
+        `status` = #{record.status,jdbcType=INTEGER},
+      </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
@@ -211,6 +223,7 @@
       `index` = #{record.index,jdbcType=INTEGER},
       bed_type = #{record.bedType,jdbcType=CHAR},
       bed_count = #{record.bedCount,jdbcType=INTEGER},
+      `status` = #{record.status,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -235,6 +248,9 @@
       <if test="bedCount != null">
         bed_count = #{bedCount,jdbcType=INTEGER},
       </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -251,6 +267,7 @@
       `index` = #{index,jdbcType=INTEGER},
       bed_type = #{bedType,jdbcType=CHAR},
       bed_count = #{bedCount,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

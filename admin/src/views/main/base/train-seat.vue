@@ -20,9 +20,9 @@
           </span>
         </span>
       </template>
-      <template v-else-if="column.dataIndex === 'seatType'">
-        <span v-for="item in SEAT_TYPE_ARRAY" :key="item.code">
-          <span v-if="item.code === record.seatType">
+      <template v-else-if="column.dataIndex === 'canSelect'">
+        <span v-for="item in OPEN_TYPE" :key="item.code">
+          <span v-if="item.code === record.canSelect">
             {{item.desc}}
           </span>
         </span>
@@ -42,7 +42,7 @@ export default defineComponent({
   components: {TrainSelectView},
   setup() {
     const SEAT_COL_ARRAY = window.SEAT_COL_ARRAY;
-    const SEAT_TYPE_ARRAY = window.SEAT_TYPE_ARRAY;
+    const OPEN_TYPE = window.OPEN_TYPE;
     const visible = ref(false);
     let trainSeat = ref({
       id: undefined,
@@ -50,7 +50,10 @@ export default defineComponent({
       floorsCode: undefined,
       roomName: undefined,
       index: undefined,
+      userName: undefined,
+      userId: undefined,
       status: undefined,
+      canSelect: undefined,
       createTime: undefined,
       updateTime: undefined,
     });
@@ -66,26 +69,37 @@ export default defineComponent({
       floorsCode: null
     });
     const columns = [
-    {
-      title: '宿舍编号',
-      dataIndex: 'roomName',
-      key: 'roomName',
-    },
-    {
-      title: '楼层名',
-      dataIndex: 'floorsCode',
-      key: 'floorsCode',
-    },
-    {
-      title: '座位号',
-      dataIndex: 'index',
-      key: 'index',
-    },
-    {
-      title: '状态',
-      dataIndex: 'status',
-      key: 'status',
-    }
+      {
+        title: '宿舍编号',
+        dataIndex: 'roomName',
+        key: 'roomName',
+      },
+      {
+        title: '楼层名',
+        dataIndex: 'floorsCode',
+        key: 'floorsCode',
+      },
+      {
+        title: '床位号',
+        dataIndex: 'index',
+        key: 'index',
+      },
+
+      {
+        title: '剩余床位',
+        dataIndex: 'status',
+        key: 'status',
+      },
+      {
+        title: '开放选择',
+        dataIndex: 'canSelect',
+        key: 'canSelect',
+      },
+      {
+        title: '住户名',
+        dataIndex: 'userName',
+        key: 'userName',
+      },
     ];
 
 
@@ -134,7 +148,7 @@ export default defineComponent({
 
     return {
       SEAT_COL_ARRAY,
-      SEAT_TYPE_ARRAY,
+      OPEN_TYPE,
       trainSeat,
       visible,
       trainSeats,

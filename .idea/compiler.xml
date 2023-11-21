@@ -6,19 +6,24 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="business" />
+        <module name="commom" />
+        <module name="Test" />
+        <module name="Gateway" />
         <module name="member" />
         <module name="batch" />
         <module name="generator" />
-        <module name="business" />
-        <module name="commom" />
-        <module name="Gateway" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Test" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="DormitoryAssistant" options="" />
       <module name="Gateway" options="-parameters" />
+      <module name="Test" options="-parameters" />
       <module name="batch" options="-parameters" />
       <module name="business" options="-parameters" />
       <module name="commom" options="-parameters" />

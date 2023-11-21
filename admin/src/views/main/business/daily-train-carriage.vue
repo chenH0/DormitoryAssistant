@@ -1,69 +1,63 @@
 <template>
   <p>
     <a-space>
-      <a-date-picker v-model:value="params.date" valueFormat="YYYY-MM-DD" placeholder="请选择日期" />
-      <train-select-view v-model="params.trainCode" width="200px"></train-select-view>
-      <a-button type="primary" @click="handleQuery()">刷新</a-button>
-      <a-button type="primary" @click="onAdd">新增</a-button>
+      <train-select-view v-model="params.floorCode" width="200px"></train-select-view>
+      <a-button type="primary" @click="handleQuery()">查找</a-button>
+      <a-button type="primary" @click="onAdd">禁用全部</a-button>
     </a-space>
   </p>
-  <a-table :dataSource="dailyTrainCarriages"
+  <a-table :dataSource="trainCarriages"
            :columns="columns"
            :pagination="pagination"
            @change="handleTableChange"
            :loading="loading">
-    <template #bodyCell="{ column, record }">
-      <template v-if="column.dataIndex === 'operation'">
-        <a-space>
-          <a-popconfirm
-              title="删除后不可恢复，确认删除?"
-              @confirm="onDelete(record)"
-              ok-text="确认" cancel-text="取消">
-            <a style="color: red">删除</a>
-          </a-popconfirm>
-          <a @click="onEdit(record)">编辑</a>
-        </a-space>
+    <template #bodyCell="{ column, record, checked }">
+      <template v-if="column.dataIndex === 'status'">
+        <span v-for="item in OPEN_TYPE" :key="item.code">
+          <span v-if="item.code === record.status">
+            <a-switch v-model:checked="record.status"
+                      :checked-value="1"
+                      :unchecked-value="0"
+                      @change="handleOpen(record)">
+              <template #checkedChildren><check-outlined /></template>
+              <template #unCheckedChildren><close-outlined /></template>
+            </a-switch>
+          </span>
+        </span>
+
       </template>
-      <template v-else-if="column.dataIndex === 'seatType'">
+      <template v-else-if="column.dataIndex === 'bedType'">
         <span v-for="item in SEAT_TYPE_ARRAY" :key="item.code">
-          <span v-if="item.code === record.seatType">
+          <span v-if="item.code === record.bedType">
             {{item.desc}}
           </span>
         </span>
       </template>
     </template>
   </a-table>
-  <a-modal v-model:visible="visible" title="每日车箱" @ok="handleOk"
+  <a-modal v-model:visible="visible" title="房间设置" @ok="handleOk"
            ok-text="确认" cancel-text="取消">
-    <a-form :model="dailyTrainCarriage" :label-col="{span: 4}" :wrapper-col="{ span: 20 }">
-      <a-form-item label="日期">
-        <a-date-picker v-model:value="dailyTrainCarriage.date" valueFormat="YYYY-MM-DD" placeholder="请选择日期" />
+    <a-form :model="trainCarriage" :label-col="{span: 4}" :wrapper-col="{ span: 20 }">
+      <a-form-item label="楼层编号">
+        <train-select-view v-model="trainCarriage.floorsCode"></train-select-view>
       </a-form-item>
-      <a-form-item label="车次编号">
-        <train-select-view v-model="dailyTrainCarriage.trainCode" width="200px"></train-select-view>
+      <a-form-item label="房间序号">
+        <a-input v-model:value="trainCarriage.index" placeholder="请输入三位数门牌号"/>
       </a-form-item>
-      <a-form-item label="箱序">
-        <a-input v-model:value="dailyTrainCarriage.index" />
-      </a-form-item>
-      <a-form-item label="座位类型">
-        <a-select v-model:value="dailyTrainCarriage.seatType">
+      <a-form-item label="房间类型">
+        <a-select v-model:value="trainCarriage.bedType">
           <a-select-option v-for="item in SEAT_TYPE_ARRAY" :key="item.code" :value="item.code">
             {{item.desc}}
           </a-select-option>
         </a-select>
       </a-form-item>
-      <!--<a-form-item label="座位数">-->
-      <!--  <a-input v-model:value="dailyTrainCarriage.seatCount" />-->
-      <!--</a-form-item>-->
-      <a-form-item label="排数">
-        <a-input v-model:value="dailyTrainCarriage.rowCount" />
+      <a-form-item label="床位数">
+        <a-input v-model:value="trainCarriage.bedCount"/>
       </a-form-item>
-      <!--<a-form-item label="列数">-->
-      <!--  <a-input v-model:value="dailyTrainCarriage.colCount" />-->
-      <!--</a-form-item>-->
     </a-form>
   </a-modal>
 </template>
+
 
 <script>
 import { defineComponent, ref, onMounted } from 'vue';
@@ -72,24 +66,25 @@ import axios from "axios";
 import TrainSelectView from "@/components/train-select";
 
 export default defineComponent({
-  name: "daily-train-carriage-view",
+  name: "train-carriage-view",
   components: {TrainSelectView},
   setup() {
     const SEAT_TYPE_ARRAY = window.SEAT_TYPE_ARRAY;
+    const OPEN_TYPE = window.OPEN_TYPE;
     const visible = ref(false);
-    let dailyTrainCarriage = ref({
+    const checked = ref(0);
+    let trainCarriage = ref({
       id: undefined,
-      date: undefined,
-      trainCode: undefined,
+      name: undefined,
+      floorsCode: undefined,
       index: undefined,
-      seatType: undefined,
-      seatCount: undefined,
-      rowCount: undefined,
-      colCount: undefined,
+      bedType: undefined,
+      bedCount: undefined,
       createTime: undefined,
       updateTime: undefined,
+      status: undefined,
     });
-    const dailyTrainCarriages = ref([]);
+    const trainCarriages = ref([]);
     // 分页的三个属性名是固定的
     const pagination = ref({
       total: 0,
@@ -98,63 +93,62 @@ export default defineComponent({
     });
     let loading = ref(false);
     let params = ref({
-      trainCode: null,
-      date: null
+      floorCode: null
     });
     const columns = [
-    {
-      title: '日期',
-      dataIndex: 'date',
-      key: 'date',
-    },
-    {
-      title: '车次编号',
-      dataIndex: 'trainCode',
-      key: 'trainCode',
-    },
-    {
-      title: '箱序',
-      dataIndex: 'index',
-      key: 'index',
-    },
-    {
-      title: '座位类型',
-      dataIndex: 'seatType',
-      key: 'seatType',
-    },
-    {
-      title: '座位数',
-      dataIndex: 'seatCount',
-      key: 'seatCount',
-    },
-    {
-      title: '排数',
-      dataIndex: 'rowCount',
-      key: 'rowCount',
-    },
-    {
-      title: '列数',
-      dataIndex: 'colCount',
-      key: 'colCount',
-    },
-    {
-      title: '操作',
-      dataIndex: 'operation'
-    }
+      {
+        title: '房间名',
+        dataIndex: 'name',
+        key: 'name',
+      },
+      {
+        title: '房间类型',
+        dataIndex: 'bedType',
+        key: 'bedType',
+      },
+      {
+        title: '床位数',
+        dataIndex: 'bedCount',
+        key: 'bedCount',
+      },
+      {
+        title: '宿舍楼层编号',
+        dataIndex: 'floorsCode',
+        key: 'floorsCode',
+      },
+      {
+        title: '宿舍编号',
+        dataIndex: 'index',
+        key: 'index',
+      },
+      {
+        title: '开放选择',
+        dataIndex: 'status'
+      }
     ];
 
     const onAdd = () => {
-      dailyTrainCarriage.value = {};
-      visible.value = true;
+      axios.post("/business/admin/room-carriage/closeAll").then((response) => {
+        const data = response.data;
+        if (data.success) {
+          notification.success({description: "修改成功！"});
+          handleQuery({
+            page: pagination.value.current,
+            size: pagination.value.pageSize,
+          });
+        } else {
+          notification.error({description: data.message});
+        }
+      });
     };
 
     const onEdit = (record) => {
-      dailyTrainCarriage.value = window.Tool.copy(record);
+      trainCarriage.value = window.Tool.copy(record);
       visible.value = true;
     };
 
-    const onDelete = (record) => {
-      axios.delete("/business/admin/daily-train-carriage/delete/" + record.id).then((response) => {
+    const onDelete = (record ) => {
+      axios.delete("/business/admin/room-carriage/delete/" + record.id).then((response) => {
         const data = response.data;
         if (data.success) {
           notification.success({description: "删除成功！"});
@@ -168,8 +162,26 @@ export default defineComponent({
       });
     };
 
+    const handleOpen = (record) => {
+      checked.value = 1-checked.value;
+      record.status = checked.value;
+
+      axios.post("/business/admin/room-carriage/updateStatus", {
+        id: record.id,
+        status: checked.value,
+      }).then((response) => {
+        const data = response.data;
+        if (data.success) {
+          //notification.success({description: "修改成功！"});
+          //checked.value = record.status;
+        } else {
+          notification.error({description: data.message});
+        }
+      });
+    };
+
     const handleOk = () => {
-      axios.post("/business/admin/daily-train-carriage/save", dailyTrainCarriage.value).then((response) => {
+      axios.post("/business/admin/room-carriage/save", trainCarriage.value).then((response) => {
         let data = response.data;
         if (data.success) {
           notification.success({description: "保存成功！"});
@@ -192,18 +204,17 @@ export default defineComponent({
         };
       }
       loading.value = true;
-      axios.get("/business/admin/daily-train-carriage/query-list", {
+      axios.get("/business/admin/room-carriage/query-list", {
         params: {
           page: param.page,
           size: param.size,
-          trainCode: params.value.trainCode,
-          date: params.value.date
+          floorCode: params.value.floorCode
         }
       }).then((response) => {
         loading.value = false;
         let data = response.data;
         if (data.success) {
-          dailyTrainCarriages.value = data.content.list;
+          trainCarriages.value = data.content.list;
           // 设置分页控件的值
           pagination.value.current = param.page;
           pagination.value.total = data.content.total;
@@ -230,12 +241,14 @@ export default defineComponent({
 
     return {
       SEAT_TYPE_ARRAY,
-      dailyTrainCarriage,
+      OPEN_TYPE,
+      trainCarriage,
       visible,
-      dailyTrainCarriages,
+      trainCarriages,
       pagination,
       columns,
       handleTableChange,
+      handleOpen,
       handleQuery,
       loading,
       onAdd,

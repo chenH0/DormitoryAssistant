@@ -5,6 +5,7 @@ import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.chen.assistant.business.domain.*;
+import com.chen.assistant.business.mapper.RoomCarriageMapper;
 import com.chen.assistant.business.req.RoomCarriageSaveReq;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -34,6 +35,8 @@ public class BedSeatService {
     private StorysService storysService;
     @Resource
     private RoomCarriageService roomCarriageService;
+    @Resource
+    private RoomCarriageMapper roomCarriageMapper;
 
     public void save(BedSeatSaveReq req) {
         DateTime now = DateTime.now();
@@ -51,7 +54,7 @@ public class BedSeatService {
 
     public PageResp<BedSeatQueryResp> queryList(BedSeatQueryReq req) {
         BedSeatExample bedSeatExample = new BedSeatExample();
-        bedSeatExample.setOrderByClause("floors_code asc, room_name asc, 'index' asc");
+        bedSeatExample.setOrderByClause("id asc");
         BedSeatExample.Criteria criteria = bedSeatExample.createCriteria();
         if(StrUtil.isNotBlank(req.getFloorsCode())){
             criteria.andFloorsCodeEqualTo(req.getFloorsCode());
@@ -84,11 +87,16 @@ public class BedSeatService {
         BedSeatExample bedSeatExample = new BedSeatExample();
         BedSeatExample.Criteria criteria = bedSeatExample.createCriteria();
         criteria.andFloorsCodeEqualTo(floorCode);
+        LOG.info("删除已存在的床位，然后重新生成");
         bedSeatMapper.deleteByExample(bedSeatExample);
         RoomCarriageExample roomCarriageExample = new RoomCarriageExample();
         RoomCarriageExample.Criteria roomCriteria = roomCarriageExample.createCriteria();
         roomCriteria.andFloorsCodeEqualTo(floorCode);
-
+        List<RoomCarriage> roomCarriages = roomCarriageMapper.selectByExample(roomCarriageExample);
+        LOG.info("删除已存在的楼层，然后重新生成");
+        for (RoomCarriage roomCarriage: roomCarriages){
+            roomCarriageService.delete(roomCarriage.getId());
+        }
 
         Storys storys = storysService.selectByFloorCode(floorCode);
         LOG.info("{}层床位正在生成", storys.getFloors());
@@ -99,6 +107,7 @@ public class BedSeatService {
                 roomCarriageSaveReq.setFloorsCode(floorCode);
                 roomCarriageSaveReq.setId(SnowUtil.getSnowflaskNextId());
                 roomCarriageSaveReq.setBedType(String.valueOf(j));
+                roomCarriageSaveReq.setStatus(0);
                 roomCarriageSaveReq.setIndex(Integer.valueOf(storys.getFloors()+StrUtil.fillBefore(String.valueOf(i), '0', 2)));
                 roomCarriageService.save(roomCarriageSaveReq);
                 RoomCarriage roomCarriage = roomCarriageService.selectByRoomCode(roomCarriageSaveReq.getId());
@@ -113,6 +122,7 @@ public class BedSeatService {
                     bedSeat.setRoomCode(roomCarriage.getId());
                     bedSeat.setRoomName(roomCarriage.getName());
                     bedSeat.setStatus(1);
+                    bedSeat.setCanSelect(0);
                     bedSeatMapper.insert(bedSeat);
                 }
             }

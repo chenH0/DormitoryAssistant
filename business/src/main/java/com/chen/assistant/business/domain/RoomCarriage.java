@@ -15,6 +15,8 @@ public class RoomCarriage {
 
     private Integer bedCount;
 
+    private Integer status;
+
     private Date createTime;
 
     private Date updateTime;
@@ -67,6 +69,14 @@ public class RoomCarriage {
         this.bedCount = bedCount;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -95,6 +105,7 @@ public class RoomCarriage {
         sb.append(", index=").append(index);
         sb.append(", bedType=").append(bedType);
         sb.append(", bedCount=").append(bedCount);
+        sb.append(", status=").append(status);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append("]");

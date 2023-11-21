@@ -6,6 +6,9 @@ import cn.hutool.core.util.ObjectUtil;
 import com.chen.assistant.business.domain.Storys;
 import com.chen.assistant.business.domain.StorysExample;
 import com.chen.assistant.business.enums.RoomTypeEnum;
+import com.chen.assistant.business.mapper.BedSeatMapper;
+import com.chen.assistant.business.mapper.BedTicketMapper;
+import com.chen.assistant.business.req.RoomCarriageUpdateReq;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.chen.assistant.common.resp.PageResp;
@@ -32,6 +35,9 @@ public class RoomCarriageService {
     @Resource
     private RoomCarriageMapper roomCarriageMapper;
 
+    @Resource
+    private BedTicketMapper BedTicketMapper;
+
     public void save(RoomCarriageSaveReq req) {
         DateTime now = DateTime.now();
         RoomCarriage roomCarriage = BeanUtil.copyProperties(req, RoomCarriage.class);
@@ -45,13 +51,14 @@ public class RoomCarriageService {
             roomCarriageMapper.insert(roomCarriage);
         } else {
             roomCarriage.setUpdateTime(now);
+            roomCarriage.setName(roomCarriage.getFloorsCode()+"层"+"-"+roomCarriage.getIndex()+"房"+"-"+RoomTypeEnum.findEnumByCode(roomCarriage.getBedType()));
             roomCarriageMapper.updateByPrimaryKey(roomCarriage);
         }
     }
 
     public PageResp<RoomCarriageQueryResp> queryList(RoomCarriageQueryReq req) {
         RoomCarriageExample roomCarriageExample = new RoomCarriageExample();
-        roomCarriageExample.setOrderByClause("floors_code asc, 'index' asc, bed_type asc");
+        roomCarriageExample.setOrderByClause("id asc");
         RoomCarriageExample.Criteria criteria = roomCarriageExample.createCriteria();
         if(ObjectUtil.isNotNull(req.getFloorCode())){
             criteria.andFloorsCodeEqualTo(req.getFloorCode());
@@ -83,5 +90,27 @@ public class RoomCarriageService {
         RoomCarriageExample.Criteria criteria = roomCarriageExample.createCriteria();
         criteria.andIdEqualTo(id);
         return roomCarriageMapper.selectByExample(roomCarriageExample).get(0);
+    }
+
+    public void updateStatus(RoomCarriageUpdateReq req) {
+        RoomCarriage roomCarriage = new RoomCarriage();
+        roomCarriage.setId(req.getId());
+        roomCarriage.setStatus(req.getStatus());
+        roomCarriageMapper.updateByPrimaryKeySelective(roomCarriage);
+
+    }
+
+    @Transactional
+    public void closeAll() {
+        RoomCarriageExample roomCarriageExample = new RoomCarriageExample();
+        RoomCarriageExample.Criteria criteria = roomCarriageExample.createCriteria();
+        criteria.andStatusEqualTo(1);
+        List<RoomCarriage> roomCarriages = roomCarriageMapper.selectByExample(roomCarriageExample);
+        RoomCarriage updateRoom = new RoomCarriage();
+        for(RoomCarriage roomCarriage: roomCarriages){
+            updateRoom.setId(roomCarriage.getId());
+            updateRoom.setStatus(0);
+            roomCarriageMapper.updateByPrimaryKeySelective(updateRoom);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.chen.assistant.business.controller.admin;
 
+import com.chen.assistant.business.req.RoomCarriageUpdateReq;
 import com.chen.assistant.common.context.LoginMemberContext;
 import com.chen.assistant.common.resp.CommonResp;
 import com.chen.assistant.common.resp.PageResp;
@@ -36,4 +37,15 @@ public class RoomCarriageAdminController {
         return new CommonResp<>();
     }
 
+    @PostMapping("/updateStatus")
+    public CommonResp<Object> updateStatus(@RequestBody RoomCarriageUpdateReq req){
+        roomCarriageService.updateStatus(req);
+        return new CommonResp<>();
+    }
+
+    @PostMapping("/closeAll")
+    public CommonResp<Object> closeAll() {
+        roomCarriageService.closeAll();
+        return new CommonResp<>();
+    }
 }

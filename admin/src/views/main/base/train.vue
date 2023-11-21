@@ -35,6 +35,13 @@
           </span>
         </span>
       </template>
+      <template v-else-if="column.dataIndex === 'status'">
+        <span v-for="item in OPEN_TYPE" :key="item.code">
+          <span v-if="item.code === record.status">
+            {{item.desc}}
+          </span>
+        </span>
+      </template>
     </template>
   </a-table>
   <a-modal v-model:visible="visible" title="楼层信息" @ok="handleOk"
@@ -75,12 +82,14 @@ export default defineComponent({
   components: {StationSelectView},
   setup() {
     const TRAIN_TYPE_ARRAY = window.TRAIN_TYPE_ARRAY;
+    const OPEN_TYPE = window.OPEN_TYPE;
     const visible = ref(false);
     let train = ref({
       id: undefined,
       code: undefined,
       type: undefined,
       total: undefined,
+      status: undefined,
       name: undefined,
       namePinyin: undefined,
       floors: undefined,
@@ -253,6 +262,7 @@ export default defineComponent({
 
     return {
       TRAIN_TYPE_ARRAY,
+      OPEN_TYPE,
       train,
       visible,
       trains,

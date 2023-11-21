@@ -47,6 +47,16 @@ public class RoomCarriageQueryResp {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
 
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public String getName() {
         return name;
     }
@@ -122,6 +132,7 @@ public class RoomCarriageQueryResp {
         sb.append(", bedCount=").append(bedCount);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", status=").append(status);
         sb.append('}');
         return sb.toString();
     }

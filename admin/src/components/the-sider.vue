@@ -36,6 +36,21 @@
             业务管理
           </span>
         </template>
+        <a-menu-item key="/business/daily-train-carriage">
+          <router-link to="/business/daily-train-carriage">
+            <MenuUnfoldOutlined /> &nbsp; 每日宿舍
+          </router-link>
+        </a-menu-item>
+        <a-menu-item key="/business/daily-train-station">
+          <router-link to="/business/daily-train-station">
+            <MenuUnfoldOutlined /> &nbsp; 每日学生
+          </router-link>
+        </a-menu-item>
+        <a-menu-item key="/business/daily-train-ticket">
+          <router-link to="/business/daily-train-ticket">
+            <MenuUnfoldOutlined /> &nbsp; 剩余床位
+          </router-link>
+        </a-menu-item>
         <a-menu-item key="/business/sk-token">
           <router-link to="/business/sk-token">
             <MenuUnfoldOutlined /> &nbsp; 令牌余量
@@ -46,31 +61,11 @@
             <MenuUnfoldOutlined /> &nbsp; 订单信息
           </router-link>
         </a-menu-item>
-        <a-menu-item key="/business/daily-train-ticket">
-          <router-link to="/business/daily-train-ticket">
-            <MenuUnfoldOutlined /> &nbsp; 剩余床位
-          </router-link>
-        </a-menu-item>
-        <a-menu-item key="/business/daily-train">
+<!--        <a-menu-item key="/business/daily-train">
           <router-link to="/business/daily-train">
             <MenuUnfoldOutlined /> &nbsp; 每日楼栋
           </router-link>
-        </a-menu-item>
-        <a-menu-item key="/business/daily-train-station">
-          <router-link to="/business/daily-train-station">
-            <MenuUnfoldOutlined /> &nbsp; 每日楼层
-          </router-link>
-        </a-menu-item>
-        <a-menu-item key="/business/daily-train-carriage">
-          <router-link to="/business/daily-train-carriage">
-            <MenuUnfoldOutlined /> &nbsp; 每日宿舍
-          </router-link>
-        </a-menu-item>
-        <a-menu-item key="/business/daily-train-seat">
-          <router-link to="/business/daily-train-seat">
-            <MenuUnfoldOutlined /> &nbsp; 每日床位
-          </router-link>
-        </a-menu-item>
+        </a-menu-item>-->
       </a-sub-menu>
       <a-sub-menu key="base">
         <template #title>

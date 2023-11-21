@@ -15,6 +15,12 @@ public class BedSeat {
 
     private Integer status;
 
+    private Integer canSelect;
+
+    private String userName;
+
+    private Long userId;
+
     private Date createTime;
 
     private Date updateTime;
@@ -67,6 +73,30 @@ public class BedSeat {
         this.status = status;
     }
 
+    public Integer getCanSelect() {
+        return canSelect;
+    }
+
+    public void setCanSelect(Integer canSelect) {
+        this.canSelect = canSelect;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -95,6 +125,9 @@ public class BedSeat {
         sb.append(", roomName=").append(roomName);
         sb.append(", index=").append(index);
         sb.append(", status=").append(status);
+        sb.append(", canSelect=").append(canSelect);
+        sb.append(", userName=").append(userName);
+        sb.append(", userId=").append(userId);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append("]");

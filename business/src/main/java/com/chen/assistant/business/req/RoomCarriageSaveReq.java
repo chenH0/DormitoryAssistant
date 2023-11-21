@@ -49,6 +49,16 @@ public class RoomCarriageSaveReq {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
 
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public Long getId() {
         return id;
     }
@@ -107,18 +117,16 @@ public class RoomCarriageSaveReq {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", floorsCode=").append(floorsCode);
+        final StringBuffer sb = new StringBuffer("RoomCarriageSaveReq{");
+        sb.append("id=").append(id);
+        sb.append(", floorsCode='").append(floorsCode).append('\'');
         sb.append(", index=").append(index);
-        sb.append(", bedType=").append(bedType);
+        sb.append(", bedType='").append(bedType).append('\'');
         sb.append(", bedCount=").append(bedCount);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
-        sb.append("]");
+        sb.append(", status=").append(status);
+        sb.append('}');
         return sb.toString();
     }
 }

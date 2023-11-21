@@ -89,23 +89,11 @@ export default defineComponent({
     let dailyTrainTicket = ref({
       id: undefined,
       date: undefined,
-      trainCode: undefined,
-      start: undefined,
-      startPinyin: undefined,
-      startTime: undefined,
-      startIndex: undefined,
-      end: undefined,
-      endPinyin: undefined,
-      endTime: undefined,
-      endIndex: undefined,
-      ydz: undefined,
-      ydzPrice: undefined,
-      edz: undefined,
-      edzPrice: undefined,
-      rw: undefined,
-      rwPrice: undefined,
-      yw: undefined,
-      ywPrice: undefined,
+      roomCode: undefined,
+      total: undefined,
+      left: undefined,
+      medium: undefined,
+      right: undefined,
       createTime: undefined,
       updateTime: undefined,
     });
@@ -125,102 +113,30 @@ export default defineComponent({
       key: 'date',
     },
     {
-      title: '车次编号',
-      dataIndex: 'trainCode',
-      key: 'trainCode',
+      title: '宿舍编号',
+      dataIndex: 'roomCode',
+      key: 'roomCode',
     },
     {
-      title: '车站',
-      dataIndex: 'station',
+      title: '总剩余床位',
+      dataIndex: 'total',
+      key: 'right',
     },
     {
-      title: '时间',
-      dataIndex: 'time',
+      title: '左室剩余床位',
+      dataIndex: 'left',
+      key: 'right',
     },
     {
-      title: '历时',
-      dataIndex: 'duration',
+      title: '中室剩余床位',
+      dataIndex: 'medium',
+      key: 'right',
     },
-    // {
-    //   title: '出发站',
-    //   dataIndex: 'start',
-    //   key: 'start',
-    // },
-    // {
-    //   title: '出发站拼音',
-    //   dataIndex: 'startPinyin',
-    //   key: 'startPinyin',
-    // },
-    // {
-    //   title: '出发时间',
-    //   dataIndex: 'startTime',
-    //   key: 'startTime',
-    // },
-    // {
-    //   title: '出发站序',
-    //   dataIndex: 'startIndex',
-    //   key: 'startIndex',
-    // },
-    // {
-    //   title: '到达站',
-    //   dataIndex: 'end',
-    //   key: 'end',
-    // },
-    // {
-    //   title: '到达站拼音',
-    //   dataIndex: 'endPinyin',
-    //   key: 'endPinyin',
-    // },
-    // {
-    //   title: '到站时间',
-    //   dataIndex: 'endTime',
-    //   key: 'endTime',
-    // },
-    // {
-    //   title: '到站站序',
-    //   dataIndex: 'endIndex',
-    //   key: 'endIndex',
-    // },
     {
-      title: '一等座',
-      dataIndex: 'ydz',
-      key: 'ydz',
+      title: '右室剩余床位',
+      dataIndex: 'right',
+      key: 'right',
     },
-    // {
-    //   title: '一等座票价',
-    //   dataIndex: 'ydzPrice',
-    //   key: 'ydzPrice',
-    // },
-    {
-      title: '二等座',
-      dataIndex: 'edz',
-      key: 'edz',
-    },
-    // {
-    //   title: '二等座票价',
-    //   dataIndex: 'edzPrice',
-    //   key: 'edzPrice',
-    // },
-    {
-      title: '软卧',
-      dataIndex: 'rw',
-      key: 'rw',
-    },
-    // {
-    //   title: '软卧票价',
-    //   dataIndex: 'rwPrice',
-    //   key: 'rwPrice',
-    // },
-    {
-      title: '硬卧',
-      dataIndex: 'yw',
-      key: 'yw',
-    },
-    // {
-    //   title: '硬卧票价',
-    //   dataIndex: 'ywPrice',
-    //   key: 'ywPrice',
-    // },
     ];
 
 
@@ -232,7 +148,7 @@ export default defineComponent({
         };
       }
       loading.value = true;
-      axios.get("/business/admin/daily-train-ticket/query-list", {
+      axios.get("/business/admin/bed-ticket/query-list", {
         params: {
           page: param.page,
           size: param.size,

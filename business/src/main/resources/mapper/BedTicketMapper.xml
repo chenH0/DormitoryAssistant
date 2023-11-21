@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.chen.assistant.business.mapper.BedSeatMapper">
-  <resultMap id="BaseResultMap" type="com.chen.assistant.business.domain.BedSeat">
+<mapper namespace="com.chen.assistant.business.mapper.BedTicketMapper">
+  <resultMap id="BaseResultMap" type="com.chen.assistant.business.domain.BedTicket">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="floors_code" jdbcType="VARCHAR" property="floorsCode" />
-    <result column="room_code" jdbcType="BIGINT" property="roomCode" />
-    <result column="room_name" jdbcType="VARCHAR" property="roomName" />
-    <result column="index" jdbcType="CHAR" property="index" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="can_select" jdbcType="INTEGER" property="canSelect" />
-    <result column="user_name" jdbcType="VARCHAR" property="userName" />
-    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="date" jdbcType="DATE" property="date" />
+    <result column="room_code" jdbcType="VARCHAR" property="roomCode" />
+    <result column="total" jdbcType="INTEGER" property="total" />
+    <result column="one" jdbcType="INTEGER" property="one" />
+    <result column="two" jdbcType="INTEGER" property="two" />
+    <result column="three" jdbcType="INTEGER" property="three" />
+    <result column="four" jdbcType="INTEGER" property="four" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
@@ -73,16 +72,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, floors_code, room_code, room_name, `index`, `status`, can_select, user_name, 
-    user_id, create_time, update_time
+    id, `date`, room_code, total, one, two, three, four, create_time, update_time
   </sql>
-  <select id="selectByExample" parameterType="com.chen.assistant.business.domain.BedSeatExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.chen.assistant.business.domain.BedTicketExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from bed_seat
+    from bed_ticket
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,58 +91,55 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from bed_seat
+    from bed_ticket
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from bed_seat
+    delete from bed_ticket
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.chen.assistant.business.domain.BedSeatExample">
-    delete from bed_seat
+  <delete id="deleteByExample" parameterType="com.chen.assistant.business.domain.BedTicketExample">
+    delete from bed_ticket
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.chen.assistant.business.domain.BedSeat">
-    insert into bed_seat (id, floors_code, room_code, 
-      room_name, `index`, `status`, 
-      can_select, user_name, user_id, 
-      create_time, update_time)
-    values (#{id,jdbcType=BIGINT}, #{floorsCode,jdbcType=VARCHAR}, #{roomCode,jdbcType=BIGINT}, 
-      #{roomName,jdbcType=VARCHAR}, #{index,jdbcType=CHAR}, #{status,jdbcType=INTEGER}, 
-      #{canSelect,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="com.chen.assistant.business.domain.BedTicket">
+    insert into bed_ticket (id, `date`, room_code, 
+      total, one, two, three, 
+      four, create_time, update_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{date,jdbcType=DATE}, #{roomCode,jdbcType=VARCHAR}, 
+      #{total,jdbcType=INTEGER}, #{one,jdbcType=INTEGER}, #{two,jdbcType=INTEGER}, #{three,jdbcType=INTEGER}, 
+      #{four,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.chen.assistant.business.domain.BedSeat">
-    insert into bed_seat
+  <insert id="insertSelective" parameterType="com.chen.assistant.business.domain.BedTicket">
+    insert into bed_ticket
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="floorsCode != null">
-        floors_code,
+      <if test="date != null">
+        `date`,
       </if>
       <if test="roomCode != null">
         room_code,
       </if>
-      <if test="roomName != null">
-        room_name,
+      <if test="total != null">
+        total,
       </if>
-      <if test="index != null">
-        `index`,
+      <if test="one != null">
+        one,
       </if>
-      <if test="status != null">
-        `status`,
+      <if test="two != null">
+        two,
       </if>
-      <if test="canSelect != null">
-        can_select,
+      <if test="three != null">
+        three,
       </if>
-      <if test="userName != null">
-        user_name,
-      </if>
-      <if test="userId != null">
-        user_id,
+      <if test="four != null">
+        four,
       </if>
       <if test="createTime != null">
         create_time,
@@ -157,29 +152,26 @@
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="floorsCode != null">
-        #{floorsCode,jdbcType=VARCHAR},
+      <if test="date != null">
+        #{date,jdbcType=DATE},
       </if>
       <if test="roomCode != null">
-        #{roomCode,jdbcType=BIGINT},
+        #{roomCode,jdbcType=VARCHAR},
       </if>
-      <if test="roomName != null">
-        #{roomName,jdbcType=VARCHAR},
+      <if test="total != null">
+        #{total,jdbcType=INTEGER},
       </if>
-      <if test="index != null">
-        #{index,jdbcType=CHAR},
+      <if test="one != null">
+        #{one,jdbcType=INTEGER},
       </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
+      <if test="two != null">
+        #{two,jdbcType=INTEGER},
       </if>
-      <if test="canSelect != null">
-        #{canSelect,jdbcType=INTEGER},
+      <if test="three != null">
+        #{three,jdbcType=INTEGER},
       </if>
-      <if test="userName != null">
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=BIGINT},
+      <if test="four != null">
+        #{four,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -189,41 +181,38 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.chen.assistant.business.domain.BedSeatExample" resultType="java.lang.Long">
-    select count(*) from bed_seat
+  <select id="countByExample" parameterType="com.chen.assistant.business.domain.BedTicketExample" resultType="java.lang.Long">
+    select count(*) from bed_ticket
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update bed_seat
+    update bed_ticket
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.floorsCode != null">
-        floors_code = #{record.floorsCode,jdbcType=VARCHAR},
+      <if test="record.date != null">
+        `date` = #{record.date,jdbcType=DATE},
       </if>
       <if test="record.roomCode != null">
-        room_code = #{record.roomCode,jdbcType=BIGINT},
+        room_code = #{record.roomCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.roomName != null">
-        room_name = #{record.roomName,jdbcType=VARCHAR},
+      <if test="record.total != null">
+        total = #{record.total,jdbcType=INTEGER},
       </if>
-      <if test="record.index != null">
-        `index` = #{record.index,jdbcType=CHAR},
+      <if test="record.one != null">
+        one = #{record.one,jdbcType=INTEGER},
       </if>
-      <if test="record.status != null">
-        `status` = #{record.status,jdbcType=INTEGER},
+      <if test="record.two != null">
+        two = #{record.two,jdbcType=INTEGER},
       </if>
-      <if test="record.canSelect != null">
-        can_select = #{record.canSelect,jdbcType=INTEGER},
+      <if test="record.three != null">
+        three = #{record.three,jdbcType=INTEGER},
       </if>
-      <if test="record.userName != null">
-        user_name = #{record.userName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=BIGINT},
+      <if test="record.four != null">
+        four = #{record.four,jdbcType=INTEGER},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -237,48 +226,44 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update bed_seat
+    update bed_ticket
     set id = #{record.id,jdbcType=BIGINT},
-      floors_code = #{record.floorsCode,jdbcType=VARCHAR},
-      room_code = #{record.roomCode,jdbcType=BIGINT},
-      room_name = #{record.roomName,jdbcType=VARCHAR},
-      `index` = #{record.index,jdbcType=CHAR},
-      `status` = #{record.status,jdbcType=INTEGER},
-      can_select = #{record.canSelect,jdbcType=INTEGER},
-      user_name = #{record.userName,jdbcType=VARCHAR},
-      user_id = #{record.userId,jdbcType=BIGINT},
+      `date` = #{record.date,jdbcType=DATE},
+      room_code = #{record.roomCode,jdbcType=VARCHAR},
+      total = #{record.total,jdbcType=INTEGER},
+      one = #{record.one,jdbcType=INTEGER},
+      two = #{record.two,jdbcType=INTEGER},
+      three = #{record.three,jdbcType=INTEGER},
+      four = #{record.four,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.chen.assistant.business.domain.BedSeat">
-    update bed_seat
+  <update id="updateByPrimaryKeySelective" parameterType="com.chen.assistant.business.domain.BedTicket">
+    update bed_ticket
     <set>
-      <if test="floorsCode != null">
-        floors_code = #{floorsCode,jdbcType=VARCHAR},
+      <if test="date != null">
+        `date` = #{date,jdbcType=DATE},
       </if>
       <if test="roomCode != null">
-        room_code = #{roomCode,jdbcType=BIGINT},
+        room_code = #{roomCode,jdbcType=VARCHAR},
       </if>
-      <if test="roomName != null">
-        room_name = #{roomName,jdbcType=VARCHAR},
+      <if test="total != null">
+        total = #{total,jdbcType=INTEGER},
       </if>
-      <if test="index != null">
-        `index` = #{index,jdbcType=CHAR},
+      <if test="one != null">
+        one = #{one,jdbcType=INTEGER},
       </if>
-      <if test="status != null">
-        `status` = #{status,jdbcType=INTEGER},
+      <if test="two != null">
+        two = #{two,jdbcType=INTEGER},
       </if>
-      <if test="canSelect != null">
-        can_select = #{canSelect,jdbcType=INTEGER},
+      <if test="three != null">
+        three = #{three,jdbcType=INTEGER},
       </if>
-      <if test="userName != null">
-        user_name = #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=BIGINT},
+      <if test="four != null">
+        four = #{four,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -289,16 +274,15 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.chen.assistant.business.domain.BedSeat">
-    update bed_seat
-    set floors_code = #{floorsCode,jdbcType=VARCHAR},
-      room_code = #{roomCode,jdbcType=BIGINT},
-      room_name = #{roomName,jdbcType=VARCHAR},
-      `index` = #{index,jdbcType=CHAR},
-      `status` = #{status,jdbcType=INTEGER},
-      can_select = #{canSelect,jdbcType=INTEGER},
-      user_name = #{userName,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=BIGINT},
+  <update id="updateByPrimaryKey" parameterType="com.chen.assistant.business.domain.BedTicket">
+    update bed_ticket
+    set `date` = #{date,jdbcType=DATE},
+      room_code = #{roomCode,jdbcType=VARCHAR},
+      total = #{total,jdbcType=INTEGER},
+      one = #{one,jdbcType=INTEGER},
+      two = #{two,jdbcType=INTEGER},
+      three = #{three,jdbcType=INTEGER},
+      four = #{four,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

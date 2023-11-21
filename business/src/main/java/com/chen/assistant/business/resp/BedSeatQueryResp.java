@@ -35,6 +35,12 @@ public class BedSeatQueryResp {
 
     private String floorsCode;
 
+    private String userName;
+
+    private Long userId;
+
+    private Integer canSelect;
+
     /**
      * 新增时间
      */
@@ -46,6 +52,30 @@ public class BedSeatQueryResp {
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Integer getCanSelect() {
+        return canSelect;
+    }
+
+    public void setCanSelect(Integer canSelect) {
+        this.canSelect = canSelect;
+    }
 
     public String getFloorsCode() {
         return floorsCode;
@@ -120,6 +150,9 @@ public class BedSeatQueryResp {
         sb.append(", index='").append(index).append('\'');
         sb.append(", status=").append(status);
         sb.append(", floorsCode='").append(floorsCode).append('\'');
+        sb.append(", userName='").append(userName).append('\'');
+        sb.append(", userId=").append(userId);
+        sb.append(", canSelect=").append(canSelect);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append('}');
