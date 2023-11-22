@@ -14,6 +14,26 @@ public class RoomCarriageUpdateReq {
 
     private int status;
 
+    private String floorsCode;
+
+    private String bedType;
+
+    public String getBedType() {
+        return bedType;
+    }
+
+    public void setBedType(String bedType) {
+        this.bedType = bedType;
+    }
+
+    public String getFloorsCode() {
+        return floorsCode;
+    }
+
+    public void setFloorsCode(String floorsCode) {
+        this.floorsCode = floorsCode;
+    }
+
     public String getName() {
         return name;
     }
@@ -44,6 +64,8 @@ public class RoomCarriageUpdateReq {
         sb.append("id=").append(id);
         sb.append(", name='").append(name).append('\'');
         sb.append(", status=").append(status);
+        sb.append(", floorsCode='").append(floorsCode).append('\'');
+        sb.append(", bedType='").append(bedType).append('\'');
         sb.append('}');
         return sb.toString();
     }

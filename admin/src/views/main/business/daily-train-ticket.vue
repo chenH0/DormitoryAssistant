@@ -2,9 +2,11 @@
   <p>
     <a-space>
       <train-select-view v-model="params.trainCode" width="200px"></train-select-view>
-      <a-date-picker v-model:value="params.date" valueFormat="YYYY-MM-DD" placeholder="请选择日期"></a-date-picker>
-      <station-select-view v-model="params.start" width="200px"></station-select-view>
-      <station-select-view v-model="params.end" width="200px"></station-select-view>
+<!--      <a-date-picker v-model:value="params.date" valueFormat="YYYY-MM-DD" placeholder="请选择日期"></a-date-picker>-->
+
+
+      <station-select-view v-model="params.bedType" width="200px"></station-select-view>
+      <bed-select-view v-model="params.bedIndex" width="200px"></bed-select-view>
       <a-button type="primary" @click="handleQuery()">查找</a-button>
     </a-space>
   </p>
@@ -79,11 +81,12 @@ import {notification} from "ant-design-vue";
 import axios from "axios";
 import TrainSelectView from "@/components/train-select";
 import StationSelectView from "@/components/station-select";
+import BedSelectView from "@/components/bed-select";
 import dayjs from "dayjs";
 
 export default defineComponent({
   name: "daily-train-ticket-view",
-  components: {StationSelectView, TrainSelectView},
+  components: {StationSelectView, TrainSelectView, BedSelectView},
   setup() {
     const visible = ref(false);
     let dailyTrainTicket = ref({
@@ -158,9 +161,8 @@ export default defineComponent({
           page: param.page,
           size: param.size,
           trainCode: params.value.trainCode,
-          date: params.value.date,
-          start: params.value.start,
-          end: params.value.end
+          bedIndex: params.value.bedIndex,
+          bedType: params.value.bedType
         }
       }).then((response) => {
         loading.value = false;

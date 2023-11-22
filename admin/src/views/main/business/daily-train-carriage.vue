@@ -170,6 +170,8 @@ export default defineComponent({
         id: record.id,
         status: checked.value,
         name:record.name,
+        floorsCode:record.floorsCode,
+        bedType:record.bedType,
       }).then((response) => {
         const data = response.data;
         if (data.success) {

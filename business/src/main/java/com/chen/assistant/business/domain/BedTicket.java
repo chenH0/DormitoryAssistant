@@ -11,6 +11,10 @@ public class BedTicket {
 
     private String roomName;
 
+    private String floorsCode;
+
+    private String bedType;
+
     private Integer total;
 
     private Integer one;
@@ -55,6 +59,22 @@ public class BedTicket {
 
     public void setRoomName(String roomName) {
         this.roomName = roomName;
+    }
+
+    public String getFloorsCode() {
+        return floorsCode;
+    }
+
+    public void setFloorsCode(String floorsCode) {
+        this.floorsCode = floorsCode;
+    }
+
+    public String getBedType() {
+        return bedType;
+    }
+
+    public void setBedType(String bedType) {
+        this.bedType = bedType;
     }
 
     public Integer getTotal() {
@@ -123,6 +143,8 @@ public class BedTicket {
         sb.append(", date=").append(date);
         sb.append(", roomCode=").append(roomCode);
         sb.append(", roomName=").append(roomName);
+        sb.append(", floorsCode=").append(floorsCode);
+        sb.append(", bedType=").append(bedType);
         sb.append(", total=").append(total);
         sb.append(", one=").append(one);
         sb.append(", two=").append(two);

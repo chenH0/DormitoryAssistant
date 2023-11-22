@@ -382,6 +382,146 @@ public class BedTicketExample {
             return (Criteria) this;
         }
 
+        public Criteria andFloorsCodeIsNull() {
+            addCriterion("floors_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFloorsCodeIsNotNull() {
+            addCriterion("floors_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFloorsCodeEqualTo(String value) {
+            addCriterion("floors_code =", value, "floorsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFloorsCodeNotEqualTo(String value) {
+            addCriterion("floors_code <>", value, "floorsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFloorsCodeGreaterThan(String value) {
+            addCriterion("floors_code >", value, "floorsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFloorsCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("floors_code >=", value, "floorsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFloorsCodeLessThan(String value) {
+            addCriterion("floors_code <", value, "floorsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFloorsCodeLessThanOrEqualTo(String value) {
+            addCriterion("floors_code <=", value, "floorsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFloorsCodeLike(String value) {
+            addCriterion("floors_code like", value, "floorsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFloorsCodeNotLike(String value) {
+            addCriterion("floors_code not like", value, "floorsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFloorsCodeIn(List<String> values) {
+            addCriterion("floors_code in", values, "floorsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFloorsCodeNotIn(List<String> values) {
+            addCriterion("floors_code not in", values, "floorsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFloorsCodeBetween(String value1, String value2) {
+            addCriterion("floors_code between", value1, value2, "floorsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFloorsCodeNotBetween(String value1, String value2) {
+            addCriterion("floors_code not between", value1, value2, "floorsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBedTypeIsNull() {
+            addCriterion("bed_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBedTypeIsNotNull() {
+            addCriterion("bed_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBedTypeEqualTo(String value) {
+            addCriterion("bed_type =", value, "bedType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBedTypeNotEqualTo(String value) {
+            addCriterion("bed_type <>", value, "bedType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBedTypeGreaterThan(String value) {
+            addCriterion("bed_type >", value, "bedType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBedTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("bed_type >=", value, "bedType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBedTypeLessThan(String value) {
+            addCriterion("bed_type <", value, "bedType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBedTypeLessThanOrEqualTo(String value) {
+            addCriterion("bed_type <=", value, "bedType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBedTypeLike(String value) {
+            addCriterion("bed_type like", value, "bedType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBedTypeNotLike(String value) {
+            addCriterion("bed_type not like", value, "bedType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBedTypeIn(List<String> values) {
+            addCriterion("bed_type in", values, "bedType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBedTypeNotIn(List<String> values) {
+            addCriterion("bed_type not in", values, "bedType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBedTypeBetween(String value1, String value2) {
+            addCriterion("bed_type between", value1, value2, "bedType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBedTypeNotBetween(String value1, String value2) {
+            addCriterion("bed_type not between", value1, value2, "bedType");
+            return (Criteria) this;
+        }
+
         public Criteria andTotalIsNull() {
             addCriterion("total is null");
             return (Criteria) this;

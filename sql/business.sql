@@ -62,6 +62,8 @@ create table `bed_ticket` (
   `date` date comment '日期',
   `room_code` bigint not null comment '宿舍编号',
   `room_name` varchar(20) not null comment '宿舍名字',
+  `floors_code` varchar(20) not null comment '宿舍楼层',
+  `bed_type` char(3) not null comment '房间类型|枚举[SeatTypeEnum]',
   `total` int not null comment '宿舍余票',
   `one` int not null comment '1余票',
   `two` int not null comment '2余票',

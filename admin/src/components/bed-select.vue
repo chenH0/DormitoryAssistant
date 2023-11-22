@@ -1,17 +1,9 @@
 <template>
-<!--  <a-select v-model:value="name" show-search allowClear
+  <a-select v-model:value="index" show-search allowClear
             :filterOption="filterNameOption"
-            @change="onChange" placeholder="请选择宿舍类型"
+            @change="onChange" placeholder="请选择床位编号"
             :style="'width: ' + localWidth">
-    <a-select-option v-for="item in stations" :key="item.name" :value="item.name" :label="item.name + item.namePinyin + item.namePy">
-      {{item.name}} {{item.namePinyin}} ~ {{item.namePy}}
-    </a-select-option>
-  </a-select>-->
-  <a-select v-model:value="name" show-search allowClear
-            :filterOption="filterNameOption"
-            @change="onChange" placeholder="请选择宿舍类型"
-            :style="'width: ' + localWidth">
-    <a-select-option v-for="item in SEAT_TYPE_ARRAY" :key="item.code" :value="item.code">
+    <a-select-option v-for="item in BED_TYPE" :key="item.code" :value="item.code">
       {{item.desc}}
     </a-select-option>
   </a-select>
@@ -24,12 +16,12 @@ import axios from "axios";
 import {notification} from "ant-design-vue";
 
 export default defineComponent({
-  name: "station-select-view",
+  name: "bed-select-view",
   props: ["modelValue", "width"],
   emits: ['update:modelValue', 'change'],
   setup(props, {emit}) {
-    const SEAT_TYPE_ARRAY = window.SEAT_TYPE_ARRAY;
-    const name = ref();
+    const BED_TYPE = window.BED_TYPE;
+    const index = ref();
     const stations = ref([]);
     const localWidth = ref(props.width);
     if (Tool.isEmpty(props.width)) {
@@ -39,7 +31,7 @@ export default defineComponent({
     // 利用watch，动态获取父组件的值，如果放在onMounted或其它方法里，则只有第一次有效
     watch(() => props.modelValue, ()=>{
       console.log("props.modelValue", props.modelValue);
-      name.value = props.modelValue;
+      index.value = props.modelValue;
     }, {immediate: true});
 
     /**
@@ -82,8 +74,8 @@ export default defineComponent({
     });
 
     return {
-      SEAT_TYPE_ARRAY,
-      name,
+      BED_TYPE,
+      index,
       stations,
       filterNameOption,
       onChange,

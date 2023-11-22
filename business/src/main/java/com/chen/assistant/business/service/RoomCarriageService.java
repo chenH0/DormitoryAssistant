@@ -135,6 +135,8 @@ public class RoomCarriageService {
                         break;
                 }
             }
+            bedTicket.setBedType(req.getBedType());
+            bedTicket.setFloorsCode(req.getFloorsCode());
             bedTicket.setId(req.getId());
             bedTicket.setCreateTime(now);
             bedTicket.setUpdateTime(now);
