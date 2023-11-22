@@ -29,20 +29,56 @@ public class BedTicketQueryResp {
      */
     private Integer total;
 
-    /**
-     * 左室余票
-     */
-    private Integer left;
+    private String roomName;
 
-    /**
-     * 忠室余票
-     */
-    private Integer medium;
 
-    /**
-     * 右室余票
-     */
-    private Integer right;
+    private Integer one;
+
+    private Integer two;
+
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
+    public Integer getOne() {
+        return one;
+    }
+
+    public void setOne(Integer one) {
+        this.one = one;
+    }
+
+    public Integer getTwo() {
+        return two;
+    }
+
+    public void setTwo(Integer two) {
+        this.two = two;
+    }
+
+    public Integer getThree() {
+        return three;
+    }
+
+    public void setThree(Integer three) {
+        this.three = three;
+    }
+
+    public Integer getFour() {
+        return four;
+    }
+
+    public void setFour(Integer four) {
+        this.four = four;
+    }
+
+    private Integer three;
+
+    private Integer four;
 
     /**
      * 新增时间
@@ -88,30 +124,6 @@ public class BedTicketQueryResp {
         this.total = total;
     }
 
-    public Integer getLeft() {
-        return left;
-    }
-
-    public void setLeft(Integer left) {
-        this.left = left;
-    }
-
-    public Integer getMedium() {
-        return medium;
-    }
-
-    public void setMedium(Integer medium) {
-        this.medium = medium;
-    }
-
-    public Integer getRight() {
-        return right;
-    }
-
-    public void setRight(Integer right) {
-        this.right = right;
-    }
-
     public Date getCreateTime() {
         return createTime;
     }
@@ -130,20 +142,19 @@ public class BedTicketQueryResp {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
+        final StringBuffer sb = new StringBuffer("BedTicketQueryResp{");
+        sb.append("id=").append(id);
         sb.append(", date=").append(date);
-        sb.append(", roomCode=").append(roomCode);
+        sb.append(", roomCode='").append(roomCode).append('\'');
         sb.append(", total=").append(total);
-        sb.append(", left=").append(left);
-        sb.append(", medium=").append(medium);
-        sb.append(", right=").append(right);
+        sb.append(", roomName='").append(roomName).append('\'');
+        sb.append(", one=").append(one);
+        sb.append(", two=").append(two);
+        sb.append(", three=").append(three);
+        sb.append(", four=").append(four);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
-        sb.append("]");
+        sb.append('}');
         return sb.toString();
     }
 }

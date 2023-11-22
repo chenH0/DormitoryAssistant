@@ -7,7 +7,9 @@ public class BedTicket {
 
     private Date date;
 
-    private String roomCode;
+    private Long roomCode;
+
+    private String roomName;
 
     private Integer total;
 
@@ -39,12 +41,20 @@ public class BedTicket {
         this.date = date;
     }
 
-    public String getRoomCode() {
+    public Long getRoomCode() {
         return roomCode;
     }
 
-    public void setRoomCode(String roomCode) {
+    public void setRoomCode(Long roomCode) {
         this.roomCode = roomCode;
+    }
+
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
     }
 
     public Integer getTotal() {
@@ -112,6 +122,7 @@ public class BedTicket {
         sb.append(", id=").append(id);
         sb.append(", date=").append(date);
         sb.append(", roomCode=").append(roomCode);
+        sb.append(", roomName=").append(roomName);
         sb.append(", total=").append(total);
         sb.append(", one=").append(one);
         sb.append(", two=").append(two);

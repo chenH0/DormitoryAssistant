@@ -44,7 +44,7 @@ public class BedTicketService {
 
     public PageResp<BedTicketQueryResp> queryList(BedTicketQueryReq req) {
         BedTicketExample bedTicketExample = new BedTicketExample();
-        bedTicketExample.setOrderByClause("id desc");
+        bedTicketExample.setOrderByClause("id asc");
         BedTicketExample.Criteria criteria = bedTicketExample.createCriteria();
 
         LOG.info("查询页码：{}", req.getPage());

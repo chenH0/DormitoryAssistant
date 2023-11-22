@@ -10,7 +10,17 @@ public class RoomCarriageUpdateReq {
 
     private Long id;
 
+    private String name;
+
     private int status;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Long getId() {
         return id;
@@ -32,6 +42,7 @@ public class RoomCarriageUpdateReq {
     public String toString() {
         final StringBuffer sb = new StringBuffer("RoomCarriageUpdateReq{");
         sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
         sb.append(", status=").append(status);
         sb.append('}');
         return sb.toString();

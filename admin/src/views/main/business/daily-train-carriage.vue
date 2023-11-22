@@ -169,6 +169,7 @@ export default defineComponent({
       axios.post("/business/admin/room-carriage/updateStatus", {
         id: record.id,
         status: checked.value,
+        name:record.name,
       }).then((response) => {
         const data = response.data;
         if (data.success) {

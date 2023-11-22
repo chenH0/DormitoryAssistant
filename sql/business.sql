@@ -59,8 +59,9 @@ create table `bed_seat` (
 drop table if exists `bed_ticket`;
 create table `bed_ticket` (
   `id` bigint not null comment 'id',
-  `date` date not null comment '日期',
-  `room_code` varchar(20) not null comment '宿舍编号',
+  `date` date comment '日期',
+  `room_code` bigint not null comment '宿舍编号',
+  `room_name` varchar(20) not null comment '宿舍名字',
   `total` int not null comment '宿舍余票',
   `one` int not null comment '1余票',
   `two` int not null comment '2余票',

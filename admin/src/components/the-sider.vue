@@ -38,17 +38,17 @@
         </template>
         <a-menu-item key="/business/daily-train-carriage">
           <router-link to="/business/daily-train-carriage">
-            <MenuUnfoldOutlined /> &nbsp; 每日宿舍
-          </router-link>
-        </a-menu-item>
-        <a-menu-item key="/business/daily-train-station">
-          <router-link to="/business/daily-train-station">
-            <MenuUnfoldOutlined /> &nbsp; 每日学生
+            <MenuUnfoldOutlined /> &nbsp; 开放宿舍
           </router-link>
         </a-menu-item>
         <a-menu-item key="/business/daily-train-ticket">
           <router-link to="/business/daily-train-ticket">
             <MenuUnfoldOutlined /> &nbsp; 剩余床位
+          </router-link>
+        </a-menu-item>
+        <a-menu-item key="/business/daily-train-station">
+          <router-link to="/business/daily-train-station">
+            <MenuUnfoldOutlined /> &nbsp; 学生资格
           </router-link>
         </a-menu-item>
         <a-menu-item key="/business/sk-token">

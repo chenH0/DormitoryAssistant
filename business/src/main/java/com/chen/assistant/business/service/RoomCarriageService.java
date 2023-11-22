@@ -3,8 +3,7 @@ package com.chen.assistant.business.service;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
-import com.chen.assistant.business.domain.Storys;
-import com.chen.assistant.business.domain.StorysExample;
+import com.chen.assistant.business.domain.*;
 import com.chen.assistant.business.enums.RoomTypeEnum;
 import com.chen.assistant.business.mapper.BedSeatMapper;
 import com.chen.assistant.business.mapper.BedTicketMapper;
@@ -13,8 +12,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.chen.assistant.common.resp.PageResp;
 import com.chen.assistant.common.util.SnowUtil;
-import com.chen.assistant.business.domain.RoomCarriage;
-import com.chen.assistant.business.domain.RoomCarriageExample;
 import com.chen.assistant.business.mapper.RoomCarriageMapper;
 import com.chen.assistant.business.req.RoomCarriageQueryReq;
 import com.chen.assistant.business.req.RoomCarriageSaveReq;
@@ -25,6 +22,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -36,7 +36,10 @@ public class RoomCarriageService {
     private RoomCarriageMapper roomCarriageMapper;
 
     @Resource
-    private BedTicketMapper BedTicketMapper;
+    private BedSeatMapper bedSeatMapper;
+
+    @Resource
+    private BedTicketMapper bedTicketMapper;
 
     public void save(RoomCarriageSaveReq req) {
         DateTime now = DateTime.now();
@@ -92,12 +95,54 @@ public class RoomCarriageService {
         return roomCarriageMapper.selectByExample(roomCarriageExample).get(0);
     }
 
+    @Transactional
     public void updateStatus(RoomCarriageUpdateReq req) {
+        DateTime now = DateTime.now();
         RoomCarriage roomCarriage = new RoomCarriage();
         roomCarriage.setId(req.getId());
         roomCarriage.setStatus(req.getStatus());
         roomCarriageMapper.updateByPrimaryKeySelective(roomCarriage);
 
+        BedTicketExample bedTicketExample = new BedTicketExample();
+        BedTicketExample.Criteria bedcriteria = bedTicketExample.createCriteria();
+        bedcriteria.andRoomCodeEqualTo(req.getId());
+        bedTicketMapper.deleteByExample(bedTicketExample);
+
+        if(req.getStatus()==1){
+            BedSeatExample bedSeatExample = new BedSeatExample();
+            BedSeatExample.Criteria criteria = bedSeatExample.createCriteria();
+            criteria.andRoomCodeEqualTo(req.getId());
+            List<BedSeat> bedSeats = bedSeatMapper.selectByExample(bedSeatExample);
+            BedTicket bedTicket = new BedTicket();
+            bedTicket.setTotal(0);
+            for (BedSeat bedSeat: bedSeats) {
+                switch (bedSeat.getIndex()){
+                    case "1":
+                        bedTicket.setOne(bedSeat.getStatus());
+                        bedTicket.setTotal(bedTicket.getTotal()+bedSeat.getStatus());
+                        break;
+                    case "2":
+                        bedTicket.setTwo(bedSeat.getStatus());
+                        bedTicket.setTotal(bedTicket.getTotal()+bedSeat.getStatus());
+                        break;
+                    case "3":
+                        bedTicket.setThree(bedSeat.getStatus());
+                        bedTicket.setTotal(bedTicket.getTotal()+bedSeat.getStatus());
+                        break;
+                    case "4":
+                        bedTicket.setFour(bedSeat.getStatus());
+                        bedTicket.setTotal(bedTicket.getTotal()+bedSeat.getStatus());
+                        break;
+                }
+            }
+            bedTicket.setId(req.getId());
+            bedTicket.setCreateTime(now);
+            bedTicket.setUpdateTime(now);
+            bedTicket.setRoomCode(req.getId());
+            bedTicket.setRoomName(req.getName());
+            bedTicket.setDate(now);
+            bedTicketMapper.insert(bedTicket);
+        }
     }
 
     @Transactional
@@ -112,5 +157,9 @@ public class RoomCarriageService {
             updateRoom.setStatus(0);
             roomCarriageMapper.updateByPrimaryKeySelective(updateRoom);
         }
+        BedTicketExample bedTicketExample = new BedTicketExample();
+        BedTicketExample.Criteria bedTicketCriteria = bedTicketExample.createCriteria();
+        bedTicketCriteria.andIdIsNotNull();
+        bedTicketMapper.deleteByExample(bedTicketExample);
     }
 }

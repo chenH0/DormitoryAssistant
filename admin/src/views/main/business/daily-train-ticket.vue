@@ -113,30 +113,35 @@ export default defineComponent({
       key: 'date',
     },
     {
-      title: '宿舍编号',
-      dataIndex: 'roomCode',
-      key: 'roomCode',
+      title: '宿舍名',
+      dataIndex: 'roomName',
+      key: 'roomName',
     },
     {
       title: '总剩余床位',
       dataIndex: 'total',
-      key: 'right',
+      key: 'total',
     },
     {
-      title: '左室剩余床位',
-      dataIndex: 'left',
-      key: 'right',
+      title: '1号床',
+      dataIndex: 'one',
+      key: 'one',
     },
     {
-      title: '中室剩余床位',
-      dataIndex: 'medium',
-      key: 'right',
+      title: '2号床',
+      dataIndex: 'two',
+      key: 'two',
     },
     {
-      title: '右室剩余床位',
-      dataIndex: 'right',
-      key: 'right',
+      title: '3号床',
+      dataIndex: 'three',
+      key: 'three',
     },
+      {
+        title: '4号床',
+        dataIndex: 'four',
+        key: 'four',
+      },
     ];
 
 

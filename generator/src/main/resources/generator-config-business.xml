@@ -55,5 +55,6 @@
         <!--<table tableName="member" domainObjectName="Member"/>-->
         <!--<table tableName="room_carriage" domainObjectName="RoomCarriage"/>-->
         <table tableName="bed_ticket" domainObjectName="BedTicket"/>
+        <!--<table tableName="bed_seat" domainObjectName="BedSeat"/>-->
     </context>
 </generatorConfiguration>
