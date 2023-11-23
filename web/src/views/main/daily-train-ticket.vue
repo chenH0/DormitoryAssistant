@@ -2,7 +2,7 @@
   <p>
     <a-space>
       <train-select-view v-model="params.trainCode" width="200px"></train-select-view>
-      <!--      <a-date-picker v-model:value="params.date" valueFormat="YYYY-MM-DD" placeholder="请选择日期"></a-date-picker>-->
+<!--      <a-date-picker v-model:value="params.date" valueFormat="YYYY-MM-DD" placeholder="请选择日期"></a-date-picker>-->
 
 
       <station-select-view v-model="params.bedType" width="200px"></station-select-view>
@@ -110,32 +110,36 @@ export default defineComponent({
     let loading = ref(false);
     const params = ref({});
     const columns = [
-
-      {
-        title: '宿舍名',
-        dataIndex: 'roomName',
-        key: 'roomName',
-      },
-      {
-        title: '总剩余床位',
-        dataIndex: 'total',
-        key: 'total',
-      },
-      {
-        title: '1号床',
-        dataIndex: 'one',
-        key: 'one',
-      },
-      {
-        title: '2号床',
-        dataIndex: 'two',
-        key: 'two',
-      },
-      {
-        title: '3号床',
-        dataIndex: 'three',
-        key: 'three',
-      },
+    {
+      title: '日期',
+      dataIndex: 'date',
+      key: 'date',
+    },
+    {
+      title: '宿舍名',
+      dataIndex: 'roomName',
+      key: 'roomName',
+    },
+    {
+      title: '总剩余床位',
+      dataIndex: 'total',
+      key: 'total',
+    },
+    {
+      title: '1号床',
+      dataIndex: 'one',
+      key: 'one',
+    },
+    {
+      title: '2号床',
+      dataIndex: 'two',
+      key: 'two',
+    },
+    {
+      title: '3号床',
+      dataIndex: 'three',
+      key: 'three',
+    },
       {
         title: '4号床',
         dataIndex: 'four',
@@ -152,7 +156,7 @@ export default defineComponent({
         };
       }
       loading.value = true;
-      axios.get("/business/bed-ticket/query-list", {
+      axios.get("/business/admin/bed-ticket/query-list", {
         params: {
           page: param.page,
           size: param.size,

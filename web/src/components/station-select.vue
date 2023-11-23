@@ -1,10 +1,18 @@
 <template>
-  <a-select v-model:value="name" show-search allowClear
+<!--  <a-select v-model:value="name" show-search allowClear
             :filterOption="filterNameOption"
-            @change="onChange" placeholder="请选择车站"
+            @change="onChange" placeholder="请选择宿舍类型"
             :style="'width: ' + localWidth">
     <a-select-option v-for="item in stations" :key="item.name" :value="item.name" :label="item.name + item.namePinyin + item.namePy">
       {{item.name}} {{item.namePinyin}} ~ {{item.namePy}}
+    </a-select-option>
+  </a-select>-->
+  <a-select v-model:value="name" show-search allowClear
+            :filterOption="filterNameOption"
+            @change="onChange" placeholder="请选择宿舍类型"
+            :style="'width: ' + localWidth">
+    <a-select-option v-for="item in SEAT_TYPE_ARRAY" :key="item.code" :value="item.code">
+      {{item.desc}}
     </a-select-option>
   </a-select>
 </template>
@@ -20,6 +28,7 @@ export default defineComponent({
   props: ["modelValue", "width"],
   emits: ['update:modelValue', 'change'],
   setup(props, {emit}) {
+    const SEAT_TYPE_ARRAY = window.SEAT_TYPE_ARRAY;
     const name = ref();
     const stations = ref([]);
     const localWidth = ref(props.width);
@@ -37,7 +46,7 @@ export default defineComponent({
      * 查询所有的车站，用于车站下拉框
      */
     const queryAllStation = () => {
-      axios.get("/business/station/query-all").then((response) => {
+      axios.get("/business/admin/parti/query-all").then((response) => {
         let data = response.data;
         if (data.success) {
           stations.value = data.content;
@@ -73,6 +82,7 @@ export default defineComponent({
     });
 
     return {
+      SEAT_TYPE_ARRAY,
       name,
       stations,
       filterNameOption,

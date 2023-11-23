@@ -5,9 +5,9 @@ import com.chen.assistant.common.req.PageReq;
 public class BedTicketQueryReq extends PageReq {
     private String trainCode;
 
-    private int bedIndex;
+    private String bedIndex;
 
-    private int bedType;
+    private String bedType;
 
     public String getTrainCode() {
         return trainCode;
@@ -17,22 +17,21 @@ public class BedTicketQueryReq extends PageReq {
         this.trainCode = trainCode;
     }
 
-    public int getBedIndex() {
+    public String getBedIndex() {
         return bedIndex;
     }
 
-    public void setBedIndex(int bedIndex) {
+    public void setBedIndex(String bedIndex) {
         this.bedIndex = bedIndex;
     }
 
     public String getBedType() {
-        return String.valueOf(bedType);
+        return bedType;
     }
 
-    public void setBedType(int bedType) {
+    public void setBedType(String bedType) {
         this.bedType = bedType;
     }
-
 
     @Override
     public String toString() {

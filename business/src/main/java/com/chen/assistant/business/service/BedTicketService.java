@@ -49,7 +49,7 @@ public class BedTicketService {
         if(ObjectUtil.isNotNull(req.getTrainCode())){criteria.andFloorsCodeEqualTo(req.getTrainCode());}
         if(ObjectUtil.isNotNull(req.getBedType())){criteria.andBedTypeEqualTo(req.getBedType());}
         if(ObjectUtil.isNotNull(req.getBedIndex())){
-            switch (req.getBedIndex()) {
+            switch (Integer.valueOf(req.getBedIndex())) {
                 case 1:
                     criteria.andOneEqualTo(1);
                     break;
