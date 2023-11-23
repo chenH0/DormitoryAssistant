@@ -46,6 +46,24 @@ public class BedTicketService {
         BedTicketExample bedTicketExample = new BedTicketExample();
         bedTicketExample.setOrderByClause("id asc");
         BedTicketExample.Criteria criteria = bedTicketExample.createCriteria();
+        if(ObjectUtil.isNotNull(req.getTrainCode())){criteria.andFloorsCodeEqualTo(req.getTrainCode());}
+        if(ObjectUtil.isNotNull(req.getBedType())){criteria.andBedTypeEqualTo(req.getBedType());}
+        if(ObjectUtil.isNotNull(req.getBedIndex())){
+            switch (req.getBedIndex()) {
+                case 1:
+                    criteria.andOneEqualTo(1);
+                    break;
+                case 2:
+                    criteria.andOneEqualTo(2);
+                    break;
+                case 3:
+                    criteria.andOneEqualTo(3);
+                    break;
+                case 4:
+                    criteria.andOneEqualTo(4);
+                    break;
+            }
+        }
 
         LOG.info("查询页码：{}", req.getPage());
         LOG.info("每页条数：{}", req.getSize());

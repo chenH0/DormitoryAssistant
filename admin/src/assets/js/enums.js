@@ -5,7 +5,7 @@ SEAT_COL={YDZ_A:{code:"A",desc:"A",type:"1"},YDZ_C:{code:"C",desc:"C",type:"1"},
 CONFIRM_ORDER_STATUS={INIT:{code:"I",desc:"初始"},PENDING:{code:"P",desc:"处理中"},SUCCESS:{code:"S",desc:"成功"},FAILURE:{code:"F",desc:"失败"},EMPTY:{code:"E",desc:"无票"},CANCEL:{code:"C",desc:"取消"}};
 
 OPEN_TYPE=[{code:0,desc:"未开放选择"},{code:1,desc:"开放选择"}];
-BED_TYPE=[{code:1,desc:"1"},{code:2,desc:"2"},{code:3,desc:"3"},{code:4,desc:"4"}];
+BED_TYPE=[{code:1,desc:"1号床"},{code:2,desc:"2号床"},{code:3,desc:"3号床"},{code:4,desc:"4号床"}];
 PASSENGER_TYPE_ARRAY=[{code:"1",desc:"成人"},{code:"2",desc:"儿童"},{code:"3",desc:"学生"}];
 TRAIN_TYPE_ARRAY=[{code:"0",desc:"女生楼层",priceRate:"1.2"},{code:"1",desc:"男生楼层",priceRate:"1"}];
 SEAT_TYPE_ARRAY=[{code:"0",desc:"左室",price:"0.4"},{code:"1",desc:"中室",price:"0.3"},{code:"2",desc:"右室",price:"0.6"}];
