@@ -35,7 +35,7 @@
   </div>
   <a-checkbox-group v-model:value="roomChecks" :options="roomOptions" />
 
-  <div class="order-tickets">
+  <div class="order-tickets"  v-if="valueChecks > 0">
     <a-row class="order-tickets-header" v-if="tickets.length > 0">
       <a-col :span="4">姓名</a-col>
       <a-col :span="6">学号</a-col>
@@ -49,7 +49,7 @@
       <a-col :span="2" v-if="valueChecks>0" style="color: dodgerblue">{{valueChecks}}号床</a-col>
     </a-row>
   </div>
-  <div v-if="tickets.length > 0">
+  <div v-if="valueChecks > 0">
     <a-button type="primary" size="large" @click="finishCheckPassenger" style="float: right">提交订单</a-button>
   </div>
 

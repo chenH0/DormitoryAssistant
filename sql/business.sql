@@ -80,16 +80,15 @@ create table `confirm_order` (
   `id` bigint not null comment 'id',
   `member_id` bigint not null comment '会员id',
   `date` date not null comment '日期',
-  `train_code` varchar(20) not null comment '车次编号',
-  `start` varchar(20) not null comment '出发站',
-  `end` varchar(20) not null comment '到达站',
-  `daily_train_ticket_id` bigint not null comment '余票ID',
-  `tickets` json not null comment '车票',
+  `room_name` varchar(20) not null comment '宿舍名字',
+  `floors_code` varchar(20) not null comment '宿舍楼层',
+  `index` char(2) not null comment '座位号|01, 02|03|04',
+  `date_room_ticket_id` bigint not null comment '余票ID',
   `status` char(1) not null comment '订单状态|枚举[ConfirmOrderStatusEnum]',
   `create_time` datetime(3) comment '新增时间',
   `update_time` datetime(3) comment '修改时间',
   primary key (`id`),
-  index `date_train_code_index` (`date`, `train_code`)
+  index `date_room_code_index` (`member_id`)
 ) engine=innodb default charset=utf8mb4 comment='确认订单';
 
 CREATE TABLE `undo_log` (
