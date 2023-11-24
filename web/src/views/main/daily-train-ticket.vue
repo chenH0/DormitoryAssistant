@@ -156,7 +156,7 @@ export default defineComponent({
         };
       }
       loading.value = true;
-      axios.get("/business/admin/bed-ticket/query-list", {
+      axios.get("/business/bed-ticket/query-list", {
         params: {
           page: param.page,
           size: param.size,

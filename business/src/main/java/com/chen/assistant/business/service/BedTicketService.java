@@ -85,4 +85,9 @@ public class BedTicketService {
     public void delete(Long id) {
         bedTicketMapper.deleteByPrimaryKey(id);
     }
+
+    public BedTicketQueryResp queryById(Long id) {
+        BedTicket bedTicket = bedTicketMapper.selectByPrimaryKey(id);
+        return BeanUtil.copyProperties(bedTicket, BedTicketQueryResp.class);
+    }
 }

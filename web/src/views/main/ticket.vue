@@ -17,6 +17,21 @@
            :loading="loading">
     <template #bodyCell="{ column, record }">
       <template v-if="column.dataIndex === 'operation'">
+        <a-space>
+          <a-button type="primary" @click="toOrder(record)">选择床位</a-button>
+          <router-link :to="{
+            path: '/seat',
+            query: {
+              date: record.date,
+              trainCode: record.trainCode,
+              start: record.start,
+              startIndex: record.startIndex,
+              end: record.end,
+              endIndex: record.endIndex
+            }
+          }">
+          </router-link>
+        </a-space>
       </template>
       <template v-else-if="column.dataIndex === 'station'">
         {{record.start}}<br/>
@@ -83,6 +98,7 @@ import TrainSelectView from "@/components/train-select";
 import StationSelectView from "@/components/station-select";
 import BedSelectView from "@/components/bed-select";
 import dayjs from "dayjs";
+import router from "@/router";
 
 export default defineComponent({
   name: "daily-train-ticket-view",
@@ -93,12 +109,12 @@ export default defineComponent({
       id: undefined,
       date: undefined,
       roomCode: undefined,
+      roomName: undefined,
       total: undefined,
-      left: undefined,
-      medium: undefined,
-      right: undefined,
-      createTime: undefined,
-      updateTime: undefined,
+      one: undefined,
+      two: undefined,
+      three: undefined,
+      four: undefined,
     });
     const dailyTrainTickets = ref([]);
     // 分页的三个属性名是固定的
@@ -110,7 +126,6 @@ export default defineComponent({
     let loading = ref(false);
     const params = ref({});
     const columns = [
-
       {
         title: '宿舍名',
         dataIndex: 'roomName',
@@ -140,6 +155,10 @@ export default defineComponent({
         title: '4号床',
         dataIndex: 'four',
         key: 'four',
+      },
+      {
+        title: '操作',
+        dataIndex: 'operation',
       },
     ];
 
@@ -174,6 +193,12 @@ export default defineComponent({
       });
     };
 
+    const toOrder = (record) => {
+      dailyTrainTicket.value = Tool.copy(record);
+      SessionStorage.set(SESSION_ORDER, dailyTrainTicket.value);
+      router.push("/order")
+    };
+
     const handleTableChange = (page) => {
       // console.log("看看自带的分页参数都有啥：" + JSON.stringify(page));
       pagination.value.pageSize = page.pageSize;
@@ -204,6 +229,7 @@ export default defineComponent({
       handleTableChange,
       handleQuery,
       loading,
+      toOrder,
       params,
       calDuration
     };

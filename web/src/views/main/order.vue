@@ -1,23 +1,34 @@
 <template>
-  <div class="order-train">
-    <span class="order-train-main">{{dailyTrainTicket.date}}</span>&nbsp;
-    <span class="order-train-main">{{dailyTrainTicket.trainCode}}</span>次&nbsp;
-    <span class="order-train-main">{{dailyTrainTicket.start}}</span>站
-    <span class="order-train-main">({{dailyTrainTicket.startTime}})</span>&nbsp;
-    <span class="order-train-main">——</span>&nbsp;
-    <span class="order-train-main">{{dailyTrainTicket.end}}</span>站
-    <span class="order-train-main">({{dailyTrainTicket.endTime}})</span>&nbsp;
+  <div>
+  <p>
+    <a-space>
+      <a-button type="primary" @click="handleQuery()">回退</a-button>
+      <a-button type="primary" @click="handleQuery()">刷新</a-button>
+    </a-space>
 
-    <div class="order-train-ticket">
-      <span v-for="item in seatTypes" :key="item.type">
-        <span>{{item.desc}}</span>：
-        <span class="order-train-ticket-main">{{item.price}}￥</span>&nbsp;
-        <span class="order-train-ticket-main">{{item.count}}</span>&nbsp;张票&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </span>
-    </div>
+  </p>
+  </div>
+
+  <div class="order-train">
+    <span class="order-train-main">{{room.roomName}}</span>&nbsp;
+
+    <span class="order-train-small">&ensp; 剩余 </span>
+    <span class="order-train-big" style="color: dodgerblue">{{room.total}}</span>
+    <span class="order-train-small"> 个空床位</span>
   </div>
   <a-divider></a-divider>
-  <b>勾选要购票的乘客：</b>&nbsp;
+
+  <div>
+    <div :style="{ marginTop: '16px' }">
+      <b>勾选要选择的床位：</b>
+      <a-radio-group v-model:value="valueChecks" button-style="solid" @change="onChange">
+        <a-radio-button value="a">1号床</a-radio-button>
+        <a-radio-button value="b" disabled>2号床</a-radio-button>
+        <a-radio-button value="c">3号床</a-radio-button>
+        <a-radio-button value="d">4号床</a-radio-button>
+      </a-radio-group>
+    </div>
+  </div>
   <a-checkbox-group v-model:value="passengerChecks" :options="passengerOptions" />
 
   <div class="order-tickets">
@@ -163,23 +174,16 @@ import {notification} from "ant-design-vue";
 export default defineComponent({
   name: "order-view",
   setup() {
-    const passengers = ref([]);
+    const room = ref([]);
     const passengerOptions = ref([]);
     const passengerChecks = ref([]);
+    const valueChecks = ref([]);
     const dailyTrainTicket = SessionStorage.get(SESSION_ORDER) || {};
     console.log("下单的车次信息", dailyTrainTicket);
 
     const SEAT_TYPE = window.SEAT_TYPE;
     console.log(SEAT_TYPE)
-    // 本车次提供的座位类型seatTypes，含票价，余票等信息，例：
-    // {
-    //   type: "YDZ",
-    //   code: "1",
-    //   desc: "一等座",
-    //   count: "100",
-    //   price: "50",
-    // }
-    // 关于SEAT_TYPE[KEY]：当知道某个具体的属性xxx时，可以用obj.xxx，当属性名是个变量时，可以使用obj[xxx]
+
     const seatTypes = [];
     for (let KEY in SEAT_TYPE) {
       let key = KEY.toLowerCase();
@@ -194,15 +198,7 @@ export default defineComponent({
       }
     }
     console.log("本车次提供的座位：", seatTypes)
-    // 购票列表，用于界面展示，并传递到后端接口，用来描述：哪个乘客购买什么座位的票
-    // {
-    //   passengerId: 123,
-    //   passengerType: "1",
-    //   passengerName: "张三",
-    //   passengerIdCard: "12323132132",
-    //   seatTypeCode: "1",
-    //   seat: "C1"
-    // }
+
     const tickets = ref([]);
     const PASSENGER_TYPE_ARRAY = window.PASSENGER_TYPE_ARRAY;
     const visible = ref(false);
@@ -217,6 +213,19 @@ export default defineComponent({
       // 每次有变化时，把购票列表清空，重新构造列表
       tickets.value = [];
       passengerChecks.value.forEach((item) => tickets.value.push({
+        passengerId: item.id,
+        passengerType: item.type,
+        seatTypeCode: seatTypes[0].code,
+        passengerName: item.name,
+        passengerIdCard: item.idCard
+      }))
+    }, {immediate: true});
+
+    watch(() => valueChecks.value, (newVal, oldVal)=>{
+      console.log("勾选乘客发生变化", newVal, oldVal)
+      // 每次有变化时，把购票列表清空，重新构造列表
+      tickets.value = [];
+      valueChecks.value.forEach((item) => tickets.value.push({
         passengerId: item.id,
         passengerType: item.type,
         seatTypeCode: seatTypes[0].code,
@@ -248,11 +257,15 @@ export default defineComponent({
     }, {immediate: true});
 
     const handleQueryPassenger = () => {
-      axios.get("/member/passenger/query-mine").then((response) => {
+      axios.get("/business/bed-ticket/query", {
+        params: {
+          id: dailyTrainTicket.id,
+        }
+      }).then((response) => {
         let data = response.data;
         if (data.success) {
-          passengers.value = data.content;
-          passengers.value.forEach((item) => passengerOptions.value.push({
+          room.value = data.content;
+          room.value.forEach((item) => passengerOptions.value.push({
             label: item.name,
             value: item
           }))
@@ -514,11 +527,12 @@ export default defineComponent({
     });
 
     return {
-      passengers,
+      room,
       dailyTrainTicket,
       seatTypes,
       passengerOptions,
       passengerChecks,
+      valueChecks,
       tickets,
       PASSENGER_TYPE_ARRAY,
       visible,
@@ -551,11 +565,18 @@ export default defineComponent({
 
 <style>
 .order-train .order-train-main {
-  font-size: 18px;
+  font-size: 22px;
+  font-weight: bold;
+}
+.order-train .order-train-small {
+  font-size: 14px;
+}
+.order-train .order-train-big {
+  font-size: 20px;
   font-weight: bold;
 }
 .order-train .order-train-ticket {
-  margin-top: 15px;
+  margin-top: 18px;
 }
 .order-train .order-train-ticket .order-train-ticket-main {
   color: red;
@@ -586,3 +607,5 @@ export default defineComponent({
   margin: 5px 5px;
 }
 </style>
+<script setup>
+</script>

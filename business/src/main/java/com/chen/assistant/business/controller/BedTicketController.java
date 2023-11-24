@@ -22,4 +22,9 @@ public class BedTicketController {
         PageResp<BedTicketQueryResp> list = bedTicketService.queryList(req);
         return new CommonResp<>(list);
     }
+
+    @GetMapping("/query")
+    public CommonResp<BedTicketQueryResp> queryById(Long id) {
+        return new CommonResp<>(bedTicketService.queryById(id));
+    }
 }
