@@ -31,4 +31,9 @@ public class HouseHoldController {
         PageResp<HouseholdResp> householdResp = householdService.show(req);
         return new CommonResp<>(householdResp);
     }
+
+    @GetMapping("/getUser")
+    public CommonResp<HouseholdResp> getUser(){
+        return new CommonResp<>(householdService.getUser(LoginMemberContext.getId()));
+    }
 }

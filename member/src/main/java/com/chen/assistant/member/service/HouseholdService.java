@@ -55,4 +55,9 @@ public class HouseholdService {
         pageResp.setList(list);
         return pageResp;
     }
+
+    public HouseholdResp getUser(Long id) {
+        Household household = householdMapper.selectByPrimaryKey(id);
+        return BeanUtil.copyProperties(household, HouseholdResp.class);
+    }
 }

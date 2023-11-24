@@ -1,5 +1,5 @@
 <template>
-  <div>
+<!--  <div>
   <p>
     <a-space>
       <a-button type="primary" @click="handleQuery()">回退</a-button>
@@ -7,7 +7,7 @@
     </a-space>
 
   </p>
-  </div>
+  </div>-->
 
   <div class="order-train">
     <span class="order-train-main">{{room.roomName}}</span>&nbsp;
@@ -21,47 +21,39 @@
   <div>
     <div :style="{ marginTop: '16px' }">
       <b>勾选要选择的床位：</b>
-      <a-radio-group v-model:value="valueChecks" button-style="solid" @change="onChange">
-        <a-radio-button value="a">1号床</a-radio-button>
-        <a-radio-button value="b" disabled>2号床</a-radio-button>
-        <a-radio-button value="c">3号床</a-radio-button>
-        <a-radio-button value="d">4号床</a-radio-button>
+      <a-radio-group v-model:value="valueChecks" button-style="solid">
+        <a-radio-button value="1" v-if="room.one === 1" :disabled=false>1号床</a-radio-button>
+        <a-radio-button value="1" v-if="room.one === 0" :disabled=true>1号床</a-radio-button>
+        <a-radio-button value="2" v-if="room.two === 1" :disabled=false>2号床</a-radio-button>
+        <a-radio-button value="2" v-if="room.two === 0" :disabled=true>2号床</a-radio-button>
+        <a-radio-button value="3" v-if="room.three === 1" :disabled=false>3号床</a-radio-button>
+        <a-radio-button value="3" v-if="room.three === 0" :disabled=true>3号床</a-radio-button>
+        <a-radio-button value="4" v-if="room.four === 1" :disabled=false>4号床</a-radio-button>
+        <a-radio-button value="4" v-if="room.four === 0" :disabled=true>4号床</a-radio-button>
       </a-radio-group>
     </div>
   </div>
-  <a-checkbox-group v-model:value="passengerChecks" :options="passengerOptions" />
+  <a-checkbox-group v-model:value="roomChecks" :options="roomOptions" />
 
   <div class="order-tickets">
     <a-row class="order-tickets-header" v-if="tickets.length > 0">
-      <a-col :span="2">乘客</a-col>
-      <a-col :span="6">身份证</a-col>
-      <a-col :span="4">票种</a-col>
-      <a-col :span="4">座位类型</a-col>
+      <a-col :span="4">姓名</a-col>
+      <a-col :span="6">学号</a-col>
+      <a-col :span="10">宿舍房间号</a-col>
+      <a-col :span="2">床位类型</a-col>
     </a-row>
     <a-row class="order-tickets-row" v-for="ticket in tickets" :key="ticket.passengerId">
-      <a-col :span="2">{{ticket.passengerName}}</a-col>
-      <a-col :span="6">{{ticket.passengerIdCard}}</a-col>
-      <a-col :span="4">
-        <a-select v-model:value="ticket.passengerType" style="width: 100%">
-          <a-select-option v-for="item in PASSENGER_TYPE_ARRAY" :key="item.code" :value="item.code">
-            {{item.desc}}
-          </a-select-option>
-        </a-select>
-      </a-col>
-      <a-col :span="4">
-        <a-select v-model:value="ticket.seatTypeCode" style="width: 100%">
-          <a-select-option v-for="item in seatTypes" :key="item.code" :value="item.code">
-            {{item.desc}}
-          </a-select-option>
-        </a-select>
-      </a-col>
+      <a-col :span="4">{{user.name}}</a-col>
+      <a-col :span="6">{{user.idCard}}</a-col>
+      <a-col :span="10">{{room.roomName}}</a-col>
+      <a-col :span="2" v-if="valueChecks>0" style="color: dodgerblue">{{valueChecks}}号床</a-col>
     </a-row>
   </div>
   <div v-if="tickets.length > 0">
-    <a-button type="primary" size="large" @click="finishCheckPassenger">提交订单</a-button>
+    <a-button type="primary" size="large" @click="finishCheckPassenger" style="float: right">提交订单</a-button>
   </div>
 
-  <a-modal v-model:visible="visible" title="请核对以下信息"
+<!--  <a-modal v-model:visible="visible" title="请核对以下信息"
            style="top: 50px; width: 800px"
            ok-text="确认" cancel-text="取消"
            @ok="showFirstImageCodeModal">
@@ -73,7 +65,7 @@
         <a-col :span="3">座位类型</a-col>
       </a-row>
       <a-row class="order-tickets-row" v-for="ticket in tickets" :key="ticket.passengerId">
-        <a-col :span="3">{{ticket.passengerName}}</a-col>
+        <a-col :span="3">{{user.values.name}}</a-col>
         <a-col :span="15">{{ticket.passengerIdCard}}</a-col>
         <a-col :span="3">
           <span v-for="item in PASSENGER_TYPE_ARRAY" :key="item.code">
@@ -110,11 +102,11 @@
         体验排队购票，加入多人一起排队购票：
         <a-input-number v-model:value="lineNumber" :min="0" :max="20" />
       </div>
-      <!--<br/>-->
-      <!--最终购票：{{tickets}}-->
-      <!--最终选座：{{chooseSeatObj}}-->
+      &lt;!&ndash;<br/>&ndash;&gt;
+      &lt;!&ndash;最终购票：{{tickets}}&ndash;&gt;
+      &lt;!&ndash;最终选座：{{chooseSeatObj}}&ndash;&gt;
     </div>
-  </a-modal>
+  </a-modal>-->
 
   <!-- 第二层验证码 后端 -->
   <a-modal v-model:visible="imageCodeModalVisible" :title="null" :footer="null" :closable="false"
@@ -175,9 +167,10 @@ export default defineComponent({
   name: "order-view",
   setup() {
     const room = ref([]);
-    const passengerOptions = ref([]);
-    const passengerChecks = ref([]);
-    const valueChecks = ref([]);
+    const user = ref([]);
+    const roomOptions = ref([]);
+    const roomChecks = ref([]);
+    const valueChecks = ref();
     const dailyTrainTicket = SessionStorage.get(SESSION_ORDER) || {};
     console.log("下单的车次信息", dailyTrainTicket);
 
@@ -208,11 +201,11 @@ export default defineComponent({
     const lineNumber = ref(5);
 
     // 勾选或去掉某个乘客时，在购票列表中加上或去掉一张表
-    watch(() => passengerChecks.value, (newVal, oldVal)=>{
+    watch(() => roomChecks.value, (newVal, oldVal)=>{
       console.log("勾选乘客发生变化", newVal, oldVal)
       // 每次有变化时，把购票列表清空，重新构造列表
       tickets.value = [];
-      passengerChecks.value.forEach((item) => tickets.value.push({
+      roomChecks.value.forEach((item) => tickets.value.push({
         passengerId: item.id,
         passengerType: item.type,
         seatTypeCode: seatTypes[0].code,
@@ -225,13 +218,12 @@ export default defineComponent({
       console.log("勾选乘客发生变化", newVal, oldVal)
       // 每次有变化时，把购票列表清空，重新构造列表
       tickets.value = [];
-      valueChecks.value.forEach((item) => tickets.value.push({
-        passengerId: item.id,
-        passengerType: item.type,
-        seatTypeCode: seatTypes[0].code,
-        passengerName: item.name,
-        passengerIdCard: item.idCard
-      }))
+      console.log(valueChecks.value);
+      tickets.value.push({
+        room:valueChecks.value,
+        user:user.value
+      })
+
     }, {immediate: true});
 
     // 0：不支持选座；1：选一等座；2：选二等座
@@ -265,7 +257,18 @@ export default defineComponent({
         let data = response.data;
         if (data.success) {
           room.value = data.content;
-          room.value.forEach((item) => passengerOptions.value.push({
+        } else {
+          notification.error({description: data.message});
+        }
+      });
+    };
+
+    const handleQueryUser = () => {
+      axios.get("/member/household/getUser").then((response) => {
+        let data = response.data;
+        if (data.success) {
+          user.value = data.content;
+          user.value.forEach((item) => passengerOptions.value.push({
             label: item.name,
             value: item
           }))
@@ -524,14 +527,16 @@ export default defineComponent({
 
     onMounted(() => {
       handleQueryPassenger();
+      handleQueryUser();
     });
 
     return {
       room,
+      user,
       dailyTrainTicket,
       seatTypes,
-      passengerOptions,
-      passengerChecks,
+      roomOptions,
+      roomChecks,
       valueChecks,
       tickets,
       PASSENGER_TYPE_ARRAY,
