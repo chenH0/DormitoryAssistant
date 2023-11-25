@@ -53,41 +53,33 @@
     <a-button type="primary" size="large" @click="finishCheckPassenger" style="float: right">提交订单</a-button>
   </div>
 
-<!--  <a-modal v-model:visible="visible" title="请核对以下信息"
-           style="top: 50px; width: 800px"
+  <a-modal v-model:visible="visible" title="请核对床位信息"
+           style="top: 80px; width: 650px"
            ok-text="确认" cancel-text="取消"
            @ok="showFirstImageCodeModal">
     <div class="order-tickets">
       <a-row class="order-tickets-header" v-if="tickets.length > 0">
-        <a-col :span="3">乘客</a-col>
-        <a-col :span="15">身份证</a-col>
-        <a-col :span="3">票种</a-col>
-        <a-col :span="3">座位类型</a-col>
+        <a-col :span="3">姓名</a-col>
+        <a-col :span="6">学号</a-col>
+        <a-col :span="8">宿舍房间号</a-col>
+        <a-col :span="4">床位类型</a-col>
       </a-row>
       <a-row class="order-tickets-row" v-for="ticket in tickets" :key="ticket.passengerId">
-        <a-col :span="3">{{user.values.name}}</a-col>
-        <a-col :span="15">{{ticket.passengerIdCard}}</a-col>
-        <a-col :span="3">
-          <span v-for="item in PASSENGER_TYPE_ARRAY" :key="item.code">
-            <span v-if="item.code === ticket.passengerType">
-              {{item.desc}}
-            </span>
-          </span>
-        </a-col>
-        <a-col :span="3">
-          <span v-for="item in seatTypes" :key="item.code">
-            <span v-if="item.code === ticket.seatTypeCode">
-              {{item.desc}}
-            </span>
-          </span>
-        </a-col>
+        <a-col :span="3">{{user.name}}</a-col>
+        <a-col :span="6">{{user.idCard}}</a-col>
+        <a-col :span="8">{{room.roomName}}</a-col>
+        <a-col :span="4" v-if="valueChecks>0" style="color: dodgerblue">{{valueChecks}}号床</a-col>
       </a-row>
       <br/>
       <div v-if="chooseSeatType === 0" style="color: red;">
-        您购买的车票不支持选座
-        <div>12306规则：只有全部是一等座或全部是二等座才支持选座</div>
-        <div>12306规则：余票小于一定数量时，不允许选座（本项目以20为例）</div>
+        点击确认后，请勿刷新页面，以免导致占床失败
       </div>
+
+      <div v-if="chooseSeatType === 0" style="color: dodgerblue;">
+        <div>宿管帮规则1：床位一经确认，不再支持更改</div>
+        <div>宿管帮规则2：一名新生仅允许选择一个床位</div>
+      </div>
+
       <div v-else style="text-align: center">
         <a-switch class="choose-seat-item" v-for="item in SEAT_COL_ARRAY" :key="item.code"
                   v-model:checked="chooseSeatObj[item.code + '1']" :checked-children="item.desc" :un-checked-children="item.desc" />
@@ -98,15 +90,12 @@
         <div style="color: #999999">提示：您可以选择{{tickets.length}}个座位</div>
       </div>
       <br>
-      <div style="color: red">
-        体验排队购票，加入多人一起排队购票：
-        <a-input-number v-model:value="lineNumber" :min="0" :max="20" />
-      </div>
-      &lt;!&ndash;<br/>&ndash;&gt;
-      &lt;!&ndash;最终购票：{{tickets}}&ndash;&gt;
-      &lt;!&ndash;最终选座：{{chooseSeatObj}}&ndash;&gt;
+
+      <!--<br/>-->
+      <!--最终购票：{{tickets}}-->
+      <!--最终选座：{{chooseSeatObj}}-->
     </div>
-  </a-modal>-->
+  </a-modal>
 
   <!-- 第二层验证码 后端 -->
   <a-modal v-model:visible="imageCodeModalVisible" :title="null" :footer="null" :closable="false"
@@ -279,11 +268,21 @@ export default defineComponent({
     };
 
     const finishCheckPassenger = () => {
-      console.log("购票列表：", tickets.value);
-
-      if (tickets.value.length > 5) {
-        notification.error({description: '最多只能购买5张车票'});
-        return;
+      if (valueChecks.value > 0) {
+        console.log("hello")
+        /*axios.get("/member/household/getUser").then((response) => {
+          let data = response.data;
+          if (data.success) {
+            user.value = data.content;
+            user.value.forEach((item) => passengerOptions.value.push({
+              label: item.name,
+              value: item
+            }))
+          } else {
+            notification.error({description: data.message});
+          }
+        });*/
+        visible.value = true;
       }
 
       // 校验余票是否充足，购票列表中的每个座位类型，都去车次座位余票信息中，看余票是否充足

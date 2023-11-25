@@ -2,7 +2,7 @@
   <p>
     <a-space>
       <a-button type="primary" @click="handleQuery()">刷新</a-button>
-      <a-button type="primary" @click="onAdd">修改</a-button>
+      <a-button type="primary" @click="onAdd(passengers)">修改</a-button>
     </a-space>
   </p>
   <a-table :dataSource="passengers"
@@ -19,7 +19,7 @@
               ok-text="确认" cancel-text="取消">
             <a style="color: red">删除</a>
           </a-popconfirm>
-          <a @click="onEdit(record)">编辑</a>
+          <a @click="onAdd(passenger)">编辑</a>
         </a-space>
       </template>
       <template v-else-if="column.dataIndex === 'type'">
@@ -43,25 +43,25 @@
   </a-table>
   <a-modal v-model:visible="visible" title="个人信息修改" @ok="handleOk"
            ok-text="确认" cancel-text="取消">
-    <a-form :model="passenger" :label-col="{span: 4}" :wrapper-col="{ span: 20 }">
+    <a-form :model="passengers" :label-col="{span: 4}" :wrapper-col="{ span: 20 }">
       <a-form-item label="姓名">
-        <a-input v-model:value="passenger.name" />
+        <a-input v-model:value="passengers[0].name" />
       </a-form-item>
       <a-form-item label="学号">
-        <a-input v-model:value="passenger.idCard" />
+        <a-input v-model:value="passengers[0].idCard" />
       </a-form-item>
       <a-form-item label="培养类型">
-        <a-select v-model:value="passenger.type">
+        <a-select v-model:value="passengers[0].type">
           <a-select-option v-for="item in PASSENGER_TYPE_ARRAY" :key="item.code" :value="item.code">
             {{item.desc}}
           </a-select-option>
         </a-select>
       </a-form-item>
       <a-form-item label="入学年份">
-        <a-input v-model:value="passenger.year" />
+        <a-input v-model:value="passengers[0].year" />
       </a-form-item>
       <a-form-item label="学院">
-        <a-input v-model:value="passenger.school" />
+        <a-input v-model:value="passengers[0].school" />
       </a-form-item>
     </a-form>
   </a-modal>
