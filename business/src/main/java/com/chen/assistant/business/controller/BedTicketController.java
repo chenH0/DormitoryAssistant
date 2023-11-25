@@ -25,6 +25,7 @@ public class BedTicketController {
 
     @GetMapping("/query")
     public CommonResp<BedTicketQueryResp> queryById(Long id) {
-        return new CommonResp<>(bedTicketService.queryById(id));
+        BedTicketQueryResp bedTicketQueryResp = bedTicketService.queryById(id);
+        return new CommonResp<>(bedTicketQueryResp);
     }
 }

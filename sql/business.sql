@@ -79,6 +79,7 @@ drop table if exists `confirm_order`;
 create table `confirm_order` (
   `id` bigint not null comment 'id',
   `member_id` bigint not null comment '会员id',
+  `member_name` varchar(20) not null comment '会员名字',
   `date` date not null comment '日期',
   `room_name` varchar(20) not null comment '宿舍名字',
   `floors_code` varchar(20) not null comment '宿舍楼层',

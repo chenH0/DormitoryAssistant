@@ -80,7 +80,7 @@
         <div>宿管帮规则2：一名新生仅允许选择一个床位</div>
       </div>
 
-      <div v-else style="text-align: center">
+<!--      <div v-else style="text-align: center">
         <a-switch class="choose-seat-item" v-for="item in SEAT_COL_ARRAY" :key="item.code"
                   v-model:checked="chooseSeatObj[item.code + '1']" :checked-children="item.desc" :un-checked-children="item.desc" />
         <div v-if="tickets.length > 1">
@@ -89,7 +89,7 @@
         </div>
         <div style="color: #999999">提示：您可以选择{{tickets.length}}个座位</div>
       </div>
-      <br>
+      <br>-->
 
       <!--<br/>-->
       <!--最终购票：{{tickets}}-->
@@ -98,11 +98,10 @@
   </a-modal>
 
   <!-- 第二层验证码 后端 -->
-  <a-modal v-model:visible="imageCodeModalVisible" :title="null" :footer="null" :closable="false"
-           style="top: 50px; width: 400px">
+<!--  <a-modal v-model:visible="imageCodeModalVisible" :title="null" :footer="null" :closable="false"
+           style="top: 80px; width: 400px">
     <p style="text-align: center; font-weight: bold; font-size: 18px">
-      使用服务端验证码削弱瞬时高峰<br/>
-      防止机器人刷票
+      确认你是人类<br/>
     </p>
     <p>
       <a-input v-model:value="imageCode" placeholder="图片验证码">
@@ -112,14 +111,13 @@
       </a-input>
     </p>
     <a-button type="danger" block @click="handleOk">输入验证码后开始购票</a-button>
-  </a-modal>
+  </a-modal>-->
 
   <!-- 第一层验证码 纯前端 -->
   <a-modal v-model:visible="firstImageCodeModalVisible" :title="null" :footer="null" :closable="false"
-           style="top: 50px; width: 400px">
+           style="top: 80px; width: 400px">
     <p style="text-align: center; font-weight: bold; font-size: 18px">
-      使用纯前端验证码削弱瞬时高峰<br/>
-      减小后端验证码接口的压力
+      确认你是人类<br/>
     </p>
     <p>
       <a-input v-model:value="firstImageCodeTarget" placeholder="验证码">
@@ -128,7 +126,7 @@
         </template>
       </a-input>
     </p>
-    <a-button type="danger" block @click="validFirstImageCode">提交验证码</a-button>
+    <a-button type="danger" block @click="handleOk">输入验证码后开始购票</a-button>
   </a-modal>
 
   <a-modal v-model:visible="lineModalVisible" title="排队购票" :footer="null" :maskClosable="false" :closable="false"
@@ -354,10 +352,10 @@ export default defineComponent({
     };
 
     const handleOk = () => {
-      if (Tool.isEmpty(imageCode.value)) {
+      /*if (Tool.isEmpty(imageCode.value)) {
         notification.error({description: '验证码不能为空'});
         return;
-      }
+      }*/
 
       console.log("选好的座位：", chooseSeatObj.value);
 
@@ -386,15 +384,11 @@ export default defineComponent({
       console.log("最终购票：", tickets.value);
 
       axios.post("/business/confirm-order/do", {
-        dailyTrainTicketId: dailyTrainTicket.id,
-        date: dailyTrainTicket.date,
-        trainCode: dailyTrainTicket.trainCode,
-        start: dailyTrainTicket.start,
-        end: dailyTrainTicket.end,
-        tickets: tickets.value,
-        imageCodeToken: imageCodeToken.value,
-        imageCode: imageCode.value,
-        lineNumber: lineNumber.value
+        roomName: room.value.roomName,
+        floorsCode: room.value.floorsCode,
+        memberName: user.value.name,
+        index: valueChecks.value,
+        dateRoomTicketId: room.value.id
       }).then((response) => {
         let data = response.data;
         if (data.success) {

@@ -252,6 +252,76 @@ public class ConfirmOrderExample {
             return (Criteria) this;
         }
 
+        public Criteria andMemberNameIsNull() {
+            addCriterion("member_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberNameIsNotNull() {
+            addCriterion("member_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberNameEqualTo(String value) {
+            addCriterion("member_name =", value, "memberName");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberNameNotEqualTo(String value) {
+            addCriterion("member_name <>", value, "memberName");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberNameGreaterThan(String value) {
+            addCriterion("member_name >", value, "memberName");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberNameGreaterThanOrEqualTo(String value) {
+            addCriterion("member_name >=", value, "memberName");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberNameLessThan(String value) {
+            addCriterion("member_name <", value, "memberName");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberNameLessThanOrEqualTo(String value) {
+            addCriterion("member_name <=", value, "memberName");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberNameLike(String value) {
+            addCriterion("member_name like", value, "memberName");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberNameNotLike(String value) {
+            addCriterion("member_name not like", value, "memberName");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberNameIn(List<String> values) {
+            addCriterion("member_name in", values, "memberName");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberNameNotIn(List<String> values) {
+            addCriterion("member_name not in", values, "memberName");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberNameBetween(String value1, String value2) {
+            addCriterion("member_name between", value1, value2, "memberName");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberNameNotBetween(String value1, String value2) {
+            addCriterion("member_name not between", value1, value2, "memberName");
+            return (Criteria) this;
+        }
+
         public Criteria andDateIsNull() {
             addCriterion("`date` is null");
             return (Criteria) this;

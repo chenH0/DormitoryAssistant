@@ -24,6 +24,8 @@ public class BedTicketQueryResp {
      */
     private String roomCode;
 
+    private String floorsCode;
+
     /**
      * 宿舍余票
      */
@@ -35,6 +37,30 @@ public class BedTicketQueryResp {
     private Integer one;
 
     private Integer two;
+
+    private Integer three;
+
+    private Integer four;
+
+    /**
+     * 新增时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Date createTime;
+
+    /**
+     * 修改时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Date updateTime;
+
+    public String getFloorsCode() {
+        return floorsCode;
+    }
+
+    public void setFloorsCode(String floorsCode) {
+        this.floorsCode = floorsCode;
+    }
 
     public String getRoomName() {
         return roomName;
@@ -75,23 +101,6 @@ public class BedTicketQueryResp {
     public void setFour(Integer four) {
         this.four = four;
     }
-
-    private Integer three;
-
-    private Integer four;
-
-    /**
-     * 新增时间
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
-    private Date createTime;
-
-    /**
-     * 修改时间
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
-    private Date updateTime;
-
     public Long getId() {
         return id;
     }
@@ -146,6 +155,7 @@ public class BedTicketQueryResp {
         sb.append("id=").append(id);
         sb.append(", date=").append(date);
         sb.append(", roomCode='").append(roomCode).append('\'');
+        sb.append(", floorsCode='").append(floorsCode).append('\'');
         sb.append(", total=").append(total);
         sb.append(", roomName='").append(roomName).append('\'');
         sb.append(", one=").append(one);

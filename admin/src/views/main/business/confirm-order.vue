@@ -37,6 +37,9 @@
       <a-form-item label="会员id">
         <a-input v-model:value="confirmOrder.memberId" />
       </a-form-item>
+      <a-form-item label="会员名字">
+        <a-input v-model:value="confirmOrder.memberName" />
+      </a-form-item>
       <a-form-item label="日期">
         <a-date-picker v-model:value="confirmOrder.date" valueFormat="YYYY-MM-DD" placeholder="请选择日期" />
       </a-form-item>
@@ -76,6 +79,7 @@ export default defineComponent({
     let confirmOrder = ref({
       id: undefined,
       memberId: undefined,
+      memberName: undefined,
       date: undefined,
       roomName: undefined,
       floorsCode: undefined,
@@ -98,6 +102,11 @@ export default defineComponent({
       title: '会员id',
       dataIndex: 'memberId',
       key: 'memberId',
+    },
+    {
+      title: '会员名字',
+      dataIndex: 'memberName',
+      key: 'memberName',
     },
     {
       title: '日期',

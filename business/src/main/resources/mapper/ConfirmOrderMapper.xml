@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.chen.assistant.business.domain.ConfirmOrder">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="member_id" jdbcType="BIGINT" property="memberId" />
+    <result column="member_name" jdbcType="VARCHAR" property="memberName" />
     <result column="date" jdbcType="DATE" property="date" />
     <result column="room_name" jdbcType="VARCHAR" property="roomName" />
     <result column="floors_code" jdbcType="VARCHAR" property="floorsCode" />
@@ -72,8 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, member_id, `date`, room_name, floors_code, `index`, date_room_ticket_id, `status`, 
-    create_time, update_time
+    id, member_id, member_name, `date`, room_name, floors_code, `index`, date_room_ticket_id, 
+    `status`, create_time, update_time
   </sql>
   <select id="selectByExample" parameterType="com.chen.assistant.business.domain.ConfirmOrderExample" resultMap="BaseResultMap">
     select
@@ -106,14 +107,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.chen.assistant.business.domain.ConfirmOrder">
-    insert into confirm_order (id, member_id, `date`, 
-      room_name, floors_code, `index`, 
-      date_room_ticket_id, `status`, create_time, 
-      update_time)
-    values (#{id,jdbcType=BIGINT}, #{memberId,jdbcType=BIGINT}, #{date,jdbcType=DATE}, 
-      #{roomName,jdbcType=VARCHAR}, #{floorsCode,jdbcType=VARCHAR}, #{index,jdbcType=CHAR}, 
-      #{dateRoomTicketId,jdbcType=BIGINT}, #{status,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+    insert into confirm_order (id, member_id, member_name, 
+      `date`, room_name, floors_code, 
+      `index`, date_room_ticket_id, `status`, 
+      create_time, update_time)
+    values (#{id,jdbcType=BIGINT}, #{memberId,jdbcType=BIGINT}, #{memberName,jdbcType=VARCHAR}, 
+      #{date,jdbcType=DATE}, #{roomName,jdbcType=VARCHAR}, #{floorsCode,jdbcType=VARCHAR}, 
+      #{index,jdbcType=CHAR}, #{dateRoomTicketId,jdbcType=BIGINT}, #{status,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.chen.assistant.business.domain.ConfirmOrder">
     insert into confirm_order
@@ -123,6 +124,9 @@
       </if>
       <if test="memberId != null">
         member_id,
+      </if>
+      <if test="memberName != null">
+        member_name,
       </if>
       <if test="date != null">
         `date`,
@@ -155,6 +159,9 @@
       </if>
       <if test="memberId != null">
         #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test="memberName != null">
+        #{memberName,jdbcType=VARCHAR},
       </if>
       <if test="date != null">
         #{date,jdbcType=DATE},
@@ -197,6 +204,9 @@
       <if test="record.memberId != null">
         member_id = #{record.memberId,jdbcType=BIGINT},
       </if>
+      <if test="record.memberName != null">
+        member_name = #{record.memberName,jdbcType=VARCHAR},
+      </if>
       <if test="record.date != null">
         `date` = #{record.date,jdbcType=DATE},
       </if>
@@ -230,6 +240,7 @@
     update confirm_order
     set id = #{record.id,jdbcType=BIGINT},
       member_id = #{record.memberId,jdbcType=BIGINT},
+      member_name = #{record.memberName,jdbcType=VARCHAR},
       `date` = #{record.date,jdbcType=DATE},
       room_name = #{record.roomName,jdbcType=VARCHAR},
       floors_code = #{record.floorsCode,jdbcType=VARCHAR},
@@ -247,6 +258,9 @@
     <set>
       <if test="memberId != null">
         member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test="memberName != null">
+        member_name = #{memberName,jdbcType=VARCHAR},
       </if>
       <if test="date != null">
         `date` = #{date,jdbcType=DATE},
@@ -278,6 +292,7 @@
   <update id="updateByPrimaryKey" parameterType="com.chen.assistant.business.domain.ConfirmOrder">
     update confirm_order
     set member_id = #{memberId,jdbcType=BIGINT},
+      member_name = #{memberName,jdbcType=VARCHAR},
       `date` = #{date,jdbcType=DATE},
       room_name = #{roomName,jdbcType=VARCHAR},
       floors_code = #{floorsCode,jdbcType=VARCHAR},

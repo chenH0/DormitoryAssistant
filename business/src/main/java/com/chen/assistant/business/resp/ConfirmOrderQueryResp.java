@@ -20,6 +20,11 @@ public class ConfirmOrderQueryResp {
     private Long memberId;
 
     /**
+     * 会员名字
+     */
+    private Long memberName;
+
+    /**
      * 日期
      */
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
@@ -77,6 +82,14 @@ public class ConfirmOrderQueryResp {
 
     public void setMemberId(Long memberId) {
         this.memberId = memberId;
+    }
+
+    public Long getMemberName() {
+        return memberName;
+    }
+
+    public void setMemberName(Long memberName) {
+        this.memberName = memberName;
     }
 
     public Date getDate() {
@@ -151,6 +164,7 @@ public class ConfirmOrderQueryResp {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", memberId=").append(memberId);
+        sb.append(", memberName=").append(memberName);
         sb.append(", date=").append(date);
         sb.append(", roomName=").append(roomName);
         sb.append(", floorsCode=").append(floorsCode);

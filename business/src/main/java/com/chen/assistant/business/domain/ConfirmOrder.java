@@ -7,6 +7,8 @@ public class ConfirmOrder {
 
     private Long memberId;
 
+    private String memberName;
+
     private Date date;
 
     private String roomName;
@@ -37,6 +39,14 @@ public class ConfirmOrder {
 
     public void setMemberId(Long memberId) {
         this.memberId = memberId;
+    }
+
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
     }
 
     public Date getDate() {
@@ -111,6 +121,7 @@ public class ConfirmOrder {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", memberId=").append(memberId);
+        sb.append(", memberName=").append(memberName);
         sb.append(", date=").append(date);
         sb.append(", roomName=").append(roomName);
         sb.append(", floorsCode=").append(floorsCode);

@@ -16,14 +16,18 @@ public class ConfirmOrderSaveReq {
     /**
      * 会员id
      */
-    @NotNull(message = "【会员id】不能为空")
     private Long memberId;
+
+    /**
+     * 会员名字
+     */
+    @NotNull(message = "【会员名字】不能为空")
+    private String memberName;
 
     /**
      * 日期
      */
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
-    @NotNull(message = "【日期】不能为空")
     private Date date;
 
     /**
@@ -53,7 +57,6 @@ public class ConfirmOrderSaveReq {
     /**
      * 订单状态|枚举[ConfirmOrderStatusEnum]
      */
-    @NotBlank(message = "【订单状态】不能为空")
     private String status;
 
     /**
@@ -82,6 +85,14 @@ public class ConfirmOrderSaveReq {
 
     public void setMemberId(Long memberId) {
         this.memberId = memberId;
+    }
+
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
     }
 
     public Date getDate() {
@@ -150,21 +161,19 @@ public class ConfirmOrderSaveReq {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
+        final StringBuffer sb = new StringBuffer("ConfirmOrderSaveReq{");
+        sb.append("id=").append(id);
         sb.append(", memberId=").append(memberId);
+        sb.append(", memberName='").append(memberName).append('\'');
         sb.append(", date=").append(date);
-        sb.append(", roomName=").append(roomName);
-        sb.append(", floorsCode=").append(floorsCode);
-        sb.append(", index=").append(index);
+        sb.append(", roomName='").append(roomName).append('\'');
+        sb.append(", floorsCode='").append(floorsCode).append('\'');
+        sb.append(", index='").append(index).append('\'');
         sb.append(", dateRoomTicketId=").append(dateRoomTicketId);
-        sb.append(", status=").append(status);
+        sb.append(", status='").append(status).append('\'');
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
-        sb.append("]");
+        sb.append('}');
         return sb.toString();
     }
 }

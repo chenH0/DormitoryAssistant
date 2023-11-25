@@ -93,6 +93,7 @@ export default defineComponent({
       id: undefined,
       date: undefined,
       roomCode: undefined,
+      floorsCode: undefined,
       total: undefined,
       left: undefined,
       medium: undefined,
