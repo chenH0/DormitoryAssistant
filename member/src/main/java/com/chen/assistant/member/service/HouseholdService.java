@@ -1,17 +1,15 @@
 package com.chen.assistant.member.service;
 
-import cn.hutool.Hutool;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateTime;
 import com.chen.assistant.common.context.LoginMemberContext;
+import com.chen.assistant.common.req.HouseholdSaveReq;
+import com.chen.assistant.common.req.HouseholdUpdateReq;
 import com.chen.assistant.common.resp.PageResp;
-import com.chen.assistant.common.util.SnowUtil;
 import com.chen.assistant.member.domain.Household;
 import com.chen.assistant.member.domain.HouseholdExample;
-import com.chen.assistant.member.enums.HouseholdStatusEnum;
 import com.chen.assistant.member.mapper.HouseholdMapper;
 import com.chen.assistant.member.req.HouseholdQueryReq;
-import com.chen.assistant.member.req.HouseholdSaveReq;
 import com.chen.assistant.member.resp.HouseholdResp;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -59,5 +57,12 @@ public class HouseholdService {
     public HouseholdResp getUser(Long id) {
         Household household = householdMapper.selectByPrimaryKey(id);
         return BeanUtil.copyProperties(household, HouseholdResp.class);
+    }
+
+    public void update(HouseholdUpdateReq req) {
+        Household household = new Household();
+        household.setMemberId(req.getMemberId());
+        household.setRoom(req.getRoom());
+        householdMapper.updateByPrimaryKeySelective(household);
     }
 }

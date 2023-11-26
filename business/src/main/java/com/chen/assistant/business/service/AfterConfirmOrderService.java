@@ -1,28 +1,21 @@
 package com.chen.assistant.business.service;
 
-import cn.hutool.core.date.DateTime;
-import com.alibaba.fastjson.JSON;
 import com.chen.assistant.business.domain.BedSeat;
 import com.chen.assistant.business.domain.BedTicket;
-import com.chen.assistant.business.domain.ConfirmOrder;
-import com.chen.assistant.business.enums.ConfirmOrderStatusEnum;
+import com.chen.assistant.business.feign.HouseHoldFeign;
 import com.chen.assistant.business.mapper.BedSeatMapper;
 import com.chen.assistant.business.mapper.BedTicketMapper;
 import com.chen.assistant.business.mapper.ConfirmOrderMapper;
 import com.chen.assistant.business.req.ConfirmOrderSaveReq;
 import com.chen.assistant.business.resp.BedTicketQueryResp;
-import com.chen.assistant.common.context.LoginMemberContext;
 import com.chen.assistant.common.exception.BusinessException;
 import com.chen.assistant.common.exception.BusinessExceptionEnum;
-import com.chen.assistant.common.inteceptor.LoginInterceptor;
-import com.chen.assistant.common.util.SnowUtil;
+import com.chen.assistant.common.req.HouseholdUpdateReq;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Date;
 
 @Service
 public class AfterConfirmOrderService {
@@ -38,6 +31,8 @@ public class AfterConfirmOrderService {
     private BedSeatMapper bedSeatMapper;
     @Resource
     private BedSeatService bedSeatService;
+    @Resource
+    private HouseHoldFeign houseHoldFeign;
 
     @Transactional
     public void afterDoConfirm(ConfirmOrderSaveReq req, BedTicketQueryResp bedTicketQueryResp) {
@@ -67,7 +62,13 @@ public class AfterConfirmOrderService {
         bedSeat.setUserName(req.getMemberName());
         bedSeat.setId(queryBedSeat.getId());
         bedSeatMapper.updateByPrimaryKeySelective(bedSeat);
-        // 3.
+        // 3.为学生表绑定床位信息
+        HouseholdUpdateReq householdUpdateReq = new HouseholdUpdateReq();
+        householdUpdateReq.setMemberId(req.getMemberId());
+        householdUpdateReq.setRoom(req.getRoomName()+" "+req.getIndex()+"床");
+        houseHoldFeign.update(householdUpdateReq);
+        // 4.更新订单状态为已完成
+
     }
 
     private static void updateBed(ConfirmOrderSaveReq req, BedTicketQueryResp bedTicketQueryResp) {

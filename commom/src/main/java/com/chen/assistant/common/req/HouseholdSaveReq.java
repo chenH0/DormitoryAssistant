@@ -1,4 +1,4 @@
-package com.chen.assistant.member.req;
+package com.chen.assistant.common.req;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
