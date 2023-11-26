@@ -30,7 +30,7 @@ public class BeforeConfirmOrderService {
     @Resource
     private AfterConfirmOrderService afterConfirmOrderService;
 
-    public Long beforeDoConfirm(ConfirmOrderSaveReq req) {
+    public void beforeDoConfirm(ConfirmOrderSaveReq req) {
         Long id = null;
         req.setMemberId(LoginMemberContext.getId());
         // 保存确认订单表，状态初始
@@ -55,10 +55,6 @@ public class BeforeConfirmOrderService {
         reduceBed(req, bedTicketQueryResp);
         // 选中床位后事务处理
         afterConfirmOrderService.afterDoConfirm(req, bedTicketQueryResp);
-
-        id = req.getId();
-        // 发送MQ排队购票
-        return id;
     }
 
     private static void reduceBed(ConfirmOrderSaveReq req, BedTicketQueryResp bedTicketQueryResp) {

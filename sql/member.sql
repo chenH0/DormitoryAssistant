@@ -12,7 +12,7 @@ create table `household` (
   `name` varchar(20) comment '姓名',
   `id_card` varchar(18) comment '学号',
   `school` varchar(20) comment '学院',
-  `room` varchar(18) comment '宿舍',
+  `room` varchar(50) comment '宿舍',
   `year` int comment '入学年份',
   `status` int comment '状态',
   `type` char(1) comment '学生类型|枚举[PassengerTypeEnum]',

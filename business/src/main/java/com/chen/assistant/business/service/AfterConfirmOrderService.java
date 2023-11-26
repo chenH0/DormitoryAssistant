@@ -1,7 +1,10 @@
 package com.chen.assistant.business.service;
 
+import cn.hutool.core.date.DateTime;
 import com.chen.assistant.business.domain.BedSeat;
 import com.chen.assistant.business.domain.BedTicket;
+import com.chen.assistant.business.domain.ConfirmOrder;
+import com.chen.assistant.business.enums.ConfirmOrderStatusEnum;
 import com.chen.assistant.business.feign.HouseHoldFeign;
 import com.chen.assistant.business.mapper.BedSeatMapper;
 import com.chen.assistant.business.mapper.BedTicketMapper;
@@ -23,8 +26,6 @@ public class AfterConfirmOrderService {
     private static final Logger LOG = LoggerFactory.getLogger(BeforeConfirmOrderService.class);
     @Resource
     private ConfirmOrderMapper confirmOrderMapper;
-    @Resource
-    private BedTicketService bedTicketService;
     @Resource
     private BedTicketMapper bedTicketMapper;
     @Resource
@@ -68,7 +69,13 @@ public class AfterConfirmOrderService {
         householdUpdateReq.setRoom(req.getRoomName()+" "+req.getIndex()+"床");
         houseHoldFeign.update(householdUpdateReq);
         // 4.更新订单状态为已完成
-
+        DateTime now = new DateTime();
+        ConfirmOrder confirmOrder = new ConfirmOrder();
+        confirmOrder.setId(req.getId());
+        confirmOrder.setStatus(ConfirmOrderStatusEnum.SUCCESS.getCode());
+        confirmOrder.setUpdateTime(now);
+        confirmOrderMapper.updateByPrimaryKeySelective(confirmOrder);
+        LOG.info("床位订单完成");
     }
 
     private static void updateBed(ConfirmOrderSaveReq req, BedTicketQueryResp bedTicketQueryResp) {

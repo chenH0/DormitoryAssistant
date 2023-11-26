@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class FeignBedSeatController {
     @Resource
     private HouseholdService householdService;
-    @PostMapping("/save")
-    public CommonResp<Object> save(@Valid @RequestBody HouseholdUpdateReq req) throws Exception{
+    @PostMapping("/update")
+    public CommonResp<Object> update(@Valid @RequestBody HouseholdUpdateReq req) throws Exception{
         householdService.update(req);
         return new CommonResp<>();
     }

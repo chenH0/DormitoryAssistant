@@ -19,9 +19,9 @@ public class ConfirmOrderController {
     private static final Logger LOG = LoggerFactory.getLogger(ConfirmOrderController.class);
 
     @PostMapping("/do")
-    public CommonResp<Object> doConfirm(@Valid @RequestBody ConfirmOrderSaveReq req){
-        Long id = beforeConfirmOrderService.beforeDoConfirm(req);
-        return new CommonResp<>(String.valueOf(id));
+    public CommonResp doConfirm(@Valid @RequestBody ConfirmOrderSaveReq req){
+        beforeConfirmOrderService.beforeDoConfirm(req);
+        return new CommonResp<>();
     }
 
 }

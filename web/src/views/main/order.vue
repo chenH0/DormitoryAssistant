@@ -410,7 +410,7 @@ export default defineComponent({
 
     // 定时查询订单结果/排队数量
     const queryLineCount = () => {
-      confirmOrderLineCount.value = -1;
+      /*confirmOrderLineCount.value = -1;
       queryLineCountInterval = setInterval(function () {
         axios.get("/business/confirm-order/query-line-count/" + confirmOrderId.value).then((response) => {
           let data = response.data;
@@ -439,7 +439,7 @@ export default defineComponent({
             notification.error({description: data.message});
           }
         });
-      }, 500);
+      }, 500);*/
     };
 
     /* ------------------- 第二层验证码 --------------------- */
