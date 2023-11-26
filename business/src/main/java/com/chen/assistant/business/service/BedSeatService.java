@@ -81,6 +81,12 @@ public class BedSeatService {
         bedSeatMapper.deleteByPrimaryKey(id);
     }
 
+    public BedSeat selectBySeatType (String roomName, String index) {
+        BedSeatExample bedSeatExample = new BedSeatExample();
+        bedSeatExample.createCriteria().andRoomNameEqualTo(roomName).andIndexEqualTo(index);
+        return bedSeatMapper.selectByExample(bedSeatExample).get(0);
+    }
+
     @Transactional
     public void genRoomSeat(String floorCode){
         DateTime dateTime = DateTime.now();

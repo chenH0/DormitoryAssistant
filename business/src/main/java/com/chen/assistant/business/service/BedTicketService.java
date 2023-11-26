@@ -88,7 +88,6 @@ public class BedTicketService {
 
     public BedTicketQueryResp queryById(Long id) {
         BedTicket bedTicket = bedTicketMapper.selectByPrimaryKey(id);
-
         return BeanUtil.copyProperties(bedTicket, BedTicketQueryResp.class);
     }
 }

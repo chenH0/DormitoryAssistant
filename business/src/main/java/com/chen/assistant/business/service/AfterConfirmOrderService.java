@@ -2,8 +2,12 @@ package com.chen.assistant.business.service;
 
 import cn.hutool.core.date.DateTime;
 import com.alibaba.fastjson.JSON;
+import com.chen.assistant.business.domain.BedSeat;
+import com.chen.assistant.business.domain.BedTicket;
 import com.chen.assistant.business.domain.ConfirmOrder;
 import com.chen.assistant.business.enums.ConfirmOrderStatusEnum;
+import com.chen.assistant.business.mapper.BedSeatMapper;
+import com.chen.assistant.business.mapper.BedTicketMapper;
 import com.chen.assistant.business.mapper.ConfirmOrderMapper;
 import com.chen.assistant.business.req.ConfirmOrderSaveReq;
 import com.chen.assistant.business.resp.BedTicketQueryResp;
@@ -16,11 +20,12 @@ import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
 @Service
-public class BeforeConfirmOrderService {
+public class AfterConfirmOrderService {
 
     private static final Logger LOG = LoggerFactory.getLogger(BeforeConfirmOrderService.class);
     @Resource
@@ -28,40 +33,44 @@ public class BeforeConfirmOrderService {
     @Resource
     private BedTicketService bedTicketService;
     @Resource
-    private AfterConfirmOrderService afterConfirmOrderService;
+    private BedTicketMapper bedTicketMapper;
+    @Resource
+    private BedSeatMapper bedSeatMapper;
+    @Resource
+    private BedSeatService bedSeatService;
 
-    public Long beforeDoConfirm(ConfirmOrderSaveReq req) {
-        Long id = null;
-        req.setMemberId(LoginMemberContext.getId());
-        // 保存确认订单表，状态初始
-        DateTime now = DateTime.now();
-        ConfirmOrder confirmOrder = new ConfirmOrder();
-        confirmOrder.setMemberName(req.getMemberName());
-        confirmOrder.setRoomName(req.getRoomName());
-        confirmOrder.setFloorsCode(req.getFloorsCode());
-        confirmOrder.setIndex(req.getIndex());
-        confirmOrder.setDateRoomTicketId(req.getDateRoomTicketId());
-        confirmOrder.setStatus(ConfirmOrderStatusEnum.INIT.getCode());
-        confirmOrder.setId(SnowUtil.getSnowflaskNextId());
-        confirmOrder.setCreateTime(now);
-        confirmOrder.setUpdateTime(now);
-        confirmOrder.setMemberId(req.getMemberId());
-        confirmOrder.setDate(now);
-        confirmOrderMapper.insert(confirmOrder);
-        // 查出余票记录
-        BedTicketQueryResp bedTicketQueryResp = bedTicketService.queryById(req.getDateRoomTicketId());
-        LOG.info("{}", bedTicketQueryResp.toString());
-        // 预校验库存
-        reduceBed(req, bedTicketQueryResp);
-        // 选中床位后事务处理
-        afterConfirmOrderService.afterDoConfirm(req, bedTicketQueryResp);
-
-        id = req.getId();
-        // 发送MQ排队购票
-        return id;
+    @Transactional
+    public void afterDoConfirm(ConfirmOrderSaveReq req, BedTicketQueryResp bedTicketQueryResp) {
+        // 1.扣减库存
+        BedTicket bedTicket = new BedTicket();
+        bedTicket.setId(bedTicketQueryResp.getId());
+        switch (req.getIndex()){
+            case "1" ->{
+                bedTicket.setOne(bedTicketQueryResp.getOne()-1);
+            }
+            case "2" ->{
+                bedTicket.setTwo(bedTicketQueryResp.getTwo()-1);
+            }
+            case "3" ->{
+                bedTicket.setThree(bedTicketQueryResp.getThree()-1);
+            }
+            case "4" ->{
+                bedTicket.setFour(bedTicketQueryResp.getFour()-1);
+            }
+        }
+        bedTicket.setTotal(bedTicketQueryResp.getTotal()-1);
+        bedTicketMapper.updateByPrimaryKeySelective(bedTicket);
+        // 2.更新床位表写入用户信息
+        BedSeat queryBedSeat = bedSeatService.selectBySeatType(req.getRoomName(), req.getIndex());
+        BedSeat bedSeat = new BedSeat();
+        bedSeat.setUserId(req.getMemberId());
+        bedSeat.setUserName(req.getMemberName());
+        bedSeat.setId(queryBedSeat.getId());
+        bedSeatMapper.updateByPrimaryKeySelective(bedSeat);
+        // 3.
     }
 
-    private static void reduceBed(ConfirmOrderSaveReq req, BedTicketQueryResp bedTicketQueryResp) {
+    private static void updateBed(ConfirmOrderSaveReq req, BedTicketQueryResp bedTicketQueryResp) {
         switch (req.getIndex()){
             case "1" ->{
                 if(bedTicketQueryResp.getOne()<=0){

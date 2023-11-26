@@ -53,6 +53,7 @@ create table `bed_seat` (
   `user_id` bigint comment '住户id',
   `create_time` datetime(3) comment '新增时间',
   `update_time` datetime(3) comment '修改时间',
+  unique key `bed_index` (`room_name`, `index`),
   primary key (`id`)
 ) engine=innodb default charset=utf8mb4 comment='座位';
 
