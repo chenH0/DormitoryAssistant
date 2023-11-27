@@ -356,7 +356,7 @@ export default defineComponent({
         notification.error({description: '验证码不能为空'});
         return;
       }*/
-
+      lineModalVisible.value = true;
       console.log("选好的座位：", chooseSeatObj.value);
 
       // 设置每张票的座位
@@ -392,12 +392,13 @@ export default defineComponent({
       }).then((response) => {
         let data = response.data;
         if (data.success) {
-          // notification.success({description: "下单成功！"});
+          notification.success({description: "下单成功！"});
           visible.value = false;
           imageCodeModalVisible.value = false;
-          lineModalVisible.value = true;
+          clearInterval(queryLineCountInterval);
+          lineModalVisible.value = false;
           confirmOrderId.value = data.content;
-          queryLineCount();
+          //queryLineCount();
         } else {
           notification.error({description: data.message});
         }
@@ -409,7 +410,7 @@ export default defineComponent({
     let queryLineCountInterval;
 
     // 定时查询订单结果/排队数量
-    const queryLineCount = () => {
+    //const queryLineCount = () => {
       /*confirmOrderLineCount.value = -1;
       queryLineCountInterval = setInterval(function () {
         axios.get("/business/confirm-order/query-line-count/" + confirmOrderId.value).then((response) => {
@@ -440,7 +441,7 @@ export default defineComponent({
           }
         });
       }, 500);*/
-    };
+    //};
 
     /* ------------------- 第二层验证码 --------------------- */
     const imageCodeModalVisible = ref();
