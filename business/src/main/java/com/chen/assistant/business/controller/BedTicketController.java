@@ -1,7 +1,6 @@
 package com.chen.assistant.business.controller;
 
 import com.chen.assistant.business.req.BedTicketQueryReq;
-import com.chen.assistant.business.req.BedTicketSaveReq;
 import com.chen.assistant.business.resp.BedTicketQueryResp;
 import com.chen.assistant.business.service.BedTicketService;
 import com.chen.assistant.common.resp.CommonResp;

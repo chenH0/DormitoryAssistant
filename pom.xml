@@ -41,6 +41,11 @@
                 <artifactId>fastjson</artifactId>
                 <version>1.2.70</version>
             </dependency>
+            <dependency>
+                <groupId>com.chen</groupId>
+                <artifactId>commom</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
 
             <dependency>
                 <groupId>cn.hutool</groupId>
@@ -78,7 +83,7 @@
         </dependencies>
     </dependencyManagement>
 
-    <build>
+    <!--<build>
         <finalName>/dist/${artifactId}</finalName>
         <plugins>
             <plugin>
@@ -86,7 +91,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-    </build>
+    </build>-->
 
 
 </project>

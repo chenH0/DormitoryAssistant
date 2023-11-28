@@ -71,7 +71,7 @@
         </dependency>
     </dependencies>
 
-    <build>
+    <!--<build>
         <finalName>/dist/${artifactId}</finalName>
         <plugins>
             <plugin>
@@ -79,6 +79,6 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-    </build>
+    </build>-->
 
 </project>

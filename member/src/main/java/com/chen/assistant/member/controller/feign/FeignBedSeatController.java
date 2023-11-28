@@ -1,10 +1,8 @@
 package com.chen.assistant.member.controller.feign;
 
-import com.chen.assistant.common.req.HouseholdSaveReq;
 import com.chen.assistant.common.req.HouseholdUpdateReq;
 import com.chen.assistant.common.resp.CommonResp;
 import com.chen.assistant.member.service.HouseholdService;
-import com.chen.assistant.member.service.MemberService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
