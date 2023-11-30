@@ -34,10 +34,10 @@
   <a-modal v-model:visible="visible" title="确认订单" @ok="handleOk"
            ok-text="确认" cancel-text="取消">
     <a-form :model="confirmOrder" :label-col="{span: 4}" :wrapper-col="{ span: 20 }">
-      <a-form-item label="会员id">
+      <a-form-item label="学生id">
         <a-input v-model:value="confirmOrder.memberId" />
       </a-form-item>
-      <a-form-item label="会员名字">
+      <a-form-item label="学生名字">
         <a-input v-model:value="confirmOrder.memberName" />
       </a-form-item>
       <a-form-item label="日期">
@@ -49,10 +49,10 @@
       <a-form-item label="宿舍楼层">
         <a-input v-model:value="confirmOrder.floorsCode" />
       </a-form-item>
-      <a-form-item label="座位号">
+      <a-form-item label="床位号">
         <a-input v-model:value="confirmOrder.index" />
       </a-form-item>
-      <a-form-item label="余票ID">
+      <a-form-item label="宿舍ID">
         <a-input v-model:value="confirmOrder.dateRoomTicketId" />
       </a-form-item>
       <a-form-item label="订单状态">
@@ -99,12 +99,12 @@ export default defineComponent({
     let loading = ref(false);
     const columns = [
     {
-      title: '会员id',
+      title: '学生id',
       dataIndex: 'memberId',
       key: 'memberId',
     },
     {
-      title: '会员名字',
+      title: '学生名字',
       dataIndex: 'memberName',
       key: 'memberName',
     },
@@ -124,12 +124,12 @@ export default defineComponent({
       key: 'floorsCode',
     },
     {
-      title: '座位号',
+      title: '床位号',
       dataIndex: 'index',
       key: 'index',
     },
     {
-      title: '余票ID',
+      title: '宿舍ID',
       dataIndex: 'dateRoomTicketId',
       key: 'dateRoomTicketId',
     },

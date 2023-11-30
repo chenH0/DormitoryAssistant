@@ -42,7 +42,9 @@ public class BeforeConfirmOrderService {
         confirmOrder.setIndex(req.getIndex());
         confirmOrder.setDateRoomTicketId(req.getDateRoomTicketId());
         confirmOrder.setStatus(ConfirmOrderStatusEnum.INIT.getCode());
-        confirmOrder.setId(SnowUtil.getSnowflaskNextId());
+        Long snowFlaskNextId = SnowUtil.getSnowflaskNextId();
+        req.setId(snowFlaskNextId);
+        confirmOrder.setId(snowFlaskNextId);
         confirmOrder.setCreateTime(now);
         confirmOrder.setUpdateTime(now);
         confirmOrder.setMemberId(req.getMemberId());

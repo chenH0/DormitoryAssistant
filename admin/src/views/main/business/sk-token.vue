@@ -30,7 +30,7 @@
       <a-form-item label="日期">
         <a-date-picker v-model:value="skToken.date" valueFormat="YYYY-MM-DD" placeholder="请选择日期" disabled/>
       </a-form-item>
-      <a-form-item label="车次编号">
+      <a-form-item label="宿舍编号">
         <a-input v-model:value="skToken.trainCode" disabled/>
       </a-form-item>
       <a-form-item label="令牌余量">
@@ -72,7 +72,7 @@ export default defineComponent({
       key: 'date',
     },
     {
-      title: '车次编号',
+      title: '宿舍编号',
       dataIndex: 'trainCode',
       key: 'trainCode',
     },

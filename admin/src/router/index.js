@@ -36,17 +36,17 @@ const routes = [{
         path: 'daily-train',
         component: () => import('../views/main/business/daily-train.vue'),
       }, {
-        path: 'daily-train-station',
-        component: () => import('../views/main/business/daily-train-station.vue'),
+        path: 'daily-student',
+        component: () => import('../views/main/business/daily-student.vue'),
       }, {
-        path: 'daily-train-carriage',
-        component: () => import('../views/main/business/daily-train-carriage.vue'),
+        path: 'daily-room',
+        component: () => import('../views/main/business/daily-room.vue'),
       }, {
         path: 'daily-train-seat',
         component: () => import('../views/main/business/daily-train-seat.vue'),
       }, {
-        path: 'daily-train-ticket',
-        component: () => import('../views/main/business/daily-train-ticket.vue'),
+        path: 'daily-bed',
+        component: () => import('../views/main/business/daily-bed.vue'),
       }]
     }, {
       path: 'batch/',

@@ -135,9 +135,9 @@
       <div v-show="confirmOrderLineCount < 0">
         <loading-outlined /> 系统正在处理中...
       </div>
-      <div v-show="confirmOrderLineCount >= 0">
-        <loading-outlined /> 您前面还有{{confirmOrderLineCount}}位用户在购票，排队中，请稍候
-      </div>
+<!--      <div v-show="confirmOrderLineCount >= 0">
+        <loading-outlined /> 您前面还有{{confirmOrderLineCount}}排队中，请稍候
+      </div>-->
     </div>
     <br/>
     <a-button type="danger" @click="onCancelOrder">取消购票</a-button>
@@ -398,7 +398,8 @@ export default defineComponent({
           clearInterval(queryLineCountInterval);
           lineModalVisible.value = false;
           confirmOrderId.value = data.content;
-          //queryLineCount();
+          setTimeout(queryLineCount, 500);
+          queryLineCount();
         } else {
           notification.error({description: data.message});
         }
@@ -410,7 +411,8 @@ export default defineComponent({
     let queryLineCountInterval;
 
     // 定时查询订单结果/排队数量
-    //const queryLineCount = () => {
+    const queryLineCount = () => {
+      window.location.href="/my-ticket"
       /*confirmOrderLineCount.value = -1;
       queryLineCountInterval = setInterval(function () {
         axios.get("/business/confirm-order/query-line-count/" + confirmOrderId.value).then((response) => {
@@ -441,7 +443,9 @@ export default defineComponent({
           }
         });
       }, 500);*/
-    //};
+    };
+
+
 
     /* ------------------- 第二层验证码 --------------------- */
     const imageCodeModalVisible = ref();

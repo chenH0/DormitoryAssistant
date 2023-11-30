@@ -7,6 +7,7 @@ import cn.hutool.core.util.StrUtil;
 import com.chen.assistant.business.domain.*;
 import com.chen.assistant.business.mapper.RoomCarriageMapper;
 import com.chen.assistant.business.req.RoomCarriageSaveReq;
+import com.chen.assistant.common.context.LoginMemberContext;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.chen.assistant.common.resp.PageResp;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class BedSeatService {
@@ -56,6 +58,15 @@ public class BedSeatService {
         BedSeatExample bedSeatExample = new BedSeatExample();
         bedSeatExample.setOrderByClause("id asc");
         BedSeatExample.Criteria criteria = bedSeatExample.createCriteria();
+        try {
+            Long id = LoginMemberContext.getId();
+            if(!Objects.isNull(id)){
+                criteria.andUserIdEqualTo(LoginMemberContext.getId());
+            }
+        }catch (Exception e){
+            LOG.info(e.getMessage());
+        }
+
         if(StrUtil.isNotBlank(req.getFloorsCode())){
             criteria.andFloorsCodeEqualTo(req.getFloorsCode());
         }

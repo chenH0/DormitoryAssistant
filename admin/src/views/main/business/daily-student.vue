@@ -1,10 +1,7 @@
 <template>
   <p>
     <a-space>
-      <a-date-picker v-model:value="params.date" valueFormat="YYYY-MM-DD" placeholder="请选择日期" />
-      <train-select-view v-model="params.trainCode" width="200px"></train-select-view>
       <a-button type="primary" @click="handleQuery()">刷新</a-button>
-      <a-button type="primary" @click="onAdd">新增</a-button>
     </a-space>
   </p>
   <a-table :dataSource="dailyTrainStations"
@@ -69,7 +66,7 @@ import dayjs from "dayjs";
 import TrainSelectView from "@/components/train-select";
 
 export default defineComponent({
-  name: "daily-train-station-view",
+  name: "daily-student-view",
   components: {TrainSelectView},
   setup() {
     const visible = ref(false);
@@ -101,50 +98,51 @@ export default defineComponent({
     });
     const columns = [
     {
-      title: '日期',
-      dataIndex: 'date',
-      key: 'date',
+
+      title: 'ID',
+      dataIndex: 'memberId',
+      key: 'memberId',
     },
-    {
-      title: '车次编号',
-      dataIndex: 'trainCode',
-      key: 'trainCode',
-    },
-    {
-      title: '站序',
-      dataIndex: 'index',
-      key: 'index',
-    },
-    {
-      title: '站名',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: '站名拼音',
-      dataIndex: 'namePinyin',
-      key: 'namePinyin',
-    },
-    {
-      title: '进站时间',
-      dataIndex: 'inTime',
-      key: 'inTime',
-    },
-    {
-      title: '出站时间',
-      dataIndex: 'outTime',
-      key: 'outTime',
-    },
-    {
-      title: '停站时长',
-      dataIndex: 'stopTime',
-      key: 'stopTime',
-    },
-    {
-      title: '里程（公里）',
-      dataIndex: 'km',
-      key: 'km',
-    },
+      {
+        title: '姓名',
+        dataIndex: 'name',
+        key: 'name',
+      },
+      {
+        title: '学号',
+        dataIndex: 'idCard',
+        key: 'idCard',
+      },
+      {
+        title: '培养类型',
+        dataIndex: 'type',
+        key: 'type',
+      },
+      {
+        title: '年级',
+        dataIndex: 'year',
+        key: 'year',
+      },
+      {
+        title: '学院',
+        dataIndex: 'school',
+        key: 'school',
+      },
+      {
+        title: '分配宿舍',
+        dataIndex: 'room',
+        key: 'room',
+      },
+      {
+        title: '最后修改时间',
+        dataIndex: 'updateTime',
+        key: 'updateTime',
+      },
+      {
+        title: '审核状态',
+        dataIndex: 'status',
+        key: 'status',
+      },
     {
       title: '操作',
       dataIndex: 'operation'
@@ -181,7 +179,7 @@ export default defineComponent({
     };
 
     const onDelete = (record) => {
-      axios.delete("/business/admin/daily-train-station/delete/" + record.id).then((response) => {
+      axios.delete("/business/admin/daily-student/delete/" + record.id).then((response) => {
         const data = response.data;
         if (data.success) {
           notification.success({description: "删除成功！"});
@@ -196,7 +194,7 @@ export default defineComponent({
     };
 
     const handleOk = () => {
-      axios.post("/business/admin/daily-train-station/save", dailyTrainStation.value).then((response) => {
+      axios.post("/business/admin/daily-student/save", dailyTrainStation.value).then((response) => {
         let data = response.data;
         if (data.success) {
           notification.success({description: "保存成功！"});
@@ -219,7 +217,7 @@ export default defineComponent({
         };
       }
       loading.value = true;
-      axios.get("/business/admin/daily-train-station/query-list", {
+      axios.get("/business/admin/daily-student/query-list", {
         params: {
           page: param.page,
           size: param.size,

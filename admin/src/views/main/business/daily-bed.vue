@@ -85,7 +85,7 @@ import BedSelectView from "@/components/bed-select";
 import dayjs from "dayjs";
 
 export default defineComponent({
-  name: "daily-train-ticket-view",
+  name: "daily-bed-view",
   components: {StationSelectView, TrainSelectView, BedSelectView},
   setup() {
     const visible = ref(false);

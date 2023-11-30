@@ -36,18 +36,18 @@
             业务管理
           </span>
         </template>
-        <a-menu-item key="/business/daily-train-carriage">
-          <router-link to="/business/daily-train-carriage">
+        <a-menu-item key="/business/daily-room">
+          <router-link to="/business/daily-room">
             <MenuUnfoldOutlined /> &nbsp; 开放宿舍
           </router-link>
         </a-menu-item>
-        <a-menu-item key="/business/daily-train-ticket">
-          <router-link to="/business/daily-train-ticket">
+        <a-menu-item key="/business/daily-bed">
+          <router-link to="/business/daily-bed">
             <MenuUnfoldOutlined /> &nbsp; 剩余床位
           </router-link>
         </a-menu-item>
-        <a-menu-item key="/business/daily-train-station">
-          <router-link to="/business/daily-train-station">
+        <a-menu-item key="/business/daily-student">
+          <router-link to="/business/daily-student">
             <MenuUnfoldOutlined /> &nbsp; 学生资格
           </router-link>
         </a-menu-item>

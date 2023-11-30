@@ -101,7 +101,7 @@ import dayjs from "dayjs";
 import router from "@/router";
 
 export default defineComponent({
-  name: "daily-train-ticket-view",
+  name: "daily-bed-view",
   components: {StationSelectView, TrainSelectView, BedSelectView},
   setup() {
     const visible = ref(false);

@@ -1,8 +1,8 @@
 <template>
   <div v-if="!param.date">
-    请到余票查询里选择一趟列车，
+    请到床位查询里选择一间宿舍，
     <router-link to="/ticket">
-      跳转到余票查询
+      跳转到床位查询
     </router-link>
   </div>
   <div v-else>
