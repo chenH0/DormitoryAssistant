@@ -19,6 +19,7 @@ import com.chen.assistant.business.resp.RoomCarriageQueryResp;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,6 +60,7 @@ public class RoomCarriageService {
         }
     }
 
+    @Cacheable(value = "RoomCarriageService.queryList")
     public PageResp<RoomCarriageQueryResp> queryList(RoomCarriageQueryReq req) {
         RoomCarriageExample roomCarriageExample = new RoomCarriageExample();
         roomCarriageExample.setOrderByClause("id asc");

@@ -1,0 +1,14 @@
+POST http://121.41.129.107:8081/user/code?phone=18984545111
+Accept: application/json
+###
+
+GET http://localhost:8000/member/hello
+Accept: application/json
+###
+
+
+GET http://121.41.129.107:8081/user/login
+Accept: application/json
+
+{"phone": "18980454270", "code": "912803"}
+###
